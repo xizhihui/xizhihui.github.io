@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>XZH's Notes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="xizhihui" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" href="/statics/reset.css">
+	<link rel="stylesheet" type="text/css" href="/statics/header_footer.css"></link>
+	<link rel="stylesheet" type="text/css" href="/statics/default.css">
+	<link rel="stylesheet" type="text/css" href="/statics/main.css">
+</head>
+<body>
+	<header class="Header">
+		<nav>
+			<h3>XZH</h3>
+			<ul>
+				<li><a href="/index.html#Timeline">Timeline</a></li><li><a href="/index.html#Category">Category</a></li><li><a href="/index.html#Tags">Tags</a></li><li><a href="/index.html#About">About</a></li>
+			</ul>
+		</nav>
+	</header>
+	<div class="Motto">
+		<h2>XZH's Notes</h2>
+		<h4>The future comes for you ~ ~ ~</h4>
+	</div>
+
+	<main>
+		<nav id="table"></nav>
+		<content id="content" class="content">
+			<h2 id="stringtie">stringTie</h2>
+<p>用于RNA-seq的转录本组装和定量软件</p>
+<h3 id="_1">基本使用</h3>
+<p>输入文件是BAM格式的比对结果文件，该文件必需经过排序，排序的方式基因组位置。这些文件可以是来源于Tophat比对的结果文件accepted_hits.bam，也可以是hisat2的结果文件经过转换和排序的文件(使用samtools)。</p>
+<div class="codehilite"><pre><span></span>stringtie &lt;aligned_reads.bam&gt; <span class="o">[</span>options<span class="o">]</span>*
+
+<span class="c1"># 选项</span>
+-o <span class="o">[</span>&lt;path/&gt;<span class="o">]</span>&lt;out.gtf&gt;           设置输出文件<span class="p">;</span>组装的结果将写入out.gtf
+-p &lt;int&gt;                        指定threads
+-G &lt;ref_ann.gff&gt;                指定参考注释文件
+--rf                            说明是fr-firststrand的文库
+--fr                            说明是fr-secondstrand的文库
+-l &lt;label&gt;                      设定输出转录本的前缀,默认是STRG
+-m &lt;int&gt;                        最短的预测转录本长度
+-A &lt;gene_abund.tab&gt;             将基因表达量输出到gene_abund.tab文件<span class="o">(</span>tab delimited format<span class="o">)</span>
+-C &lt;cov_refs.gtf&gt;               输出reads能完全覆盖的参考序列区域的所有转录本
+-a &lt;int&gt;                        没有剪切后reads比对上的junction最短长度
+-j &lt;float&gt;                      可比对到junction的剪切reads的最少个数
+-t                              禁止在组装转录本的两端进行trim
+-c &lt;float&gt;                      设置进行转录本预测的最小read覆盖度
+-g &lt;int&gt;                        locus的最小间隔值,如果reads比对区域距离小于该值,则会被合并
+-B                              允许生成Ballgown的输入文件
+-b &lt;path&gt;                       指定-B生成文件的存储路径
+-e                              指定只进行比对文件的定量和输出能比对到参考转录本的组装转录本
+-M &lt;<span class="m">0</span>.0-1.0&gt;                    设定多位置比对reads在给定位置序列的最大占比
+-x &lt;seqid_list&gt;                 忽略这里设置的参考序列区域,可以是逗号分隔的染色体. -x <span class="s1">&#39;chrM,chrX,chrY&#39;</span>
+--merge                         指定使用转录合并模式,在本模式中，将使用GTF/GFF文件作为输入，然后把这些转录合并成非冗余的转录集合。
+                                主要是在多样本的RNA-seq数据结果中使用.
+                                本模式下有效的选项:-G, -o, -c,-m,-F,-T,-f,-i,-l
+</pre></div>
+
+
+<blockquote>
+<p>使用hisat2结果作为输入时, 首先在比对时要指定--dta选项,其次需要进行排序</p>
+</blockquote>
+<div class="codehilite"><pre><span></span>samtools view -Su alns.sam <span class="p">|</span> samtools sort - alns.sorted
+</pre></div>
+
+
+<h3 id="_2">输出文件</h3>
+<p>主要的输出:</p>
+<ul>
+<li>.GTF文件, 组装的转录本</li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="c1">#seqname source      feature     start   end     score   strand  frame attributes</span>
+<span class="c1">#chrX    StringTie   transcript  281394  303355  1000    +       .     gene_id &quot;ERR188044.1&quot;; transcript_id &quot;ERR188044.1.1&quot;; reference_id &quot;NM_018390&quot;; ref_gene_id &quot;NM_018390&quot;;ref_gene_name &quot;PLCXD1&quot;; cov &quot;101.256691&quot;; FPKM &quot;530.078918&quot;; TPM &quot;705.667908&quot;;</span>
+<span class="c1">#chrX    StringTie   exon        281394  281684  1000    +       .     gene_id &quot;ERR188044.1&quot;; transcript_id &quot;ERR188044.1.1&quot;; exon_number &quot;1&quot;; reference_id &quot;NM_018390&quot;;ref_gene_id &quot;NM_018390&quot;; ref_gene_name &quot;PLCXD1&quot;; cov &quot;116.270836&quot;;</span>
+</pre></div>
+
+
+<ul>
+<li>.tab文件, 基因表达量</li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="c1">#Gene ID     Gene Name   Reference   Strand  Start   End     Coverage    FPKM        TPM</span>
+<span class="c1">#NM_000451   SHOX        chrX        +       624344  646823  0.000000    0.000000    0.000000</span>
+<span class="c1">#NM_006883   SHOX        chrX        +       624344  659411  0.000000    0.000000    0.000000</span>
+</pre></div>
+
+
+<ul>
+<li>
+<p>.GTF文件, 能与参考注释匹配的完全覆盖转录
+同组装的转录本</p>
+</li>
+<li>
+<p>用于Ballgown进行下游差异分析的文件
+总共有5个文件, e2t.ctab, e_data.ctab, i2t.ctab, i_data.ctab, t_data.ctab</p>
+</li>
+<li>
+<p>在merge mode, merged_gtf文件
+如果stringtie在merge mode下运行的话，会将输入的一系列GTF/GFF文件合并组装成无冗余的转录本。输出的文件只是包含转录本，没有其他的数据如coverage，FPKM，TPM。stringtie可以用这个新的转录本重新计算表达量，但是你得设置-e参数。如果你要寻找新的转录本或者寻找转录本的来源，你可以使用gffcompare软件来实现。</p>
+</li>
+</ul>
+<h3 id="ballgown">结合Ballgown进行差异分析</h3>
+<h4 id="_3">完全的差异分析</h4>
+<p><img alt="差异分析" src="https://ccb.jhu.edu/software/stringtie/DE_pipeline.png" /></p>
+<p>推荐的流程:
+1. 对每个样本, 使用hisat2 --dta选项与参考基因组进行比对。<br />
+在比对时，我们强烈推荐加入参考注释信息。这可以通过hisat2 --ss/--exon实现,也可以通过hisat2的--know-splicesite-infile实现。值得注意的是，你一定要对输出的比对文件进行排序和转换成BAM文件。</p>
+<ol>
+<li>
+<p>对得到的每个样本的比对文件，用strintie进行组装。<br />
+我们推荐使用-G参数提供参考注释(如果有的话.)</p>
+</li>
+<li>
+<p>用生成组装文件，使用stringtie --merge生成无冗余的转录本<br />
+同样的，如果有参考注释，也推荐使用</p>
+</li>
+<li>
+<p>对每个样本的比对文件, 使用stringtie -B/-b, -G和-e选项计算表达量和生成Ballgown所需的table文件。<br />
+-G选项指定第三步生成无冗余转录本，这是唯一没有使用参考注释的情况。虽然说这里的-e选项不是必需的，但是使用它可以得到一个更准确的结果。</p>
+</li>
+<li>
+<p>使用Ballgown进行差异分析</p>
+</li>
+</ol>
+<h4 id="_4">简化的差异分析</h4>
+<p><img alt="简化的差异分析" src="https://ccb.jhu.edu/software/stringtie/DE_pipeline_refonly.png" /></p>
+<h3 id="stringtiedeseq2edger">stringtie结合DESeq2和edgeR的差异分析</h3>
+<ol>
+<li>使用stringtie -e得到定量结果</li>
+<li>使用<a href="https://ccb.jhu.edu/software/stringtie/dl/prepDE.py">“prepDE.py”</a>提取定量结果生成counts矩阵</li>
+</ol>
+<div class="codehilite"><pre><span></span><span class="c1"># prepDE.py [options]</span>
+<span class="c1"># -i &lt;input&gt;        指定gtfs文件的路径和样品ID的txt文件</span>
+<span class="c1"># -g G          指定gene count matrix的输出路径</span>
+<span class="c1"># -t T          指定transcripts count matrix的输出路径</span>
+<span class="c1"># -l length         指定平均read长度</span>
+<span class="c1"># -p pattern        选择样品子路径的正则表达式</span>
+<span class="c1"># -c            是否合并重复的gene,虽然它们有不同的gene ID</span>
+<span class="c1"># -s string         指定stringtie添加geneID前缀的字符串,默认为MSTRG</span>
+<span class="c1"># -k Key        如果-c指定,则指定本脚本添加到gneIDs的前缀, 默认为prepG</span>
+<span class="c1"># --legend=Legend 如果-c指定,转录比对到geneIDs的表头文件的输出路径,默认为legend.csv</span>
+
+<span class="c1">#prepDE.py -i sample_lst.txt</span>
+
+ <span class="c1">## sample_lst.txt</span>
+ <span class="c1">## ERR188021 &lt;PATH_TO_ERR188021.gtf&gt;</span>
+ <span class="c1">## ERR188023 &lt;PATH_TO_ERR188023.gtf&gt;</span>
+ <span class="c1">## ERR188024 &lt;PATH_TO_ERR188024.gtf&gt;</span>
+</pre></div>
+
+
+<ol>
+<li>使用DESeq2进行差异分析</li>
+</ol>
+<div class="codehilite"><pre><span></span>countData <span class="o">&lt;-</span> <span class="kp">as.matrix</span><span class="p">(</span>read.csv<span class="p">(</span><span class="s">&#39;gene_count_matrix.csv&#39;</span><span class="p">,</span> row.names<span class="o">=</span><span class="s">&#39;gene_id&#39;</span><span class="p">))</span>
+colData <span class="o">&lt;-</span> read.csv<span class="p">(</span>PHENO_DATA<span class="p">,</span> sep<span class="o">=</span><span class="s">&#39;\t&#39;</span><span class="p">,</span> row.names<span class="o">=</span><span class="m">1</span><span class="p">)</span>  <span class="c1"># 这里是你的表型文件</span>
+<span class="kp">all</span><span class="p">(</span><span class="kp">rownames</span><span class="p">(</span>colData<span class="p">)</span> <span class="o">%in%</span> <span class="kp">colnames</span><span class="p">(</span>countData<span class="p">))</span>         <span class="c1"># 检测是否一致</span>
+countData <span class="o">&lt;-</span> countData<span class="p">[,</span> <span class="kp">rownames</span><span class="p">(</span>colData<span class="p">)]</span>
+<span class="kp">all</span><span class="p">(</span><span class="kp">rownames</span><span class="p">(</span>colData<span class="p">)</span> <span class="o">==</span> <span class="kp">colnames</span><span class="p">(</span>countData<span class="p">))</span>
+
+dds <span class="o">&lt;-</span> DESeqDataSetFromMatrix<span class="p">(</span>countData <span class="o">=</span> countData<span class="p">,</span>
+                              colData <span class="o">=</span> colData<span class="p">,</span>
+                              design<span class="o">=~</span>CHOOSE_FEATURE<span class="p">)</span>
+dds <span class="o">&lt;-</span> DESeq<span class="p">(</span>dds<span class="p">)</span>
+res <span class="o">&lt;-</span> results<span class="p">(</span>dds<span class="p">)</span>
+</pre></div>
+
+
+<hr />
+<h3 id="super-reads">组装super-reads</h3>
+<p>stringtie还可以把短的transcripts组装成长的contigs，我们把这个叫做super-reads。这一步可以省略，但我们还是推荐使用这一步，因为他可以提高转录本组装的正确性。不过你需要安装MaSuRCA genome assembler包。</p>
+<h4 id="super-reads_1">super-reads的生成</h4>
+<div class="codehilite"><pre><span></span>superreads.pl reads_1.fastq reads_2.fastq &lt;masurca_path&gt; <span class="o">[</span>options<span class="o">]</span>*
+
+<span class="c1"># 选项</span>
+-t &lt;num_threads&gt;
+-j &lt;jf_size&gt;            MasuRCA需要运行Jellyfish,这里设置后者使用的hash size
+-s &lt;step&gt;               打印运行成功的步骤
+-r &lt;paired_read_prefix&gt; 设置paired read的前缀
+-f &lt;fragment_size&gt;      设置mean library insert length
+-d &lt;stdev&gt;              设置insert length的标准偏差
+-l &lt;name&gt;               设置组装的super-reads文件名
+-u &lt;prefix&gt;             设置为组装的reads的文件名
+</pre></div>
+
+
+<h4 id="super-reads_2">super-reads比对到参考基因组上</h4>
+<p>可以使用你喜欢的比对软件，如tophat，hisat，bowtie等。比如：</p>
+<div class="codehilite"><pre><span></span>tophat <span class="o">[</span>options<span class="o">]</span>* &lt;genome_index_base&gt; PE_reads_1.notAssembled.fq.gz,super_reads.fq PE_reads_2.notAssembled.fq.gz
+</pre></div>
+		</content>
+
+	</main>
+	<footer>
+		<p> Powered by xizhihui </p>
+		<p> Thanks to <a href="https://www.hifreud.com/">hifreud</a> the theme is learned from his site. </p>
+	</footer>
+
+<script type="text/javascript" src="/js/index.json"></script>
+<script type="text/javascript" src="/js/category.json"></script>
+<script type="text/javascript" src="/js/tags.json"></script>
+<script type="text/javascript" src="/js/about.json"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript">
+	// listen to click event on navigator in header
+	// document
+	// 	.querySelector("div#head_right ul")
+	// 	.addEventListener("click", change_page)
+	var table = [['h2', 'stringtie', 'stringTie'], ['h3', '_1', '基本使用'], ['h3', '_2', '输出文件'], ['h3', 'ballgown', '结合Ballgown进行差异分析'], ['h4', '_3', '完全的差异分析'], ['h4', '_4', '简化的差异分析'], ['h3', 'stringtiedeseq2edger', 'stringtie结合DESeq2和edgeR的差异分析'], ['h3', 'super-reads', '组装super-reads'], ['h4', 'super-reads_1', 'super-reads的生成'], ['h4', 'super-reads_2', 'super-reads比对到参考基因组上']]
+	var html = format_article_table(table)
+	var table_ele = document.querySelector("main #table")
+	table_ele.innerHTML = html
+	// window.onload = evt => resize_nav(table_ele)
+	adaption(document, window)
+
+</script>
+</body>
+</html>

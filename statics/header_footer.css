@@ -1,0 +1,102 @@
+/*
+* @Author: XiZhihui
+* @Date:   2018-11-01 10:12:09
+* @Last Modified by:   XiZhihui
+* @Last Modified time: 2018-11-01 14:24:26
+*/
+
+
+/*
+header
+*/
+.Header {
+	width: 100%;
+	min-width: 22.5rem/* 360px */;
+	background-color: #1D365D;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10;
+}
+.Header nav {
+	width: 70%;
+	min-width: 22.5rem/* 360px */;
+	margin: .9375rem/* 15px */ auto;
+	overflow: hidden;
+}
+
+.Header nav h3, .Header nav ul {
+	height: 1.875rem/* 30px */;	
+	line-height: 1.875rem/* 30px */;
+	padding: .1875rem/* 3px */
+}
+.Header h3 {
+	float: left;
+	font-size: 1.5rem/* 24px */;
+	padding: .3125rem/* 5px */;
+	color: white;
+}
+.Header ul {
+	float: right;
+}
+
+.Header ul li {
+	display: inline-block;
+	font-size: 1rem/* 16px */;
+	color: #83BEE0;
+	margin: auto 10px;
+}
+.Header li a {
+	color: #83BEE0;
+}
+
+.Header ul li.js-current-page {
+	color: white;
+}
+.Header li:hover, .Header li a:hover {
+	color: white;
+	cursor: pointer;
+}
+
+/* Motto */
+.Motto {
+	background: #1D365D;
+	margin: 3.75rem/* 60px */ auto 0;
+	padding-bottom: 1.25rem
+}
+.Motto h2, .Motto h4 {
+	width: 70%;
+	min-width: 22.5rem/* 360px */;
+	color: white;
+	margin: .625rem/* 10px */ auto 1.25rem/* 20px */;
+}
+.Motto h2 {
+	font-size: 3.75rem/* 60px */;
+}
+.Motto h4 {
+	font-size: 1.875rem/* 30px */;
+	color: #83BEE0;
+	margin-bottom: auto;
+}
+
+
+/*
+footer
+*/
+footer {
+	clear: both;
+	background: white;
+	padding: 0.9375rem;
+	border-top: 0.0625rem solid #1D365D;
+}
+
+footer p {
+	width: 70%;
+	margin: auto;
+	color: #43759E;
+	font-size: 1.5625rem;
+}
+
+footer p a:hover {
+	text-decoration: underline;
+}

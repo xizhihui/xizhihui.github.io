@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>XZH's Notes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="xizhihui" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" href="/statics/reset.css">
+	<link rel="stylesheet" type="text/css" href="/statics/header_footer.css"></link>
+	<link rel="stylesheet" type="text/css" href="/statics/default.css">
+	<link rel="stylesheet" type="text/css" href="/statics/main.css">
+</head>
+<body>
+	<header class="Header">
+		<nav>
+			<h3>XZH</h3>
+			<ul>
+				<li><a href="/index.html#Timeline">Timeline</a></li><li><a href="/index.html#Category">Category</a></li><li><a href="/index.html#Tags">Tags</a></li><li><a href="/index.html#About">About</a></li>
+			</ul>
+		</nav>
+	</header>
+	<div class="Motto">
+		<h2>XZH's Notes</h2>
+		<h4>The future comes for you ~ ~ ~</h4>
+	</div>
+
+	<main>
+		<nav id="table"></nav>
+		<content id="content" class="content">
+			<h2 id="express">eXpress</h2>
+<blockquote>
+<p>https://pachterlab.github.io/eXpress/downloads/express-1.5.1/express-1.5.1-linux_x86_64.tgz</p>
+</blockquote>
+<h3 id="_1">使用方法</h3>
+<div class="codehilite"><pre><span></span>express <span class="o">[</span>options<span class="o">]</span>* &lt;target_seqs.fasta&gt; &lt;aligned_reads.<span class="o">(</span>sam/bam<span class="o">)</span>&gt;
+
+<span class="c1"># &lt;target_seqs.fasta&gt;:  参考序列的fasta文件</span>
+<span class="c1"># &lt;aligned_reads.(sam/bam)&gt;:    比对结果文件</span>
+<span class="c1"># -o path:  指定输出路径</span>
+<span class="c1"># -B n: 指定进行batch EM rounds计算的次数,以时间为代价提高定量准确性</span>
+<span class="c1"># -O n: 指定进行online EM rounds计算的次数,以时间为代价提高定量准确性</span>
+<span class="c1"># -m n: 指定fragment的平均长度</span>
+<span class="c1"># -s n：指定fragment长度的标准差</span>
+<span class="c1"># -H str:   以逗号分隔的位置坐标,指定haplotypes的位置。利于等位基因的特异表达定量</span>
+<span class="c1"># --output-align-samp:  </span>
+<span class="c1"># --output-align-prob:</span>
+<span class="c1"># --fr-stranded: 指定链特异性比对的方向,read1比对到forward链,read2比对到reverse链</span>
+<span class="c1"># --rf-stranded：指定链特异性比对的方向,read1比对到reverse链,read2比对到forward链</span>
+<span class="c1"># --f-stranded:  single-end, read比对到forward链</span>
+<span class="c1"># --r-stranded:  single-end, read比对到reverse链</span>
+<span class="c1"># </span>
+</pre></div>
+
+
+<h3 id="_2">其他说明</h3>
+<h4 id="_3">输入文件</h4>
+<p>eXpress需要一个multi-fasta格式的输入文件,计算该文件序列的转录丰度。</p>
+		</content>
+
+	</main>
+	<footer>
+		<p> Powered by xizhihui </p>
+		<p> Thanks to <a href="https://www.hifreud.com/">hifreud</a> the theme is learned from his site. </p>
+	</footer>
+
+<script type="text/javascript" src="/js/index.json"></script>
+<script type="text/javascript" src="/js/category.json"></script>
+<script type="text/javascript" src="/js/tags.json"></script>
+<script type="text/javascript" src="/js/about.json"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript">
+	// listen to click event on navigator in header
+	// document
+	// 	.querySelector("div#head_right ul")
+	// 	.addEventListener("click", change_page)
+	var table = [['h2', 'express', 'eXpress'], ['h3', '_1', '使用方法'], ['h3', '_2', '其他说明'], ['h4', '_3', '输入文件']]
+	var html = format_article_table(table)
+	var table_ele = document.querySelector("main #table")
+	table_ele.innerHTML = html
+	// window.onload = evt => resize_nav(table_ele)
+	adaption(document, window)
+
+</script>
+</body>
+</html>

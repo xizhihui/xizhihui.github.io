@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>XZH's Notes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="xizhihui" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" href="/statics/reset.css">
+	<link rel="stylesheet" type="text/css" href="/statics/header_footer.css"></link>
+	<link rel="stylesheet" type="text/css" href="/statics/default.css">
+	<link rel="stylesheet" type="text/css" href="/statics/main.css">
+</head>
+<body>
+	<header class="Header">
+		<nav>
+			<h3>XZH</h3>
+			<ul>
+				<li><a href="/index.html#Timeline">Timeline</a></li><li><a href="/index.html#Category">Category</a></li><li><a href="/index.html#Tags">Tags</a></li><li><a href="/index.html#About">About</a></li>
+			</ul>
+		</nav>
+	</header>
+	<div class="Motto">
+		<h2>XZH's Notes</h2>
+		<h4>The future comes for you ~ ~ ~</h4>
+	</div>
+
+	<main>
+		<nav id="table"></nav>
+		<content id="content" class="content">
+			<h2 id="_1">第一节 测序原理</h2>
+<p>在生信分析中，我们通常接触的都是下机数据，也就是测序的结果数据，但是这些数据是怎么产生的呢？这就要讲到测序的原理。其实，测序的本质原理就是DNA链的合成咯，通过合成新的DNA链我们从而知道DNA链的序列组成。一代测序的sanger法是通过每步添加一种特定标记的双脱氧核糖核苷酸(ddNTP)来合成DNA链，由于ddNTP会导致DNA链合成的中断，那就可以得到各个长度大小的DNA片段，通过跑胶分离则可知道不同DNA长度的链上分别是什么标记，由此知道其标记对应的ddNTP，从而推出DNA的序列组成；这类一代测序法过程比较耗时。而二代测序的改进在于，它是边合成边测序的，无需后续的跑胶等实现；DNA合成的数量巨大，也就使得测序过程也更为快速。在如今市场上，二代测序虽然说有许多平台，如Illumina，Roche 454、Ion Torrent，但市场上一直是Illumina占据主导地位。所以我们这里将说明一下Illumina的测序过程。</p>
+<h2 id="illumina">一、Illumina的测序过程</h2>
+<p>Illumina的测序原理基本上可以采用这几个关键词来概括：桥式PCR，可逆阻断技术；其测序过程基本可以分为三个阶段，library preparation，cluster，sequencing。在建库之前，我们需要对样品进行预处理。</p>
+<ol>
+<li>sample preprocessing</li>
+</ol>
+<p>在这一步，主要是对样品进行处理筛选，把不符合测序要求的低质量样品排除，以免影响测序结果。进行测序的样品主要有以下要求：
++ 样品DNA最好是单倍体，避免等位基因与测序错误相混淆（但这个似乎很难把控）
++ DNA的纯度要高，OD值
++ DNA要避免降解，以防影响打断片段的大小
++ DNA的样品量要满足基本的建库需求</p>
+<ol>
+<li>library preparation</li>
+</ol>
+<p>在建库的过程中，也可以粗略打断、添加adapter。
+首先是对DNA进行打断，使其片段化（fragment）。基本方法有超声法，机械法和酶解法，其打断后的DNA fragment大小一般分别是500,150,300；在实际应用中，一般使用的是超声法。我们应该注意，500的片段大小是指打断后的大部分片段都是在500bp附近。这个DNA fragment length我们也称之为insertSize。
+其次是添加adapter。在添加adapter之前，需要给DNA fragment进行末端补齐，然后加上一个A碱基，使其变为黏性末端；随后通过该黏性末端添加上adapter。至此文库制备完成。</p>
+<ol>
+<li>cluster</li>
+</ol>
+<p>在制备好文库以后，需要将文库样品上样至flowcell中。flowcell的具体情况可看下图(https://imgchr.com/i/PAg4o9)。</p>
+<p><img alt="flowcell" src="https://s1.ax1x.com/2018/07/02/PAg4o9.png" /></p>
+<p>在flowcell的tile上锚定了大量的DNA短序列，这些DNA短序列能与adapter进行互补配对。在我们上样后，添加了adapter的DNA fragment可被这些tile上的序列捕捉锚定。在洗脱多余的DNA fragment后，改变缓冲液，使得被锚定的DNA fragment的另一端也被锚定，从而导致DNA fragment形成拱形，这也是桥式PCR的由来。基于此，DNA fragment被扩增，形成了DNA fragment cluster。此举可使得每个DNA fragment cluster组成一致成分单一但数目巨大，为后续测序做准备。最后，加入对应的酶将DNA链的反向链切除（酶切位点在反向adapter上），使得DNA fragment正向链剩余。</p>
+<ol>
+<li>sequencing</li>
+</ol>
+<p>测序的过程是边合成边测序的。在加入正向adapter的对应引物后，加入经过处理后的ATCG，使其进行合成，在合成的过程中收集信号。ATCG经过的处理有：其一是核苷酸的3‘位置加入叠氮基团，以使每次反应序列只增长一个碱基；其次是对核苷酸进行荧光标记。该过程则是：序列增长一个碱基，激发荧光；收集荧光信号；加入试剂后洗脱；如此循环。加入试剂的作用有两点，其一是把叠氮基团去掉，使得DNA链可以继续延长；其二是切除荧光标记以防影响后续信号收集。</p>
+<h2 id="_2">二、各代测序技术的比较</h2>
+<h3 id="_3">一代测序</h3>
+<p>一代测序采用的是sanger法测序，在DNA复制过程中采用单种染料特异标记的双脱氧核糖核酸作为原料，但该类核酸会终止延长反应；进而导致DNA的复制链长短不一、末端碱基则分别为对应的双脱氧核酸。在电泳后，长短不同的DNA电泳位置不同，携带染料不同，则被有效地鉴别出来。因为涉及到电泳鉴别，时间长，基本无法做到高通量。</p>
+<h3 id="_4">二代测序</h3>
+<p>二代测序的基本原理是多分子、多克隆同时进行，荧光成像。可分为三类：Illumina、Roche 454、Ion Torrent。Illumina将桥式PCR、四色荧光可逆终止和激光扫描成像结合起来，DNA每延长1个碱基成像一次，最终根据成像荧光颜色获得DNA序列；它能测量同聚物的准确长度；但其读长较短（200-500bp，这是因为测序过程中由测序不同步产生的杂信号越来越多、酶活性也越来越不稳定造成）。Roche 454则使用油包水PCR、dNTP轮番使用、焦磷酸水平发光的原理进行测序；其平均测序长度达400bp，但它无法准确检测多聚物的个数，会引入插入和缺失。Ion Torrent则是将Roche 454的焦磷酸测序更改为微电极pH检测，无需发光成像检测，检测体积小、简单、时间短；但其通量无法与前二者相比，适合小基因组和外显子验证测序。</p>
+<h3 id="_5">三代测序</h3>
+<p>三代测序保持了测序速度和通量，并使读长大幅度上升，可达1000bp以上，它不用进行PCR扩增，基于单分子测序，目前有三类：Oxford nanopore、PacBio SMRT和Helicosope。Oxford的测序是基于纳米孔内的分子接头，当碱基通过纳米孔时，孔内的电荷环境发生变化，分子接头可捕获电流强度的变化，进而得到碱基组成；其读长一般在几十kb，30x人类基因组在一天左右完成，保持输入DNA的完整性，还可直接测序RNA；但其错误率较高。PacBio采用的是纳米孔和荧光可逆终止dNTP技术，活性久高保真的聚合酶大大提高了边合成边测序的读长，可达10kb，但它同样具有较高的随机错误率。Heliscope基于边合成边测序的思想，将DNA随机打断成小片段分别进行dNTP荧光标记，经过不断地重复合成、洗脱、成像、淬灭过程完成测序。</p>
+<h2 id="faq">三、相关FAQ</h2>
+<h3 id="1-gc-bias">1. GC bias的影响</h3>
+<p>由于GC的含量多少会影响PCR过程的偏好性（PCR bias），从而会导致某些原始DNA序列不被扩增或者扩增减少，这些序列可能会无法测序到。</p>
+<h3 id="2-read-lengthinsert-size">2. read length和insert size的选择</h3>
+<p>首先我们要明白的是，read length是测序仪的测序长度，也就是读长；而insert size是指构建文库时DNA 被打断后的大小（文库片段大小）；而fragment size是片段加上了adapter后的大小。一般来说，这二者是相适应协调的。例如进行denovo拼接的话，我们应当优先选用小片段文库，然后逐渐提高。而在进行RNA-seq时，我们应该选择较小的文库，较低的读长以保证准确性。</p>
+<h3 id="3-illumina150bp">3. 为何Illumina只能测150bp？</h3>
+<p>这是因为随着反应的进行，反应底物减少、酶的活性降低，DNA扩增时的准确性降低，杂信号会越来越多。<br />
+Phasing：酶活性不行了。。。<br />
+Pre-phasing：叠氮基团没发挥作用。</p>
+<h3 id="4-adapterbarcodeindex">4. adapter,barcode,index的作用</h3>
+<p>adapter的作用有二：一是将文库片段与flowcell上的锚点固定；二是作为桥式PCR的扩增引物。在建库过程中，基本顺序是adapter1-Index-fragment-adapter2，而adapter2则与flowcell上的锚点oligoDT互补结合。桥式PCR之后的测序，所用primer的序列是与Index互补的而非adapter1。
+由于二代测序一次上机可得到约30G的数据,而通常一个样品测序数据量不需要那么多,所以会把多个样品混杂在一起测序(混池测序), index/barcode就是用于区分不同样品的标签序列。</p>
+<h3 id="5-adapter">5. adapter的获取</h3>
+<p>Illumina: https://support.illumina.com/downloads/illumina-customer-sequence-letter.html<br />
+cutadapt软件内置<br />
+trimmomatic内置</p>
+<h3 id="6">6.测序深度与覆盖度的区别</h3>
+<p><strong>测序深度</strong>: 在测序后,指定区域得到的测序碱基数目除以该区域的碱基长度就是测序深度.就拿人的全基因组测序来讲,它的大小是30亿的碱基长度(3G),而测序得到了8.9亿条的150bp的reads.那么平均测序深度就是8.9亿*150/30亿=45,简称45x.<br />
+<strong>覆盖度</strong>：在测序后,测序获得的序列占整个基因组或指定区域的比例.由于基因组中的高GC、重复序列等复杂结构的存在，测序最终拼接组装获得的序列往往无法覆盖有所的区域，这部分没有获得的区域就称为Gap。</p>
+<h3 id="7">7.各种组</h3>
+<blockquote>
+<p>各种组的异同: https://mp.weixin.qq.com/s?__biz=MzAxMDkxODM1Ng==&amp;mid=2247484311&amp;idx=1&amp;sn=7845d8341562531e968598da685b38a4&amp;chksm=9b48432cac3fca3aed2d57cc12d94eb58c6fce4e5aa698b7a2d0f261cadd2d9f7121635f5e52&amp;scene=21#wechat_redirect</p>
+</blockquote>
+<p><strong>外显子组</strong>, exome, 是指真核生物基因组中全部外显子区域的总和，包含了蛋白质合成最直接的信息。外显子 组测序（Exome-seq）是利用设计好的探针试剂盒将坐标已知的全基因组外显子区域的DNA捕捉并富集后，进行高通量测序的基因组分析方法。 对于人类基因组来说，外显子区域大概占到基因组的1%，大概在30M左右.一般全外显子测序的测序深度为50X~200X.</p>
+<p><strong>转录组</strong>, RNA-seq, 是指在相同环境（或生理条件）下的在一个细胞、或一群细胞中所能转录出的所有RNA的总和，包括信使RNA（mRNA）、核糖体RNA（rRNA）、转运RNA（tRNA）及非编码RNA。转录组测序（RNA-seq）是将提取所要研究的特定类型的RNA，将其反转录成cDNA，利用高通量测序技术获得某一物种特定组织或器官在某一状态下的几乎所有转录本序列信息。</p>
+<p><strong>染色质免疫共沉淀</strong>, CHIP-seq, 主要用于蛋白质与DNA相互作用研究，采用特异抗体对目的蛋白进行免疫沉淀，分离与目的蛋白结合的基因组DNA片段，对其进行纯化和文库构建，再通过高通量测序的方法，在全基因组范围内寻找目的蛋白的DNA结合位点，从而获得全基因组范围内与组蛋白、转录因子等互作的DNA片段信息。（与外显子测序不一样，不是通过设计好的探针来捕获序列的，而是通过特异的RNApoly酶、组蛋白、转录因子来捕获序列的，蛋白结合在哪里就捕获哪里。每做一次实验，换一个蛋白，所捕获的序列是不一样的。）因此其主要研究点——研究用不同组蛋白、转录因子等不同蛋白来做不同的实验，找出互作的DNA序列的不同。</p>
+		</content>
+
+	</main>
+	<footer>
+		<p> Powered by xizhihui </p>
+		<p> Thanks to <a href="https://www.hifreud.com/">hifreud</a> the theme is learned from his site. </p>
+	</footer>
+
+<script type="text/javascript" src="/js/index.json"></script>
+<script type="text/javascript" src="/js/category.json"></script>
+<script type="text/javascript" src="/js/tags.json"></script>
+<script type="text/javascript" src="/js/about.json"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript">
+	// listen to click event on navigator in header
+	// document
+	// 	.querySelector("div#head_right ul")
+	// 	.addEventListener("click", change_page)
+	var table = [['h2', '_1', '第一节 测序原理'], ['h2', 'illumina', '一、Illumina的测序过程'], ['h2', '_2', '二、各代测序技术的比较'], ['h3', '_3', '一代测序'], ['h3', '_4', '二代测序'], ['h3', '_5', '三代测序'], ['h2', 'faq', '三、相关FAQ'], ['h3', '1-gc-bias', '1. GC bias的影响'], ['h3', '2-read-lengthinsert-size', '2. read length和insert size的选择'], ['h3', '3-illumina150bp', '3. 为何Illumina只能测150bp？'], ['h3', '4-adapterbarcodeindex', '4. adapter,barcode,index的作用'], ['h3', '5-adapter', '5. adapter的获取'], ['h3', '6', '6.测序深度与覆盖度的区别'], ['h3', '7', '7.各种组']]
+	var html = format_article_table(table)
+	var table_ele = document.querySelector("main #table")
+	table_ele.innerHTML = html
+	// window.onload = evt => resize_nav(table_ele)
+	adaption(document, window)
+
+</script>
+</body>
+</html>

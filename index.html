@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>XZH's Notes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="xizhihui" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" href="statics/reset.css">
+	<link rel="stylesheet" type="text/css" href="statics/header_footer.css">
+	<link rel="stylesheet" type="text/css" href="statics/main.css">
+</head>
+<body>
+	<header class="Header">
+		<nav>
+			<h3>XZH</h3>
+			<ul>
+				<li>Timeline</li>
+				<li>Category</li>
+				<li>Tags</li>
+				<li>About</li>
+			</ul>
+		</nav>
+	</header>
+	<div class="Motto">
+		<h2>XZH's Notes</h2>
+		<h4>The future comes for you ~ ~ ~</h4>
+	</div>
+	<main>
+		<nav id="table"></nav>
+		<div class="Search">
+			<input type="text" name="search" placeholder="搜索文章" onkeyup="search(event)">
+			<ul class="Search-result">
+			</ul>
+		</div>
+		<content id="content">
+		</content>
+	</main>
+	<footer>
+		<p> Powered by xizhihui </p>
+		<p> Thanks to <a href="https://www.hifreud.com/">hifreud</a>, the theme is learned from his site. </p>
+	</footer>
+
+<script type="text/javascript" src="js/index.json"></script>
+<script type="text/javascript" src="js/category.json"></script>
+<script type="text/javascript" src="js/tags.json"></script>
+<script type="text/javascript" src="js/about.json"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript">
+	// 切换目录，timeline, category, tags or ahout?
+	let nav = document.querySelector("header ul")
+	let lis = nav.querySelectorAll("li")
+	let hash = location.hash
+	nav.addEventListener("click", change_page)
+
+	if (hash == "#Category") {
+		lis[1].click()
+	} else if (hash == "#Tags") {
+		lis[2].click()
+	} else if (hash == "#About") {
+		lis[3].click()
+	} else {
+		lis[0].click()
+	}
+
+	// 关闭搜索框的结果
+	document.addEventListener("click", (evt) => {
+		let target = evt.target || evt.srcElement
+		let search_result = document.querySelector(".Search-result")
+		let search = search_result.previousElementSibling
+		if (target == search || target == search_result) {
+			return
+		}
+		search_result.innerHTML = ''
+		search.value = ''
+		search_result.classList.remove("show-result")
+	}, false)
+</script>
+</body>
+</html>

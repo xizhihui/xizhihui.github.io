@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>XZH's Notes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="xizhihui" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" href="/statics/reset.css">
+	<link rel="stylesheet" type="text/css" href="/statics/header_footer.css"></link>
+	<link rel="stylesheet" type="text/css" href="/statics/default.css">
+	<link rel="stylesheet" type="text/css" href="/statics/main.css">
+</head>
+<body>
+	<header class="Header">
+		<nav>
+			<h3>XZH</h3>
+			<ul>
+				<li><a href="/index.html#Timeline">Timeline</a></li><li><a href="/index.html#Category">Category</a></li><li><a href="/index.html#Tags">Tags</a></li><li><a href="/index.html#About">About</a></li>
+			</ul>
+		</nav>
+	</header>
+	<div class="Motto">
+		<h2>XZH's Notes</h2>
+		<h4>The future comes for you ~ ~ ~</h4>
+	</div>
+
+	<main>
+		<nav id="table"></nav>
+		<content id="content" class="content">
+			<h1 id="hisat2">Hisat2</h1>
+<p>hisat2是快速灵敏的比对软件,可用于全基因组测序，转录组测序，外显子测序的数据比对.基于GCSA（bwt的拓展），我们设计了graph FM index用于比对。hisat2的比对结果是sam格式文件，你可以使用samtools，GATK等软件进行后续的分析.</p>
+<h3 id="_1">下载与安装</h3>
+<div class="codehilite"><pre><span></span>conda install hisat2
+</pre></div>
+
+
+<h3 id="getting-started"><a href="https://ccb.jhu.edu/software/hisat2/manual.shtml">Getting started</a></h3>
+<ol>
+<li>构建索引</li>
+</ol>
+<p>如果你用到了--snp, --ss, --exon等参数,对于人类基因组的大小来说,hisat2需要200G RAM。这几个参数慎用。<a href="ftp://ftp.ccb.jhu.edu/pub/infphilo/hisat2/data">预构建的索引</a>.</p>
+<div class="codehilite"><pre><span></span><span class="c1"># 输出8个以index为前缀的.n.ht2的文件,n=1-8</span>
+hisat2-build ref.fa index
+</pre></div>
+
+
+<ol>
+<li>进行比对</li>
+</ol>
+<div class="codehilite"><pre><span></span><span class="c1"># single-end</span>
+hisat2 -f -x index -U reads.fa -S align.sam &gt; align.log
+<span class="c1"># pair-end</span>
+hisat2 -f -x index -1 read_1.fa -2 read_2.fa -S align.sam &gt; align.log
+</pre></div>
+
+
+<ol>
+<li><a href="http://samtools.sourceforge.net/mpileup.shtml">使用samtools进行下游分析</a></li>
+</ol>
+<div class="codehilite"><pre><span></span><span class="c1"># 转为bam</span>
+samtools view -bS align.sam &gt; align.bam
+<span class="c1"># 对bam进行排序</span>
+samtools sort align.bam -o align.sorted.bam
+<span class="c1"># variant calling</span>
+samtools mpileup -uf ref.fa align.sorted.bam <span class="p">|</span> bcftools view -bvcg - &gt; align.raw.bcf
+bcftools view align.raw.bcf
+</pre></div>
+
+
+<h3 id="options">options</h3>
+<h4 id="hisat2_1">hisat2：进行比对</h4>
+<div class="codehilite"><pre><span></span>hisat2 <span class="o">[</span>options<span class="o">]</span>* -x &lt;hisat2-idx&gt; <span class="o">{</span>-1 &lt;m1&gt; -2 &lt;m2&gt; <span class="p">|</span> -U &lt;r&gt; <span class="p">|</span> --sra-acc &lt;SRA accession number&gt;<span class="o">}</span> <span class="o">[</span>-S &lt;hit&gt;<span class="o">]</span>
+
+<span class="c1"># 选项</span>
+-x &lt;hisat2-idx&gt;             索引的前缀
+-1 &lt;ml&gt;                     以逗号分隔的多个pair-end read1
+-2 &lt;ml&gt;                     以逗号分隔的多个pair-end read2
+-U &lt;r&gt;                      以逗号分隔的多个single-end reads
+--sra-acc &lt;number&gt;          指定sra accession number
+-S &lt;hit&gt;                    指定输出文件
+
+<span class="c1"># 输入可选参数</span>
+-q                          说明输入文件格式是fastq文件
+--qseq                      说明输入文件格式是QSEQ文件
+-f                          说明输入文件是fasta文件
+-r                          说明输入文件是每行一个序列，除此无他
+-c                          reads是以序列的形式用逗号分隔输入的
+-s,--skip &lt;int&gt;             reads的前int个跳过
+-u &lt;int&gt;                    只比对int个reads
+-5,--trim5 &lt;int&gt;            比对前截去5‘端的int个base
+-3,--trim3 &lt;int&gt;            比对前截去3’端的int个base
+--phred33                   说明fastq的碱基质量体系phred33
+--phred64                   说明fastq的碱基质量体系是phred64
+--solexa-quals              说明质量体系是solexa,并且转换成phred
+
+<span class="c1"># 比对可选参数</span>
+--n-ceil &lt;func&gt;             指定每条reads允许N碱基的个数的函数<span class="p">;</span>超过将被丢弃
+--ignore-quals              在对错配罚分时,考虑该位置的碱基质量
+--nofw/--norc               指定后,在pair-end无法比对时,不会试图去比对参考序列的forward链<span class="o">(</span>nofw<span class="o">)</span>和reverse链<span class="o">(</span>norc<span class="o">)</span>
+
+<span class="c1"># 打分选项</span>
+--mp MX,MN                  指定错配时的最大和最小罚分
+--sp MX,MN                  指定发生soft clipped的碱基的最大和最小罚分
+--no-softclip               禁用softclip
+--np &lt;int&gt;                  指定N碱基的罚分
+--rdg m1,m2                 指定比对时read gap open<span class="o">(</span>m1<span class="o">)</span>和gap extend<span class="o">(</span>m2<span class="o">)</span>的罚分
+--rfg m1,m2                 指定比对时reference gap open<span class="o">(</span>m1<span class="o">)</span>和gap extend<span class="o">(</span>m2<span class="o">)</span>的罚分
+--score-min &lt;func&gt;          指定比对得分的函数, 当超过计算所得分数时才算一个成功比对
+</pre></div>
+
+
+<h4 id="hisat2-index">hisat2-index: 构建索引</h4>
+<div class="codehilite"><pre><span></span>hisat2-build <span class="o">[</span>options<span class="o">]</span>* &lt;reference_in&gt; &lt;ht2_base&gt;
+
+<span class="c1"># 选项</span>
+-f              指定ref的文件格式
+-c              以逗号分隔的形式指定有多个ref 序列，而非fasta文件的列表
+--large-index   指定构建大型索引即便参考序列短于 <span class="m">4</span> billion bp
+-a              禁止自动使用参数（--bmax，--dv，--packed）
+-r              不构建3.ht2,4.ht2
+-3              只构建3.ht2,4.ht2
+-p              使用多少个线程
+--snp &lt;path&gt;    提供snps的列表
+--haplotype &lt;path&gt;  提供haplotypes的文件
+--ss            提供间接位点<span class="o">(</span>splice sites<span class="o">)</span>的文件.与--exon联用
+--exon &lt;path&gt;   提供外显子文件,与--ss联用
+--cutoff &lt;int&gt;  只对参考序列int个base构建索引,丢弃其余部分
+-q              静默运行
+</pre></div>
+
+
+<h4 id="hisat2-inspectindex">hisat2-inspect:从index提取源参考序列</h4>
+<div class="codehilite"><pre><span></span>hisat2-inspect <span class="o">[</span>options<span class="o">]</span>* &lt;ht2_base&gt;
+
+<span class="c1"># 选项</span>
+-a &lt;int&gt;                输出时每隔60base就换行
+-n                      输出参考序列名,每行一个
+-s                      打印进行构建索引的参数
+--snp                   打印snps
+--ss                    打印splice site
+--exon                  打印exon
+</pre></div>
+		</content>
+
+	</main>
+	<footer>
+		<p> Powered by xizhihui </p>
+		<p> Thanks to <a href="https://www.hifreud.com/">hifreud</a> the theme is learned from his site. </p>
+	</footer>
+
+<script type="text/javascript" src="/js/index.json"></script>
+<script type="text/javascript" src="/js/category.json"></script>
+<script type="text/javascript" src="/js/tags.json"></script>
+<script type="text/javascript" src="/js/about.json"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript">
+	// listen to click event on navigator in header
+	// document
+	// 	.querySelector("div#head_right ul")
+	// 	.addEventListener("click", change_page)
+	var table = [['h3', '_1', '下载与安装'], ['h3', 'getting-started', '<a href="https://ccb.jhu.edu/software/hisat2/manual.shtml">Getting started</a>'], ['h3', 'options', 'options'], ['h4', 'hisat2_1', 'hisat2：进行比对'], ['h4', 'hisat2-index', 'hisat2-index: 构建索引'], ['h4', 'hisat2-inspectindex', 'hisat2-inspect:从index提取源参考序列']]
+	var html = format_article_table(table)
+	var table_ele = document.querySelector("main #table")
+	table_ele.innerHTML = html
+	// window.onload = evt => resize_nav(table_ele)
+	adaption(document, window)
+
+</script>
+</body>
+</html>

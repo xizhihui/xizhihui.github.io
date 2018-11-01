@@ -1,0 +1,244 @@
+/*
+* @Author: XiZhihui
+* @Date:   2018-10-29 20:53:54
+* @Last Modified by:   XiZhihui
+* @Last Modified time: 2018-11-01 15:58:47
+* @Description: css for index.html
+*/
+
+a:hover {
+	cursor: pointer;
+}
+
+body {
+	background: #F7F7F7;
+}
+
+
+/*
+main
+*/
+main {
+	width: 70%;
+	min-width: 22.5rem;
+	height: auto;
+	margin: 1.25rem auto 2.5rem auto;
+	overflow: hidden;
+	position: relative;
+}
+
+/* 搜索按钮 */
+main div.Search {
+	position: absolute;
+	left: 60%;
+	top: 0;
+}
+
+main div.Search input {
+	position: relative;
+	width: 2.5rem;
+	height: 2.5rem;
+	border: 0.0625rem solid steelblue;
+	border-radius: 0.625rem;
+	border: 0.0625rem solid steelblue;
+	outline: none;
+	transition: width 0.5s linear;
+	line-height: 2.5rem;
+	font-size: 1.25rem;
+	padding: 0.625rem;
+}
+
+main div.Search input:focus, main div.Search input:hover{
+	width: 15rem;
+	cursor: pointer;
+}
+
+div.Search .Search-result {
+	margin-top: 0.3125rem;
+	padding: 0.625rem;
+	background: white;
+	border: 0.0625rem solid steelblue;
+	border-radius: 0.3125rem;
+	display: none;
+}
+
+div.Search .show-result {
+	display: block;
+}
+
+main div.Search .Card-list-item {
+	width: 15rem;
+	height: 1.875rem;
+	line-height: 1.875rem;
+	padding: 0 0.3125rem;
+	border-radius: 0.3125rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+main div.Search .Card-list-item a {
+	color: steelblue;
+}
+
+.Search-result .Card-list-item:hover {
+	background: steelblue;
+}
+.Search-result .Card-list-item:hover a {
+	color: white;
+}
+
+/*
+左侧导航
+*/
+main #table {
+	width: 15rem/* 240px */;
+	margin: auto;
+	border-radius: 0.625rem;
+	position: absolute;
+}
+
+#table a {
+	display: inline-block;
+	width: 100%;
+	font-size: .7rem/* 14px */;
+	padding: 0.3125rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#table a:hover {
+	background: #E8EBEE;
+}
+
+#table h3 {
+	font-size: 1.25rem/* 20px */;
+	padding-left: .3125rem/* 5px */;
+}
+#table h4 {
+	font-size: 1rem/* 16px */;
+	padding-left: 1rem;
+}
+#table ul {
+	padding-left: 1.25rem;
+	font-size: 0.9375rem;
+}
+
+/*
+---------------------------------------------------------------------
+右侧列表
+*/
+#content {
+	width: 75%;
+	float: right;
+	padding: 1.5625rem;
+	background: white;
+	border-radius: 0.625rem;
+}
+
+#content .Year {
+	font-size: 1.875rem/* 30px */;
+	margin: 0.3125rem 0.625rem 0 0;
+}
+
+#content .Card {
+	margin: .625rem/* 10px */;
+}
+
+#content .Card-title {
+	font-size: 1.25rem/* 20px */;
+	margin: .625rem/* 10px */ .3125rem/* 5px */;
+}
+
+#content .Card-list, #content .Card-more {
+	padding-left: 1.25rem/* 20px */;
+	transition: height 1s;
+	overflow: hidden;
+}
+
+#content .Card-list-item,  #content .Card-more button{
+	display: block;
+	font-size: .875rem/* 14px */;
+	height: 1.875rem/* 30px */;
+	line-height: 1.875rem/* 30px */;
+	margin: .625rem/* 10px */ 1.25rem/* 20px */;
+	padding: 0 0.625rem;
+	border-radius: 0.3125rem;
+	background: #E8EBEE;
+	overflow: hidden;
+}
+#content .Card-list-item a {
+	float: left;
+	max-width: 60%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	color: steelblue;
+}
+#content .Card-list-item a:hover {
+	max-width: 100%;
+}
+#content .Card-list-item span {
+	float: right;
+	width: 20%;
+	text-align: right;
+	font-style: italic;
+	color: gray;
+}
+.Card-list-item a:hover {
+	text-decoration: underline;
+}
+
+#content .Card-more button {
+	outline: none;
+	color: steelblue;
+	float: left;
+	border: none;
+	border-radius: 0.3125rem;
+	margin-top: .3125rem/* 5px */
+}
+
+#content .Card-more button:hover {
+	cursor: pointer;
+	background: lightblue;
+	color: white;
+}
+
+
+/*
+————————————————————————————————————————————————————————————
+简单的移动端
+*/
+@media only screen and (max-width: 37.4375rem) {
+	header {
+		height: auto;
+	}
+
+	/* 搜索按钮位置 低于599px，显示全部，“搜索文章” 在页面中间 无过渡效果*/
+	main div.Search {
+		position: absolute;
+		left: 50%;
+		margin-left: -25%;/* 120px */
+		width: 50%;/* 120px */
+	}
+	main div.Search input {
+		transition: none;
+		width: 100%;
+		text-align: center;
+	}
+	main div.Search input:hover, main div.Search input:focus {
+		width: 100%;
+	}
+
+	nav#table {
+		display: none;
+	}
+	main {
+		width: 100%;
+	}
+	#content {
+		width: 100%;
+	}
+	
+}

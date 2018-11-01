@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>XZH's Notes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="xizhihui" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" href="/statics/reset.css">
+	<link rel="stylesheet" type="text/css" href="/statics/header_footer.css"></link>
+	<link rel="stylesheet" type="text/css" href="/statics/default.css">
+	<link rel="stylesheet" type="text/css" href="/statics/main.css">
+</head>
+<body>
+	<header class="Header">
+		<nav>
+			<h3>XZH</h3>
+			<ul>
+				<li><a href="/index.html#Timeline">Timeline</a></li><li><a href="/index.html#Category">Category</a></li><li><a href="/index.html#Tags">Tags</a></li><li><a href="/index.html#About">About</a></li>
+			</ul>
+		</nav>
+	</header>
+	<div class="Motto">
+		<h2>XZH's Notes</h2>
+		<h4>The future comes for you ~ ~ ~</h4>
+	</div>
+
+	<main>
+		<nav id="table"></nav>
+		<content id="content" class="content">
+			<h1 id="_1">质控的那些事</h1>
+<h2 id="1">1. 质控的方向</h2>
+<p>就平常的生物实验而言，质控是要贯穿到实验的各个阶段的，比如那些阳性阴性对照就可以认为是在进行质控了。而在测序数据的分析过程中，也同样需要将质控贯穿到分析的各个阶段。质控基本上可以分为三个阶段，依据你的分析对象和分析目的不同而有所变化：raw sequence data, alignment, variant calling. 目前比较常见的质控多是局限在raw data的质控这个阶段。虽然如此，另外两个阶段的质控也应该是需要的，因为后续的许多分析也是基于这两个阶段。Raw data质控的方向通常有以下几类：quality trimming, adapter removal, contaminant filtering. 而在alignment阶段，我们可以通过uniquely mapped reads, signed noise ratio进行质控。在variant calling阶段，还在调查中......</p>
+<h2 id="2-qc-of-raw-data">2. QC of Raw data</h2>
+<h3 id="21-fastqc">2.1 FastQC质量统计</h3>
+<div class="codehilite"><pre><span></span>fastqc /path/*.fastq.gz -o /path/QC_result/
+</pre></div>
+
+
+<h3 id="22">2.2 质控条件</h3>
+<ul>
+<li>去除非测序序列：adapter、primer、barcode、index</li>
+<li>去除低质量reads：低于Q20、Q30的碱基占比达30%</li>
+<li>去除含N过多reads: 占比达10%</li>
+<li>去除重复序列：RNA-seq、16s-seq一般不做去除</li>
+<li>去除3’端质量Q低于10的碱基，即碱基错误率为0.1</li>
+<li>去除较短长度reads：低于25的去除</li>
+<li>根据分析结果, 适当地重复上面某些步骤</li>
+</ul>
+<h3 id="23-trimmomaticreads">2.3 使用Trimmomatic修剪reads</h3>
+<div class="codehilite"><pre><span></span>trimmomatic PE read1.fq.gz  read2.fq.gz <span class="se">\</span>
+    clean_paired_forward.fq.gz clean_unpaired_forward.fq.gz <span class="se">\</span>
+    clean_paired_reverse.fq.gz clean_unpaired_reverse.fq.gz <span class="se">\</span>
+    ILLUMINACLIP:TruSeq3-PE.fa:2:30:10 <span class="se">\</span>
+    LEADING:4 TRAILING:5 SLIDINGWINDOW:4:5 MINLEN:25 <span class="p">&amp;</span>
+<span class="c1"># ILLUMINACLIP:adpater存在.fa文件中，允许2个错配；回文模式下匹配阈值;；简单模式下匹配阈值</span>
+<span class="c1"># LEADING：切除首端质量值小于4的碱基</span>
+<span class="c1"># TRAILING: 切除末端质量小于5的碱基</span>
+</pre></div>
+
+
+<h3 id="24-cutadaptreads">2.4 使用cutadapt修剪reads</h3>
+<div class="codehilite"><pre><span></span>cutadapt -a ADAPTER_FWD -A ADAPTER_REV -o out.1.fastq -p out.2.fastq reads.1.fastq reads.2.fastq
+</pre></div>
+
+
+<h3 id="24-fastx_toolkit">2.4 fastx_toolkit个性化清洗和过滤</h3>
+<div class="codehilite"><pre><span></span>fastq_quality_filter -q <span class="m">30</span> -p <span class="m">80</span> -z -i input.fastq -o out.fastq
+<span class="c1"># input.fastq不支持gz，可以如下,使用-c保留源文件</span>
+gunzip -c input.fastq.gz <span class="p">|</span> fastq_quality_filter ....etc....
+</pre></div>
+
+
+<h3 id="25-multiqc">2.5 multiqc</h3>
+<h3 id="26-fastp">2.6 fastp</h3>
+<p>据说是一步到位</p>
+<h2 id="3">3. 另外两个阶段的质控</h2>
+<p>在比对阶段和变异检测阶段的质控软件不多，已有的软件通常都包含了这两个阶段的质控，所以合并起来。</p>
+<h3 id="31-rseqc">3.1 使用RSeQC进行质控</h3>
+<p>http://rseqc.sourceforge.net/#usage-information
+该软件的input格式有SAM、BAM、Fasta、BED</p>
+<table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bam2fq.py</td>
+<td>bam2wig.py</td>
+<td>bam_stat.py</td>
+<td>insertion_profile.py</td>
+</tr>
+<tr>
+<td>clipping_profile.py</td>
+<td>deletion_profile.py</td>
+<td>divide_bam.py</td>
+<td>infer_experiment.py</td>
+</tr>
+<tr>
+<td>FPKM_count.py</td>
+<td>eneBody_coverage.py</td>
+<td>geneBody_coverage2.py</td>
+<td>inner_distance.py</td>
+</tr>
+<tr>
+<td>junction_annotation.py</td>
+<td>junction_saturation.py</td>
+<td>mismatch_profile.py</td>
+<td>overlay_bigwig.py</td>
+</tr>
+<tr>
+<td>normalize_bigwig.py</td>
+<td>read_distribution.py</td>
+<td>read_duplication.py</td>
+<td>read_GC.pyread_hexamer.py</td>
+</tr>
+<tr>
+<td>read_NVC.py</td>
+<td>read_quality.py</td>
+<td>RNA_fragment_size.py</td>
+<td>RPKM_count.py</td>
+</tr>
+<tr>
+<td>RPKM_saturation.py</td>
+<td>spilt_bam.py</td>
+<td>split_paired_bam.py</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<div class="codehilite"><pre><span></span>python scripts/bam2fq.py -i test_PairedEnd_StrandSpecific_hg19.sam  -o bam2fq_out1
+
+python clipping_profile.py -i Pairend_StrandSpecific_51mer_Human_hg19.bam -s <span class="s2">&quot;PE&quot;</span> -o out
+</pre></div>
+
+
+<h2 id="_2">参考</h2>
+<ul>
+<li><a href="http://www.bio-info-trainee.com/1914.html">用sickle软件来对双端测序数据过滤低质量reads</a>:http://www.bio-info-trainee.com/1914.html  </li>
+<li><a href="https://doi.org/10.1016/j.ygeno.2014.03.006">使用Q30进行质控</a>:https://doi.org/10.1016/j.ygeno.2014.03.006  </li>
+<li><a href="http://www.biotrainee.com/thread-324-1-4.html">论QC的重要性</a>:http://www.biotrainee.com/thread-324-1-4.html</li>
+</ul>
+		</content>
+
+	</main>
+	<footer>
+		<p> Powered by xizhihui </p>
+		<p> Thanks to <a href="https://www.hifreud.com/">hifreud</a> the theme is learned from his site. </p>
+	</footer>
+
+<script type="text/javascript" src="/js/index.json"></script>
+<script type="text/javascript" src="/js/category.json"></script>
+<script type="text/javascript" src="/js/tags.json"></script>
+<script type="text/javascript" src="/js/about.json"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript">
+	// listen to click event on navigator in header
+	// document
+	// 	.querySelector("div#head_right ul")
+	// 	.addEventListener("click", change_page)
+	var table = [['h2', '1', '1. 质控的方向'], ['h2', '2-qc-of-raw-data', '2. QC of Raw data'], ['h3', '21-fastqc', '2.1 FastQC质量统计'], ['h3', '22', '2.2 质控条件'], ['h3', '23-trimmomaticreads', '2.3 使用Trimmomatic修剪reads'], ['h3', '24-cutadaptreads', '2.4 使用cutadapt修剪reads'], ['h3', '24-fastx_toolkit', '2.4 fastx_toolkit个性化清洗和过滤'], ['h3', '25-multiqc', '2.5 multiqc'], ['h3', '26-fastp', '2.6 fastp'], ['h2', '3', '3. 另外两个阶段的质控'], ['h3', '31-rseqc', '3.1 使用RSeQC进行质控'], ['h2', '_2', '参考']]
+	var html = format_article_table(table)
+	var table_ele = document.querySelector("main #table")
+	table_ele.innerHTML = html
+	// window.onload = evt => resize_nav(table_ele)
+	adaption(document, window)
+
+</script>
+</body>
+</html>

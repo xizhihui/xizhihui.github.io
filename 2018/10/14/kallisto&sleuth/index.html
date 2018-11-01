@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>XZH's Notes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="xizhihui" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" href="/statics/reset.css">
+	<link rel="stylesheet" type="text/css" href="/statics/header_footer.css"></link>
+	<link rel="stylesheet" type="text/css" href="/statics/default.css">
+	<link rel="stylesheet" type="text/css" href="/statics/main.css">
+</head>
+<body>
+	<header class="Header">
+		<nav>
+			<h3>XZH</h3>
+			<ul>
+				<li><a href="/index.html#Timeline">Timeline</a></li><li><a href="/index.html#Category">Category</a></li><li><a href="/index.html#Tags">Tags</a></li><li><a href="/index.html#About">About</a></li>
+			</ul>
+		</nav>
+	</header>
+	<div class="Motto">
+		<h2>XZH's Notes</h2>
+		<h4>The future comes for you ~ ~ ~</h4>
+	</div>
+
+	<main>
+		<nav id="table"></nav>
+		<content id="content" class="content">
+			<h2 id="kallisto-sleuth">kallisto定量, sleuth差异分析</h2>
+<ul>
+<li>kallisto</li>
+<li>利用sleuth进行差异分析</li>
+</ul>
+<h2 id="kallisto">kallisto</h2>
+<p><a href="https://pachterlab.github.io/kallisto/manual.html">kallisto</a>是一个align-free的测序结果定量工具。速度快得很.他可以在10min内完成index的构建，然后花3min完成30 million的human reads的定量。它不仅快速而且准确。</p>
+<p>Pseudoalignment保存了用于定量的关键信息。An important feature of kallisto is that it outputs bootstraps along with the estimates of transcript abundances</p>
+<h3 id="_1">流程概览</h3>
+<div class="codehilite"><pre><span></span><span class="c1"># 建立一个索引</span>
+kallisto index -i transcripts.idx transcripts.fasta.gz
+<span class="c1"># 进行定量</span>
+kallisto quant -i transcripts.idx -o output -b <span class="m">100</span> reads_1.fastq.gz reads_2.fastq.gz
+<span class="c1"># single-end</span>
+<span class="c1"># kallisto quant -i transcripts.idx -o output -b 100 --single -l 180 -s 20 reads.fastq.gz</span>
+</pre></div>
+
+
+<h3 id="0">0. 安装</h3>
+<div class="codehilite"><pre><span></span>conda install kallisto
+</pre></div>
+
+
+<h3 id="1-kallisto-index">1. kallisto index: 建立索引</h3>
+<div class="codehilite"><pre><span></span>kallisto index <span class="o">[</span>arguments<span class="o">]</span> ref.fa<span class="o">[</span>.gz<span class="o">]</span>
+
+<span class="c1"># 必需参数</span>
+-i, --index<span class="o">=</span>STRING          存放索引的目录名字
+
+<span class="c1"># 可选参数</span>
+-k, --kmer-size<span class="o">=</span>INT         k-mer <span class="o">(</span>odd<span class="o">)</span> length <span class="o">(</span>default: <span class="m">31</span>, max value: <span class="m">31</span><span class="o">)</span>
+    --make-unique           Replace repeated target names with unique names
+</pre></div>
+
+
+<h3 id="2-kallisto-quant">2. kallisto quant: 进行定量</h3>
+<h4 id="_2">注意事项</h4>
+<ul>
+<li>每次的输入文件只能是一个样本的文件, 输入多个文件仅仅是因为这个样本的数据被分成了多个文件.</li>
+<li>对于single-end,你必需通过-l参数指定fragment length</li>
+</ul>
+<div class="codehilite"><pre><span></span>kallisto quant <span class="o">[</span>arguments<span class="o">]</span> reads.fastq
+
+示例: pair-end / single-end
+kallisto quant -i index -o output pairA_1.fastq pairA_2.fastq pairB_1.fastq pairB_2.fastq
+kallisto quant -i index -o output --single -l <span class="m">200</span> -s <span class="m">20</span> file1.fastq.gz file2.fastq.gz file3.fastq.gz
+
+<span class="c1"># 必需参数</span>
+-i, --index<span class="o">=</span>STRING            索引所在目录
+-o, --output-dir<span class="o">=</span>STRING       输出目录。默认输出三个文件,abuncance.h5, abundance.tsv, run_info.json
+
+Optional arguments:
+    --bias                    Perform sequence based bias correction
+-b, --bootstrap-samples<span class="o">=</span>INT   Number of bootstrap samples <span class="o">(</span>default: <span class="m">0</span><span class="o">)</span>
+    --seed<span class="o">=</span>INT                Seed <span class="k">for</span> the bootstrap sampling <span class="o">(</span>default: <span class="m">42</span><span class="o">)</span>
+    --plaintext               指定输出纯文本文件,而非HDF5格式
+    --fusion                  搜索融合位点?<span class="o">(</span>Search <span class="k">for</span> fusions <span class="k">for</span> Pizzly<span class="o">)</span>
+    --single                  输入的文件是single-end reads
+    --single-overhang         对不再转录本上的read也进行定量
+    --fr-stranded             Strand specific reads, first <span class="nb">read</span> forward
+    --rf-stranded             Strand specific reads, first <span class="nb">read</span> reverse
+-l, --fragment-length<span class="o">=</span>DOUBLE  Estimated average fragment length
+-s, --sd<span class="o">=</span>DOUBLE               Estimated standard deviation of fragment length
+                              <span class="o">(</span>default: -l, -s values are estimated from paired
+                               end data, but are required when using --single<span class="o">)</span>
+-t, --threads<span class="o">=</span>INT             Number of threads to use <span class="o">(</span>default: <span class="m">1</span><span class="o">)</span>
+    --pseudobam               Save pseudoalignments to transcriptome to BAM file
+    --genomebam               Project pseudoalignments to genome sorted BAM file
+-g, --gtf                     GTF file <span class="k">for</span> transcriptome information
+                              <span class="o">(</span>required <span class="k">for</span> --genomebam<span class="o">)</span>
+-c, --chromosomes             Tab separated file with chrosome names and lengths
+                              <span class="o">(</span>optional <span class="k">for</span> --genomebam, but recommended<span class="o">)</span>
+</pre></div>
+
+
+<h3 id="3-kallisto-preudo">3. kallisto preudo: 伪比对</h3>
+<p>这个功能是进行伪比对这一步，主要是用于单细胞RNA-seq的。它的命令在形式上与目的上与kallisto quant相似，但是它不会利用EM-算法来计算reads abundance.而且它还有个选项指定多个细胞到一个批文件里面.</p>
+<div class="codehilite"><pre><span></span>kallisto pseudo <span class="o">[</span>arguments<span class="o">]</span> FASTQ-files
+
+<span class="c1"># 必需参数</span>
+-i, --index<span class="o">=</span>STRING            Filename <span class="k">for</span> the kallisto index to be used <span class="k">for</span>
+                              pseudoalignment
+-o, --output-dir<span class="o">=</span>STRING       Directory to write output to
+
+<span class="c1"># 可选参数</span>
+-u  --umi                     First file in pair is a UMI file
+-b  --batch<span class="o">=</span>FILE              Process files listed in FILE
+    --single                  Quantify single-end reads
+-l, --fragment-length<span class="o">=</span>DOUBLE  Estimated average fragment length
+-s, --sd<span class="o">=</span>DOUBLE               Estimated standard deviation of fragment length
+                              <span class="o">(</span>default: -l, -s values are estimated from paired
+                               end data, but are required when using --single<span class="o">)</span>
+-t, --threads<span class="o">=</span>INT             Number of threads to use <span class="o">(</span>default: <span class="m">1</span><span class="o">)</span>
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span><span class="c1"># batch file的形式, single-end只有一个fastq,2变成1</span>
+<span class="o">{</span>   
+    <span class="c1">#id file1 file 2</span>
+    cell1 cell1_1.fastq.gz cell1_1.fastq.gz
+    cell2 cell2_1.fastq.gz cell2_1.fastq.gz
+    cell3 cell3_1.fastq.gz cell3_1.fastq.gz
+<span class="o">}</span>
+<span class="c1"># 对于--umi指定后的形式</span>
+<span class="o">{</span>
+    <span class="c1">#id umi-file file-1</span>
+    cell1 cell_1.umi cell_1.fastq.gz
+    cell2 cell_2.umi cell_2.fastq.gz
+    cell3 cell_3.umi cell_3.fastq.gz
+<span class="o">}</span>
+</pre></div>
+
+
+<h3 id="4-kallisto-h5dump-hdf5">4. kallisto h5dump: 把HDF5文件转为纯文本格式</h3>
+<div class="codehilite"><pre><span></span>kallisto h5dump -o output_path abundance.h5
+</pre></div>
+
+
+<h2 id="sleuth">利用sleuth进行差异分析</h2>
+<p>sleuth可以与kallisto进行无缝对接，进行表达定量的后续差异分析；它在RStudio上工作，让你能交互式地进行数据探索。</p>
+<h3 id="_3">安装</h3>
+<div class="codehilite"><pre><span></span><span class="c1"># 通过bioconductor安装</span>
+<span class="kn">source</span><span class="p">(</span><span class="s">&#39;http://bioconductor.org/biocLite.R&#39;</span><span class="p">)</span>
+biocLite<span class="p">(</span><span class="s">&#39;devtools&#39;</span><span class="p">)</span>
+biocLite<span class="p">(</span><span class="s">&#39;pachterlab/sleuth&#39;</span><span class="p">)</span>
+<span class="c1"># 通过conda安装</span>
+<span class="c1"># conda install --channel bioconda r-sleuth</span>
+</pre></div>
+
+
+<h3 id="_4">特性</h3>
+<ul>
+<li>既适用于transcript-level的分析，也适合gene-level的分析</li>
+<li>与kallisto兼容，让你的分析流程更快</li>
+<li>使用bootstraps来检测和校正实验的技术性变异</li>
+<li>用于数据分析的可交互应用</li>
+</ul>
+<h3 id="get-started-with-rstudio"><a href="https://pachterlab.github.io/sleuth_walkthroughs/trapnell/analysis.html">get started with RStudio</a></h3>
+<ol>
+<li>构建实验设计表格</li>
+</ol>
+<div class="codehilite"><pre><span></span><span class="c1"># 不打印messages</span>
+<span class="kp">suppressMessages</span><span class="p">({</span>
+    <span class="kn">library</span><span class="p">(</span><span class="s">&#39;sleuth&#39;</span><span class="p">)</span>
+<span class="p">})</span>
+<span class="kp">options</span><span class="p">(</span>stringsAsFactors<span class="o">=</span><span class="bp">F</span><span class="p">)</span>
+
+<span class="c1"># 找到kallisto处理结果</span>
+sample_id <span class="o">&lt;-</span> <span class="kp">dir</span><span class="p">(</span><span class="kp">file.path</span><span class="p">(</span><span class="s">&#39;..&#39;</span><span class="p">,</span> <span class="s">&#39;results&#39;</span><span class="p">))</span>
+kal_dirs <span class="o">&lt;-</span> <span class="kp">file.path</span><span class="p">(</span><span class="s">&#39;..&#39;</span><span class="p">,</span> <span class="s">&#39;results&#39;</span><span class="p">,</span> sample_id<span class="p">,</span> <span class="s">&#39;kallisto&#39;</span><span class="p">)</span>
+
+<span class="c1"># 找到对于的实验设计文件</span>
+s2c <span class="o">&lt;-</span> read.table<span class="p">(</span><span class="kp">file.path</span><span class="p">(</span><span class="s">&#39;..&#39;</span><span class="p">,</span> <span class="s">&#39;metadata&#39;</span><span class="p">,</span> <span class="s">&#39;hiseq_info.txt&#39;</span><span class="p">),</span> header<span class="o">=</span><span class="bp">T</span><span class="p">)</span>
+s2c <span class="o">&lt;-</span> dplyr<span class="o">::</span>select<span class="p">(</span>s2c<span class="p">,</span> sample<span class="o">=</span>run_accession<span class="p">,</span> condition<span class="p">)</span>
+<span class="c1"># 将path作为列添加上去，否则会报错</span>
+s2c <span class="o">&lt;-</span> dplyr<span class="o">::</span>mutate<span class="p">(</span>s2c<span class="p">,</span> path<span class="o">=</span>kal_dirs<span class="p">)</span>
+
+<span class="c1">##      sample condition                          path</span>
+<span class="c1">## 1 SRR493366  scramble ../results/SRR493366/kallisto</span>
+<span class="c1">## 2 SRR493367  scramble ../results/SRR493367/kallisto</span>
+<span class="c1">## 3 SRR493368  scramble ../results/SRR493368/kallisto</span>
+<span class="c1">## 4 SRR493369   HOXA1KD ../results/SRR493369/kallisto</span>
+<span class="c1">## 5 SRR493370   HOXA1KD ../results/SRR493370/kallisto</span>
+<span class="c1">## 6 SRR493371   HOXA1KD ../results/SRR493371/kallisto</span>
+</pre></div>
+
+
+<ol>
+<li>构建‘sleuth’对象<br />
+sleuth对象不仅包含了实验信息，也包含了用于差异分析的模型和结果。</li>
+</ol>
+<div class="codehilite"><pre><span></span><span class="c1"># 1. 添加kallisto处理好的数据</span>
+so <span class="o">&lt;-</span> sleuth_prep<span class="p">(</span>s2c<span class="p">,</span> extra_bootstrap_summary<span class="o">=</span><span class="bp">T</span><span class="p">)</span>
+
+<span class="c1"># 2. 确定sleuth应答错误衡量(full)模型的参数, condition是前面构建的实验设计表格里面的</span>
+<span class="c1"># 详细讲就是~condition作为formula进行线性回归，然后对样本数据进行平滑</span>
+so <span class="o">&lt;-</span> sleuth_fit<span class="p">(</span>so<span class="p">,</span> <span class="o">~</span>condition<span class="p">,</span> <span class="s">&#39;full&#39;</span><span class="p">)</span>
+
+<span class="c1"># 3. 确定sleuth归并模型的参数;前提是假定各个条件下的表达量是一致的</span>
+so <span class="o">&lt;-</span> sleuth_fit<span class="p">(</span>so<span class="p">,</span> <span class="o">~</span><span class="m">1</span><span class="p">,</span> <span class="s">&#39;reduced&#39;</span><span class="p">)</span>
+
+<span class="c1"># 4. 使用似然率确定表达差异</span>
+so <span class="o">&lt;-</span> sleuth_lrt<span class="p">(</span>so<span class="p">,</span> <span class="s">&#39;reduced&#39;</span><span class="p">,</span> <span class="s">&#39;full&#39;</span><span class="p">)</span>
+
+<span class="c1"># 查看使用了哪些回归模型</span>
+models<span class="p">(</span>so<span class="p">)</span>
+
+<span class="c1"># 5. 进行差异分析</span>
+sleuth_table <span class="o">&lt;-</span> sleuth_results<span class="p">(</span>so<span class="p">,</span> <span class="s">&#39;reduced:full&#39;</span><span class="p">,</span> <span class="s">&#39;lrt&#39;</span><span class="p">,</span> show_all<span class="o">=</span><span class="bp">F</span><span class="p">)</span>
+sleuth_significant <span class="o">&lt;-</span> dplyr<span class="o">::</span>filter<span class="p">(</span>sleuth_table<span class="p">,</span> qval<span class="o">&lt;=</span><span class="m">0.05</span><span class="p">)</span>
+<span class="kp">head</span><span class="p">(</span>sleuth_significant<span class="p">,</span> <span class="m">20</span><span class="p">)</span>
+</pre></div>
+
+
+<ol>
+<li>基因名注释</li>
+</ol>
+<div class="codehilite"><pre><span></span><span class="c1"># 注意,这里使用的ENSEMBL human transcriptome, 所以使用biomaRt</span>
+<span class="kn">source</span><span class="p">(</span><span class="s">&#39;http://bioconductor.org/biocLite.R&#39;</span><span class="p">)</span>
+biocLite<span class="p">(</span><span class="s">&#39;biomaRt&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="codehilite"><pre><span></span>mart <span class="o">&lt;-</span> biomaRt<span class="o">::</span>useMart<span class="p">(</span>biomart<span class="o">=</span><span class="s">&#39;ENSEMBL_MART_ENSEMBL&#39;</span><span class="p">,</span>
+                        dataset<span class="o">=</span><span class="s">&#39;hsapiens_gene_ensembl&#39;</span><span class="p">,</span>
+                        host<span class="o">=</span><span class="s">&#39;ensembl.org&#39;</span><span class="p">)</span>
+t2g <span class="o">&lt;-</span> biomaRt<span class="o">::</span>getBM<span class="p">(</span>attributes<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&#39;ensembl_transcript_id&#39;</span><span class="p">,</span>
+                                    <span class="s">&#39;ensembl_gene_id&#39;</span><span class="p">,</span>
+                                    <span class="s">&#39;extenal_gene_name&#39;</span><span class="p">),</span>
+                      mart<span class="o">=</span>mart<span class="p">)</span>
+t2g <span class="o">&lt;-</span> dplyr<span class="o">::</span>rename<span class="p">(</span>t2g<span class="p">,</span> 
+                     target_id<span class="o">=</span>ensembl_transcript_id<span class="p">,</span>
+                     ens_gene<span class="o">=</span>ensembl_gene_id<span class="p">,</span>
+                     ext_gene<span class="o">=</span>external_gene_name<span class="p">)</span>
+
+<span class="c1"># 添加到sleuth对象上</span>
+so <span class="o">&lt;-</span> sleuth_prep<span class="p">(</span>s2c<span class="p">,</span> target_mapping<span class="o">=</span>t2g<span class="p">)</span>
+
+<span class="c1"># 再进行一次计算</span>
+so <span class="o">&lt;-</span> sleuth_fit<span class="p">(</span>so<span class="p">,</span> <span class="o">~</span>condition<span class="p">,</span> <span class="s">&#39;full&#39;</span><span class="p">)</span>
+so <span class="o">&lt;-</span> sleuth_fit<span class="p">(</span>so<span class="p">,</span> <span class="o">~</span><span class="m">1</span><span class="p">,</span> <span class="s">&#39;reduced&#39;</span><span class="p">)</span>
+so <span class="o">&lt;-</span> sleuth_rlt<span class="p">(</span>so<span class="p">,</span> <span class="s">&#39;reduced&#39;</span><span class="p">,</span> <span class="s">&#39;full&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<ol>
+<li>可视化结果</li>
+<li>对结果的查看和交互可以通过产生sleuth live site实现</li>
+</ol>
+<div class="codehilite"><pre><span></span>sleuth_live<span class="p">(</span>so<span class="p">)</span>
+</pre></div>
+
+
+<ul>
+<li>箱图</li>
+</ul>
+<div class="codehilite"><pre><span></span>plot_bootstrap<span class="p">(</span>so<span class="p">,</span> <span class="s">&#39;ENST00000264734&#39;</span><span class="p">,</span> units<span class="o">=</span><span class="s">&#39;est_counts&#39;</span><span class="p">,</span> color_by<span class="o">=</span><span class="s">&#39;condition&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<ul>
+<li>PCA plot
+以实验条件的pca条件</li>
+</ul>
+<div class="codehilite"><pre><span></span>plot_pca<span class="p">(</span>so<span class="p">,</span> color_by<span class="o">=</span><span class="s">&#39;condition&#39;</span><span class="p">,</span> text_labels<span class="o">=</span><span class="bp">T</span><span class="p">)</span>
+</pre></div>
+
+
+<ul>
+<li>样品counts分布图</li>
+</ul>
+<div class="codehilite"><pre><span></span>plot_group_density<span class="p">(</span>so<span class="p">,</span> use_filtered<span class="o">=</span><span class="bp">T</span><span class="p">,</span> units<span class="o">=</span><span class="s">&#39;est_counts&#39;</span><span class="p">,</span> trans<span class="o">=</span><span class="s">&#39;log&#39;</span><span class="p">,</span>grouping<span class="o">=</span><span class="kp">setdiff</span><span class="p">(</span><span class="kp">colnames</span><span class="p">(</span>so<span class="o">$</span>sample_to_corvariates<span class="p">),</span> <span class="s">&#39;sample&#39;</span><span class="p">),</span>offset<span class="o">=</span><span class="m">1</span><span class="p">)</span>
+</pre></div>
+
+
+<ul>
+<li>MA-plot</li>
+</ul>
+<div class="codehilite"><pre><span></span>plot_ma<span class="p">(</span>so<span class="p">,</span> test<span class="o">=</span><span class="s">&#39;condition&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<ul>
+<li>均值方差分析</li>
+</ul>
+<div class="codehilite"><pre><span></span>plot_mean_var<span class="p">(</span>so<span class="p">)</span>
+</pre></div>
+
+
+<ul>
+<li>热图</li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="kn">library</span><span class="p">(</span>pheatmap<span class="p">)</span>
+plot_transcript_heatmap<span class="p">(</span>so<span class="p">,</span> transcripts<span class="o">=</span>sleuth_table<span class="o">$</span>target_id<span class="p">[</span><span class="m">1</span><span class="o">:</span><span class="m">20</span><span class="p">])</span>
+</pre></div>
+
+
+<ul>
+<li>火山图</li>
+</ul>
+<div class="codehilite"><pre><span></span>plot_volcano<span class="p">(</span>so<span class="p">,</span> test<span class="o">=</span><span class="s">&#39;condition&#39;</span><span class="p">)</span>
+</pre></div>
+		</content>
+
+	</main>
+	<footer>
+		<p> Powered by xizhihui </p>
+		<p> Thanks to <a href="https://www.hifreud.com/">hifreud</a> the theme is learned from his site. </p>
+	</footer>
+
+<script type="text/javascript" src="/js/index.json"></script>
+<script type="text/javascript" src="/js/category.json"></script>
+<script type="text/javascript" src="/js/tags.json"></script>
+<script type="text/javascript" src="/js/about.json"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript">
+	// listen to click event on navigator in header
+	// document
+	// 	.querySelector("div#head_right ul")
+	// 	.addEventListener("click", change_page)
+	var table = [['h2', 'kallisto-sleuth', 'kallisto定量, sleuth差异分析'], ['h2', 'kallisto', 'kallisto'], ['h3', '_1', '流程概览'], ['h3', '0', '0. 安装'], ['h3', '1-kallisto-index', '1. kallisto index: 建立索引'], ['h3', '2-kallisto-quant', '2. kallisto quant: 进行定量'], ['h4', '_2', '注意事项'], ['h3', '3-kallisto-preudo', '3. kallisto preudo: 伪比对'], ['h3', '4-kallisto-h5dump-hdf5', '4. kallisto h5dump: 把HDF5文件转为纯文本格式'], ['h2', 'sleuth', '利用sleuth进行差异分析'], ['h3', '_3', '安装'], ['h3', '_4', '特性'], ['h3', 'get-started-with-rstudio', '<a href="https://pachterlab.github.io/sleuth_walkthroughs/trapnell/analysis.html">get started with RStudio</a>']]
+	var html = format_article_table(table)
+	var table_ele = document.querySelector("main #table")
+	table_ele.innerHTML = html
+	// window.onload = evt => resize_nav(table_ele)
+	adaption(document, window)
+
+</script>
+</body>
+</html>

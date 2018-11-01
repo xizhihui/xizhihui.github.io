@@ -1,0 +1,12 @@
+window.about_json = {
+	"Work Experience": [
+		{ date: "201708-201806", title: "上饶市康可得生物技术有限公司", url: "#" },
+	],
+	"Education": [
+		{ date: "201409-201706", title: "厦门大学", url: "#" },
+		{ date: "201009-201407", title: "西北大学", url: "#" },
+	],
+	"Articles": [
+		
+	]
+}

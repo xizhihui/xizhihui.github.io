@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>XZH's Notes</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="author" content="xizhihui" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" type="text/css" href="/statics/reset.css">
+	<link rel="stylesheet" type="text/css" href="/statics/header_footer.css"></link>
+	<link rel="stylesheet" type="text/css" href="/statics/default.css">
+	<link rel="stylesheet" type="text/css" href="/statics/main.css">
+</head>
+<body>
+	<header class="Header">
+		<nav>
+			<h3>XZH</h3>
+			<ul>
+				<li><a href="/index.html#Timeline">Timeline</a></li><li><a href="/index.html#Category">Category</a></li><li><a href="/index.html#Tags">Tags</a></li><li><a href="/index.html#About">About</a></li>
+			</ul>
+		</nav>
+	</header>
+	<div class="Motto">
+		<h2>XZH's Notes</h2>
+		<h4>The future comes for you ~ ~ ~</h4>
+	</div>
+
+	<main>
+		<nav id="table"></nav>
+		<content id="content" class="content">
+			<h2 id="rmats-rmats2sashimiplot">rMATS, rmats2sashimiplot：可变剪切差异分析及可视化</h2>
+<h3 id="_1">安装</h3>
+<p><code>environment: py2.7.x</code></p>
+<ul>
+<li>rMATs</li>
+</ul>
+<div class="codehilite"><pre><span></span><span class="c1"># in linux</span>
+<span class="n">wget</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">rnaseq</span><span class="o">-</span><span class="n">mats</span><span class="o">.</span><span class="n">sourceforge</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="n">rMATS</span><span class="o">.</span><span class="mf">4.0</span><span class="o">.</span><span class="mf">2.</span><span class="n">tgz</span>
+
+<span class="c1"># check version to use, in python</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="k">print</span> <span class="n">sys</span><span class="o">.</span><span class="n">maxunicode</span>
+<span class="c1"># 1114111: rMATS-turbo-xxx-UCS4</span>
+<span class="c1"># 65535: rMATS-turbo-xxx-UCS2</span>
+
+<span class="s2">&quot;path/to/rMATs-turbo-xxx-UCS{x}/rMATS.py&quot;</span>
+</pre></div>
+
+
+<ul>
+<li>rmats2sashimiplot</li>
+</ul>
+<div class="codehilite"><pre><span></span>wget https://files.pythonhosted.org/packages/f7/15/cd6fa8dc70de55be94f4a55edd388e5ba99c77eca8fd73e556e66e9d8110/rmats2sashimiplot-2.0.2.tar.gz
+tar -zxvf rmats2sashimiplot-2.0.2.tar.gz &amp; cd rmats2sashimiplot-2.0.2
+python setup.py install
+</pre></div>
+
+
+<h3 id="_2">使用</h3>
+<ul>
+<li>rMATs</li>
+</ul>
+<div class="codehilite"><pre><span></span># input as fastq, samples in each group list in s1.txt/s2.txt separated with comma
+python rmats.py --s1 s1.txt --s2 s2.txt --gtf gtfFile --bi STARindexFolder -od outDir -t readType -readLength readLength [options]*
+# input as sorted.bam, samples in each group list in s1.txt/s2.txt separated with comma
+python rmats.py --b1 b1.txt --b2 b2.txt --gtf gtfFile --od outDir -t readType --nthread nthread --readLength readLength --tstat tstat [options]*
+</pre></div>
+
+
+<ul>
+<li>rmats2sashimiplot</li>
+</ul>
+<div class="codehilite"><pre><span></span># input as sam
+$rmats2sashimiplot --s1 s1_rep1.sam[,s1_rep2.sam]* --s2 s2.rep1.sam[,s2.rep2.sam]* -t eventType -e eventsFile --l1 SampleLabel1 --l2 SampleLabel2 --exon_s exonScale --intron_s intronScale -o outDir
+
+# input as bam
+$rmats2sashimiplot --b1 s1_rep1.bam[,s1_rep2.bam]* --b2 s2.rep1.bam[,s2.rep2.bam]* -c coordinate:annotaionFile --l1 SampleLabel1 --l2 SampleLabel2 --exon_s exonScale --intron_s intronScale -o outDir
+
+# a group file provided
+$rmats2sashimiplot --b1 s1_rep1.bam[,s1_rep2.bam]* --b2 s2.rep1.bam[,s2.rep2.bam]* -c coordinate:annotaionFile --l1 SampleLabel1 --l2 SampleLabel2 --exon_s exonScale --intron_s intronScale -o outDir --group-info gf.gf
+</pre></div>
+
+
+<h3 id="rmats">rMATS 结果</h3>
+<h4 id="_3">识别的剪切事件类型</h4>
+<p>rMATS analyzes skipped exon (SE), alternative 5' splice site (A5SS), alternative 3' splice site (A3SS), mutually exclusive exons (MXE), and retained intron (RI) events. </p>
+<p><img alt="5种ASE" src="https://s1.ax1x.com/2018/10/28/ic5Jp9.jpg" />
+<img alt="5种ASE" src="https://s1.ax1x.com/2018/10/28/ic5BkD.png" /></p>
+<h4 id="_4">结果文件释义</h4>
+<ul>
+<li>AS_Event.MATS.JC.txt, 只使用 Junction counts (counts of reads that span splicing junctions) 检测到的 AS_Event 结果</li>
+<li>JS.raw.input.AS_Event.txt, 进行 AS_Event.MATS.JC 分析的源数据</li>
+<li>AS_Event.MATS.JCEC.txt, 同时使用 junction counts 和 reads on target 检测到的 AS_Event 结果</li>
+<li>JCEC.raw.input.AS_Event.txt，进行 AS_Event.MATS.JCEC.txt 分析的源数据</li>
+<li>fromGTF.AS_Event.txt, 来源于 GTF 和 RNA 的所有可能可变剪切事件</li>
+</ul>
+<h4 id="_5">结果文件各列释义</h4>
+<ul>
+<li>IJC_SAMPLE_*: inclusion junction counts</li>
+<li>SJC_SAMPLE_*: skipping junction counts</li>
+<li>IC_SAMPLE_*: inclusion counts</li>
+<li>SC_SAMPLE_*: skipping counts</li>
+<li>IncFormLen: length of inclusion form, used for normalization</li>
+<li>SkipFormLen: length of skipping form, used for normalization</li>
+<li>IncLevel1: inclusion level for SAMPLE_1 replicates (comma separated) calculated from normalized counts</li>
+<li>IncLevel2: inclusion level for SAMPLE_2 replicates (comma separated) calculated from normalized counts</li>
+<li>IncLevelDifference: average(IncLevel1) - average(IncLevel2)</li>
+<li>P-Value: Significance of splicing difference between two sample groups. (Only available if statistical model is on)</li>
+<li>FDR: False Discovery Rate calculated from p-value. (Only available if statistical model is on)</li>
+<li>upstreamES/upstreamEE: upstreamExonStart, upstreamExonEnd</li>
+<li>downstreamES/downstreamEE: like above</li>
+</ul>
+<p><img alt="IC and SC" src="https://s1.ax1x.com/2018/10/28/ic5am6.png" />
+<img alt="upstreamES/EE" src="https://s1.ax1x.com/2018/10/28/ic5t61.png" /></p>
+<h4 id="_6">相关计算</h4>
+<p><code>IncLevel1 = (IC_SAMPLE_1 / IncFormLen) / (IC_SAMPLE_1 / IncFormLen + SC_SAMPLE_1 / SkipFormLen)</code></p>
+<p><code>IncFormLen = 2 * (Junction_length - read_length + 1)</code></p>
+<p><code>SkipFormLen = Junction_length - read_length + 1</code></p>
+<p><code>Junction_length = 2 * (read_length - anchor), anchor = 8 bp(default)</code></p>
+<h4 id="_7">结果解读：</h4>
+<ol>
+<li>JunctionCountOnly</li>
+</ol>
+<p>在对剪切事件发生的差异分析过程中，rMATs 采用了 2 种定量方式，即 JunctionCountOnly 和 ReadOnTargetAndJunctionCounts. 对于前者，它把那些会全部比对到 alternatively spliced exon(ASE) 的 reads 进行剔除，而后者不会。也就是说，Junction counts 是 reads 覆盖 (span) 到 splicing site 的 reads count，read on target 就是被 JunctionCountOnly 剔除的 reads，也就是 这些 reads 整体只比对到 ASE 区域的某个部分。</p>
+<ol>
+<li>PSI</li>
+</ol>
+<p>PSI, 全称为 Percent-splice-in，可以针对 isoform，exon，ASE 进行计算。对于 ASE 来说，PSI = splice_in / (splice_in + splice_out), 在 rMATS 里，splice_in 和 splice_out 是支持 splice_in 和 splice_out 发生的 reads 数目，可以同基因表达的 reads count 作类比。</p>
+<h3 id="rmats2sashimiplot">rmats2sashimiplot</h3>
+<h4 id="_8">结果展示</h4>
+<p><img alt="可视化结果" src="https://raw.githubusercontent.com/Xinglab/rmats2sashimiplot/master/img/plotwitheventgf.png" /></p>
+<h4 id="_9">结果解读</h4>
+<ul>
+<li>Y-轴释义</li>
+</ul>
+<p><img alt="Y-轴释义" src="https://raw.githubusercontent.com/Xinglab/rmats2sashimiplot/master/img/RPKM.png" /></p>
+<h3 id="_10">参考</h3>
+<ul>
+<li><a href="http://rnaseq-mats.sourceforge.net/user_guide.htm">rMATS</a></li>
+<li><a href="https://github.com/Xinglab/rmats2sashimiplot">rmats2sashimiplot</a></li>
+<li><a href="https://www.biostars.org/p/256949/">biostars</a></li>
+</ul>
+		</content>
+
+	</main>
+	<footer>
+		<p> Powered by xizhihui </p>
+		<p> Thanks to <a href="https://www.hifreud.com/">hifreud</a> the theme is learned from his site. </p>
+	</footer>
+
+<script type="text/javascript" src="/js/index.json"></script>
+<script type="text/javascript" src="/js/category.json"></script>
+<script type="text/javascript" src="/js/tags.json"></script>
+<script type="text/javascript" src="/js/about.json"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript">
+	// listen to click event on navigator in header
+	// document
+	// 	.querySelector("div#head_right ul")
+	// 	.addEventListener("click", change_page)
+	var table = [['h2', 'rmats-rmats2sashimiplot', 'rMATS, rmats2sashimiplot：可变剪切差异分析及可视化'], ['h3', '_1', '安装'], ['h3', '_2', '使用'], ['h3', 'rmats', 'rMATS 结果'], ['h4', '_3', '识别的剪切事件类型'], ['h4', '_4', '结果文件释义'], ['h4', '_5', '结果文件各列释义'], ['h4', '_6', '相关计算'], ['h4', '_7', '结果解读：'], ['h3', 'rmats2sashimiplot', 'rmats2sashimiplot'], ['h4', '_8', '结果展示'], ['h4', '_9', '结果解读'], ['h3', '_10', '参考']]
+	var html = format_article_table(table)
+	var table_ele = document.querySelector("main #table")
+	table_ele.innerHTML = html
+	// window.onload = evt => resize_nav(table_ele)
+	adaption(document, window)
+
+</script>
+</body>
+</html>
