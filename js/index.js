@@ -2,7 +2,7 @@
 * @Author: XiZhihui
 * @Date:   2018-10-31 09:13:49
 * @Last Modified by:   XiZhihui
-* @Last Modified time: 2018-11-01 16:07:25
+* @Last Modified time: 2018-11-06 17:07:58
 * @Description: format content html
 */
 
@@ -45,16 +45,22 @@ function CardList(card_items) {
 
 function CardTitle(title, year) {
 	let name = title
-	if (year) name = year + title
+	if (year) {
+		name = year + title
+		title = "January February March April May June July August September October November December".split(" ")[parseInt(title-1)]
+	}
 	return `<h2 class="Card-title"><a name="${name}">${title}</a></h2>`
 }
 
 function Card(data, type, year) {
+	let titles = Object.keys(data)
+	titles.sort().reverse()
+
 	let card_str = ''
 	let cards = []
 	let moreOrLess = ''
 
-	for (title in data) {
+	titles.forEach(title => {
 		let items = data[title]
 		let card_list = CardList(items)
 		title_str = CardTitle(title, year)
@@ -71,7 +77,7 @@ function Card(data, type, year) {
 					${moreOrLess}
 				</div>`
 		cards.push(card_str)
-	}
+	})
 	// cards.reverse()
 	return cards.join("")
 }
@@ -96,10 +102,14 @@ function CardMoreOrLess(evt) {
 	index = parseInt(data.index)
 
 	// 得到当前card的数据, current_json 最后是个数组
-	current_json = window[data.type + "_json"]
-	if (data.year == "undefined") {
-		current_json = current_json[data.title]
-	} else {
+	// current_json = window[data.type + "_json"]
+	// if (data.year == "undefined") {
+	// 	current_json = current_json[data.title]
+	// } else {
+	// 	current_json = current_json[data.year][data.title]
+	// }
+	current_json = get_json(total_json)[data.type]
+	if (data.type == "index") {
 		current_json = current_json[data.year][data.title]
 	}
 
@@ -134,10 +144,12 @@ function CardMoreOrLess(evt) {
 function format_content(data, type) {
 	let html_str = ''
 	if (type == "index") {
-		for (year in data) {
+		years = Object.keys(data)
+		years.sort().reverse()
+		years.forEach(year => {
 			html_str += `<h2 class="Year"><a name="${year}">${year}</a></h2>`
 			html_str += Card(data[year], type, year)
-		}
+		})
 	} else {
 		html_str += Card(data, type)
 	}
@@ -147,13 +159,14 @@ function format_content(data, type) {
 // 目录html
 function format_table(data, type) {
 	let html_str = []
+	let months = "January February March April May June July August September October November December".split(" ")
 	if (type == "index") {
 		let temp = [],
 			temp_str = ''
 		for (year in data) {
 			temp_str = `<h3 class="Table-title"><a href="#${year}">${year}</h3>`
 			for (month in data[year]) {
-				month_str = `<h4 class="Table-title-item"><a href="#${year+month}">${month} (${data[year][month].length})</a></h4>`
+				month_str = `<h4 class="Table-title-item"><a href="#${year+month}">${months[parseInt(month)-1]} (${data[year][month].length})</a></h4>`
 				temp.push(month_str)
 			}
 			temp.reverse() // 最近的内容出现页面上方
@@ -222,6 +235,27 @@ function format_article_table(tables) {
 }
 //———————————————————————————————————————————————————
 // 页面切换
+function get_json(raw_json) {
+	index_json = {}
+	category_json = {}
+	raw_json.forEach(item => {
+		// index_json
+		[year, month, day] = item.date.split("/")
+		if (year in index_json) {
+			if (month in index_json[year]) {
+				index_json[year][month].push(item)
+			} else {
+				index_json[year][month] = [item]
+			}
+		} else {
+			index_json[year] = {}
+		}
+	})
+	return {
+		index: index_json
+	}
+}
+
 function change_page(evt) {
 	let target = evt.target || evt.srcElement
 	if (target.tagName != "LI") return
@@ -240,11 +274,14 @@ function change_page(evt) {
 	location.hash = txt
 
 	document.querySelector(".Search").style.display = "block"
+
+	jsons = get_json(total_json)
 	// 根据新的当前页更新页面
 	switch (txt) {
 		case "Timeline":
-			content = format_content(index_json, "index")
-			nav = format_table(index_json, "index")
+			timeline_json = jsons.index
+			content = format_content(timeline_json, "index")
+			nav = format_table(timeline_json, "index")
 			break
 		case "Category":
 			content = format_content(category_json, "category")
@@ -267,7 +304,6 @@ function change_page(evt) {
 	Array.from(document.querySelectorAll(".js-card-list")).forEach(card => {
 
 		height = parseFloat(getComputedStyle(card)["height"])
-		console.log(height)
 		card.style.height = px2rem(height)
 	})
 }
@@ -368,8 +404,8 @@ function page_init() {
 		}
 	}, false)
 
-	// 响应式
-	adaption(document, window)
+	// // 响应式
+	// adaption(document, window)
 }
 
 page_init()
