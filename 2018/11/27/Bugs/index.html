@@ -3,15 +3,15 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>生信基础 reads 重复和比对重复 | Xizhihui&#39;s Notes</title>
+  <title>杀虫剂 | Xizhihui&#39;s Notes</title>
   <meta name="author" content="Xizhihui">
   
-  <meta name="description" content="呦呦呦">
+  <meta name="description" content="当你打开这里，你要承认，你无时无刻都在产生各种 Bugs，别人写代码，你写 Bug，whatever，这里给你提供杀虫剂。">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="生信基础 reads 重复和比对重复">
+  <meta property="og:title" content="杀虫剂">
   <meta property="og:site_name" content="Xizhihui&#39;s Notes">
 
   
@@ -107,7 +107,7 @@ var _hmt = _hmt || [];
 
 	
 		<div class="page-header ">		
-			<h1 class="title "> 生信基础 reads 重复和比对重复</h1>
+			<h1 class="title "> 杀虫剂</h1>
 		</div>		
 	
 
@@ -127,31 +127,17 @@ var _hmt = _hmt || [];
 	<div class="mypage">		
 	  
 		 <div class="alert alert-success description">
-			<i class="fa fa-info-circle"></i> <p>呦呦呦</p>
+			<i class="fa fa-info-circle"></i> <p>当你打开这里，你要承认，你无时无刻都在产生各种 Bugs，别人写代码，你写 Bug，whatever，这里给你提供杀虫剂。</p>
 			
 		 </div> <!-- alert -->
 	  		
 
-	  <p>在说duplication之前,我们有必要说一下PCR bias和unique reads. PCR bias是指在PCR扩增的过程中,PCR引物会偏好性地同某条DNA链结合,导致的结果就是这条DNA链被扩增的数目要更多;而不是所有的DNA链被平行扩增.那么什么又是unique reads呢?在得到测序结果后,对于任意两条reads,只要其reads的起点,中间序列,终点这三点有一点不同,这两条reads就是互为unique reads. 所以我们来看, 建库后PCR扩增的测序结果里面,肯定有很多条reads不是unique reads,这些reads就是所谓的duplication, 这其中肯定也包含了PCR bias引起的额外重复.</p>
+	  <p>程序员，男的又叫“程序猿”，女的又称“程序媛”，但是，他两又合称“码农”。既然是码农，自然要除虫。哈？除什么虫？你不知道？天啦噜，活捉一只不会写 Bug 的生物。让我来告诉你，什么叫 Bug，下面这货就是了：</p>
+<p><img src="first_bug.jpg" alt="Bug"></p>
+<p>看见没，既然有了虫子，就要除掉它啦。这里给你所有类型的杀虫剂。</p>
 <a id="more"></a>
-<blockquote>
-<p>duplication rate = 1 - unique reads / total reads.</p>
-</blockquote>
-<h2 id="1-duplication的来源"><a href="#1-duplication的来源" class="headerlink" title="1. duplication的来源"></a>1. duplication的来源</h2><ul>
-<li>PCR duplicate</li>
-<li>cluster duplicate</li>
-<li>optical duplicate: 单个cluster的光信号重影导致2个信号产生</li>
-</ul>
-<h2 id="2-影响重复率-duplication-rate-的因素"><a href="#2-影响重复率-duplication-rate-的因素" class="headerlink" title="2. 影响重复率(duplication rate)的因素"></a>2. 影响重复率(duplication rate)的因素</h2><ul>
-<li>扩增模版的多样性</li>
-<li>模版序列的多样性: PCR bias</li>
-<li>adapter与fragment的连接效率</li>
-<li>fragment的一致性: 片段长度不同,扩增效率也是不同的</li>
-<li>cluster PCR: cluster的大小影响测序信号的强弱</li>
-<li>其他影响测序过程的方面</li>
-</ul>
-<h3 id="3-去重"><a href="#3-去重" class="headerlink" title="3. 去重"></a>3. 去重</h3><p>如果是原始数据的重复在质控阶段就可以了,类似的包Trimmomatic和fastp都能去重.如果是比对后的重复,使用samtools可以去重,也可以使用picard去重.(去重的原理是把bam文件里面的比对结果改成1024,表示duplicate)</p>
-	  
+<h3 id="1-问题描述：小弟我用-hexo-建立自己的静态博客，然后部署到-GitHub-之后发现，Tag-文件夹被改成-tag-文件夹，导致博客访问出现-404。"><a href="#1-问题描述：小弟我用-hexo-建立自己的静态博客，然后部署到-GitHub-之后发现，Tag-文件夹被改成-tag-文件夹，导致博客访问出现-404。" class="headerlink" title="1. 问题描述：小弟我用 hexo 建立自己的静态博客，然后部署到 GitHub 之后发现，Tag 文件夹被改成 tag 文件夹，导致博客访问出现 404。"></a>1. 问题描述：小弟我用 hexo 建立自己的静态博客，然后部署到 GitHub 之后发现，<code>Tag</code> 文件夹被改成 <code>tag</code> 文件夹，导致博客访问出现 404。</h3><p>这个开始不好办，因为我不知道出什么地方，然后去改配置啊，改来改去。后来发现啊，是 Git 它默认对大小写不敏感，才会在经过 Git 之后的发布变成小写。这里是杀虫剂，从 <strong><a href="http://www.wujinyu.com/2017/09/01/other/hexo-404/" target="_blank" rel="noopener">卡布奇诺</a></strong> 得到的，感谢他。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> .deploy_git</span><br><span class="line">git config ignorecase <span class="literal">false</span></span><br><span class="line">git rm -rf *</span><br><span class="line">git commit -m <span class="string">'clean all file'</span></span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">hexo clean</span><br><span class="line">hexo deploy -generate</span><br></pre></td></tr></table></figure>	  
 	</div>
 
 	<!-- recommended posts -->
@@ -162,14 +148,14 @@ var _hmt = _hmt || [];
 	<div class="pagination">
 <ul class="pagination">
 	 
-				
-    	<li class="prev"><a href="/2018/10/12/差异分析-limma/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
-  		
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
 
         <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
 
 		
-		   <li class="next"><a href="/2018/10/12/生信基础-unique比对的获取/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+		   <li class="next"><a href="/2018/11/26/第一次写的文/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
         
 	
 </ul>
@@ -220,33 +206,14 @@ var _hmt = _hmt || [];
 	
 	<div class="meta-widget">
 	<i class="fa fa-clock-o"></i>
-	2018-10-12 
+	2018-11-27 
 	</div>
 	
 
 	<!-- categories -->
     
-	<div class="meta-widget">
-	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
-    <ul id="categorys" class="tag_box list-unstyled collapse in">
-          
-  <li>
-    </li><li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
-  
-
-    </ul>
-	</div>
-	
 
 	<!-- tags -->
-	
-	<div class="meta-widget">
-	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
-    <ul id="tags" class="tag_box list-unstyled collapse in">	  
-	    
-  <li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
-    </ul>
-	</div>
 	
 
 	<!-- toc -->
@@ -254,7 +221,7 @@ var _hmt = _hmt || [];
 	
 	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
 	   <div id="toc" class="toc collapse in">
-			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-duplication的来源"><span class="toc-article-text">1. duplication的来源</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-影响重复率-duplication-rate-的因素"><span class="toc-article-text">2. 影响重复率(duplication rate)的因素</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-去重"><span class="toc-article-text">3. 去重</span></a></li></ol></li></ol>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-问题描述：小弟我用-hexo-建立自己的静态博客，然后部署到-GitHub-之后发现，Tag-文件夹被改成-tag-文件夹，导致博客访问出现-404。"><span class="toc-article-text">1. 问题描述：小弟我用 hexo 建立自己的静态博客，然后部署到 GitHub 之后发现，Tag 文件夹被改成 tag 文件夹，导致博客访问出现 404。</span></a></li></ol>
 		</div>
 	
 	</div>

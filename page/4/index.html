@@ -128,6 +128,29 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/生信基础-质控的那些事/">生信基础 质控的那些事</a></div>						
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="质控的方向"><a href="#质控的方向" class="headerlink" title="质控的方向"></a>质控的方向</h2><p>就平常的生物实验而言，质控是要贯穿到实验的各个阶段的，比如那些阳性阴性对照就可以认为是在进行质控了。而在测序数据的分析过程中，也同样需要将质控贯穿到分析的各个阶段。质控基本上可以分为三个阶段，依据你的分析对象和分析目的不同而有所变化：raw sequence data, alignment, variant calling. 目前比较常见的质控多是局限在raw data的质控这个阶段。虽然如此，另外两个阶段的质控也应该是需要的，因为后续的许多分析也是基于这两个阶段。Raw data 质控的方向通常有以下几类：quality trimming, adapter removal, contaminant filtering. 而在alignment阶段，我们可以通过uniquely mapped reads, signed noise ratio 进行质控。在variant calling阶段，还在调查中……</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/生信基础-质控的那些事/#more" class="btn btn-default more">Read More</a>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
 			<div class="article-title"><a href="/2018/10/12/生信基础-链特异性/">生信基础 链特异性</a></div>						
 		</h3>
 	
@@ -185,7 +208,7 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/加权共表达基因网络分析-WGCNA/" title="呦呦呦">加权共表达基因网络分析 WGCNA</a></div>						
+			<div class="article-title"><a href="/2018/10/12/质控软件-raw_data质控/">质控软件 raw_data质控</a></div>						
 		</h3>
 	
 
@@ -194,16 +217,10 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<p>在拿到高通量测序数据以后(特别是基因表达数据),通常要分析基因与表型之间的相关性,以探究基因对表型所起关键的调节功能；而加权基因共表达网络分析(Weighted Gene Coexpression Network Analysis)就是其中比较实用的一种分析方法。那么,什么是加权基因共表达网络分析呢？要了解这个,我们需要对以下前提有所了解。</p>
-<ul>
-<li>功能相关的基因,其表达水平/表达模式也基本上是相似的</li>
-<li>表达水平高度相关的基因具有潜在的共有调控机制或参与相似的生物学过程</li>
-<li>如果得到某个表达模式中涉及到许多基因,其中有些基因是已知的,基于上面两点,那么就可以通过该已知基因的功能推测未知基因的功能</li>
-</ul>
-<p>根据上面三点,我们就要得到有许多基因涉及的表达模式,而这个可以通过对基因的表达数据进行聚类得到.讲到这里,WGCNA实质上也是一种聚类方法.而在WGCNA之前,现在也在使用的另一种基因与表型的分析方法,那就是基因共表达网络分析.而WGCNA相较于后者来讲,有何优势?</p>
+		<p>测序数据的质控是必须的，也是主要的。</p>
 	
 	</div>
-  <a type="button" href="/2018/10/12/加权共表达基因网络分析-WGCNA/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2018/10/12/质控软件-raw_data质控/#more" class="btn btn-default more">Read More</a>
 </div>
 
            
@@ -290,7 +307,7 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/质控软件-raw_data质控/">质控软件 raw_data质控</a></div>						
+			<div class="article-title"><a href="/2018/10/12/芯片专题-AffyMetrix/">芯片专题 AffyMetrix</a></div>						
 		</h3>
 	
 
@@ -299,10 +316,31 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<p>测序数据的质控是必须的，也是主要的。</p>
+		<h2 id="一、芯片基础"><a href="#一、芯片基础" class="headerlink" title="一、芯片基础"></a>一、芯片基础</h2><h3 id="1-1-芯片平台和包"><a href="#1-1-芯片平台和包" class="headerlink" title="1.1 芯片平台和包"></a>1.1 芯片平台和包</h3><table>
+<thead>
+<tr>
+<th>平台</th>
+<th>包</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>illumina</td>
+<td>beadarray, lumi</td>
+</tr>
+<tr>
+<td>affymatrix</td>
+<td>affy,simpleaffy, oligo</td>
+</tr>
+<tr>
+<td>agilent</td>
+<td>没有找到</td>
+</tr>
+</tbody>
+</table>
 	
 	</div>
-  <a type="button" href="/2018/10/12/质控软件-raw_data质控/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2018/10/12/芯片专题-AffyMetrix/#more" class="btn btn-default more">Read More</a>
 </div>
 
            
@@ -391,29 +429,29 @@ var _hmt = _hmt || [];
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/富集分析/">富集分析<span>1</span></a></li>
-		
-			<li><a href="/tags/随想/">随想<span>1</span></a></li>
-		
-			<li><a href="/tags/定量/">定量<span>3</span></a></li>
-		
-			<li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
-		
-			<li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
-		
-			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
-		
-			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
-		
-			<li><a href="/tags/组装/">组装<span>1</span></a></li>
-		
-			<li><a href="/tags/流程/">流程<span>1</span></a></li>
+			<li><a href="/tags/可视化/">可视化<span>1</span></a></li>
 		
 			<li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
 		
+			<li><a href="/tags/流程/">流程<span>1</span></a></li>
+		
 			<li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
 		
-			<li><a href="/tags/可视化/">可视化<span>1</span></a></li>
+			<li><a href="/tags/定量/">定量<span>3</span></a></li>
+		
+			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
+		
+			<li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
+		
+			<li><a href="/tags/随想/">随想<span>1</span></a></li>
+		
+			<li><a href="/tags/富集分析/">富集分析<span>1</span></a></li>
+		
+			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
+		
+			<li><a href="/tags/组装/">组装<span>1</span></a></li>
+		
+			<li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -427,6 +465,10 @@ var _hmt = _hmt || [];
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2018/11/27/Bugs/" title="当你打开这里，你要承认，你无时无刻都在产生各种 Bugs，别人写代码，你写 Bug，whatever，这里给你提供杀虫剂。"><i class="fa fa-file-o"></i>杀虫剂</a>
+      </li>
+    
+      <li>
         <a href="/2018/11/26/第一次写的文/" title="有了第一次写的文，还差第一个爱的人"><i class="fa fa-file-o"></i>第一次写的文</a>
       </li>
     
@@ -436,10 +478,6 @@ var _hmt = _hmt || [];
     
       <li>
         <a href="/2018/11/02/数据处理-dplyr/"><i class="fa fa-file-o"></i>数据处理 dplyr</a>
-      </li>
-    
-      <li>
-        <a href="/2018/10/28/流程构建-Snakemake使用初步/" title="呦呦呦"><i class="fa fa-file-o"></i>流程构建 Snakemake使用初步</a>
       </li>
     
       <li>
