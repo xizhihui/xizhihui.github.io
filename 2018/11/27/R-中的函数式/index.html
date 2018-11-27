@@ -1,0 +1,357 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>R 中的函数式 | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  <meta name="description" content="函数式编程，纯碎的函数。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="R 中的函数式">
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> R 中的函数式</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>函数式编程，纯碎的函数。</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <p>近期，在使用 R 做数据分析的时候，总是会遇到单独对列或者对行进行处理、筛选，不可避免地用到 apply 这类函数。记得以前在 Javascript 中有个库叫做 “underscore”，支持纯粹的函数式编程。仔细想想，R 中这类 apply 函数，其实也就是函数式编程。那干脆再看看相关资料，看看具体是如何的。</p>
+<a id="more"></a>
+<h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><h3 id="一类函数-first-class-function"><a href="#一类函数-first-class-function" class="headerlink" title="一类函数 first-class function"></a>一类函数 first-class function</h3><p>讲到函数式编程，应该要了解它最基本的特征，那就是一个函数可以以一个函数作为参数进行运算，然后返回值或者函数。这就是所谓的 “first-class function”，它在支持函数式编程的语言中是被当作一等公民的，所谓 “first-class citizens”，它与内置的基本数据类型是一致的，可以进行赋值之类的。关于 “first-class function”，可以参考 <a href="wiki">wiki - first-class function</a>。那么所谓的函数式编程的基本形式如何表现的？我们可以看下面这个例子。</p>
+<p>我要在数据中在行这一维度上按照某个条件清洗数据，清洗条件是值是 6 的倍数改成 99 吧。在代码中就是这样,（虽然有更简便的方法，但是为了效果就这样），我们对每一行分别进行取值赋值，需要重复 10 次。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">df &lt;- matrix(<span class="number">1</span>:<span class="number">100</span>, <span class="number">10</span>)</span><br><span class="line">df[<span class="number">1</span>,][df[<span class="number">1</span>,] %% <span class="number">6</span> == <span class="number">0</span>] &lt;- <span class="number">99</span></span><br><span class="line">df[<span class="number">2</span>,][df[<span class="number">2</span>,] %% <span class="number">6</span> == <span class="number">0</span>] &lt;- <span class="number">99</span></span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<p>改造成函数式的话，那么就是要先创建一个函数进行更改数据，然后对每一行应用它。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fix_6_with_99 &lt;- <span class="keyword">function</span>(x) &#123;</span><br><span class="line">	x[x %% <span class="number">6</span> == <span class="number">0</span>] &lt;- <span class="number">99</span></span><br><span class="line">	x</span><br><span class="line">&#125;</span><br><span class="line">df &lt;- apply(df, <span class="number">1</span>, fix_6_with_99)</span><br></pre></td></tr></table></figure>
+<p>这就是所谓的函数式编程。基于此，函数式编程又有了另外两个特征：</p>
+<ul>
+<li>匿名函数，anonymous function</li>
+<li>闭包，closures</li>
+</ul>
+<h3 id="匿名函数-anonymous-function"><a href="#匿名函数-anonymous-function" class="headerlink" title="匿名函数 anonymous function"></a>匿名函数 anonymous function</h3><p>匿名函数，顾名思义就是这个函数它没有名字。就一般来讲，函数它本身就是对象，一个对象怎么会没有名字呢。但一类函数由于可以把函数作为参数来传递到函数内部，被传递的这个函数是否有名字就不太重要了，因为它在函数内部是以对应的参数名的形式存在。例如 apply 我们可以自己这样构造，上述的 “fix_6_with_99” 就是作为下面的 “func” 传进去了。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">apply &lt;- <span class="keyword">function</span>(dataframe, dim, func) &#123;</span><br><span class="line">	df &lt;- Vector(<span class="string">"dataframe"</span>, nrow(dataframe))</span><br><span class="line">	<span class="keyword">if</span> (dim == <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1</span>:nrow(dataframe)) &#123;</span><br><span class="line">			df[i,] &lt;- func(dataframe[i,])</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1</span>:ncol(dataframe)) &#123;</span><br><span class="line">			df[,i] &lt;- func(dataframe[,i])</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以我们可以如下改造上面的哪个调用：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">df &lt;- apply(df, <span class="number">1</span>, <span class="keyword">function</span>(x) &#123;</span><br><span class="line">	x[x %% <span class="number">6</span> == <span class="number">0</span>] &lt;- <span class="number">99</span></span><br><span class="line">	x</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>但是匿名函数只能用一次，你只能在你定义并调用的时候使用一次。对于常用的函数，我们是不推荐把它作为匿名函数使用的，因为我们要 “do not repeat yourself” 的复用嘛。</p>
+<h3 id="闭包-closures"><a href="#闭包-closures" class="headerlink" title="闭包 closures"></a>闭包 closures</h3><p>在说闭包的时候，有句话说的好，我认为可以加深认识：</p>
+<blockquote>
+<p>“An object is data with functions. A closure is a function with data.” — John D. Cook</p>
+</blockquote>
+<p>闭包就是一个函数在内部有了数据，这和我们平常的函数内部定义的数据不同，需要结合函数式编程的另一大特征来理解：返回函数。一般来说，函数应该要返回的是值。在函数式编程中，一个函数可以返回值，也可以返回函数，但兜兜转转，函数返回的函数返回的函数…返回的还是值。由于函数正常情况下，执行完毕后，解析器就会收回这个函数对应的内存空间，函数内部的变量也随之清除。但是，如果“在另外一个地方有引用这些待清除的变量”时，因为解析器无法得知这些变量何时不再使用或者说使用完毕，这些变量就暂时无法被清除，这个情况就是闭包。由于函数 parent 可以返回函数 child，如果 child 中有引用到 parent 的某个变量 variant，就实现在“另外一个地方引用这些变量”，保证了 variant 不能被清除，出现了闭包。简单地闭包例子如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">greet_to_name &lt;- <span class="keyword">function</span>(name) &#123;</span><br><span class="line">	count &lt;- <span class="number">0</span></span><br><span class="line">	<span class="keyword">function</span>(greet) &#123;</span><br><span class="line">		cat(paste(greet, name, count, <span class="string">"\n"</span>, sep=<span class="string">", "</span>))</span><br><span class="line">		count &lt;- count + <span class="number">1</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">greet &lt;- greet_to_name(<span class="string">"xizhihui"</span>)</span><br><span class="line">greet(<span class="string">"hello"</span>)</span><br><span class="line">greet(<span class="string">"hello"</span>)</span><br><span class="line"><span class="comment">#&gt; hello, xizhihui, 0,</span></span><br><span class="line"><span class="comment">#&gt; hello, xizhihui, 0,</span></span><br></pre></td></tr></table></figure>
+<p>我们在 “greet” 函数的返回值里面看到了 “greet_to_name” 里面的 name 和 count 变量的值，这就是一个简单地闭包。但是，虽然我们在函数里面添加了 <code>count &lt;- count + 1</code> 这个语句，似乎对于 greet 调用多次并有没影响。这又涉及到另外一个问题：作用域。</p>
+<h3 id="作用域-scope"><a href="#作用域-scope" class="headerlink" title="作用域 scope"></a>作用域 scope</h3><p>每个变量或函数都有它的有效作用范围，当出现变量名冲突时，根据作用域由近及远来获取对应的变量。在上面的例子中，由于内部的 function(greet) 没有定义 count 变量，在当前的函数作用域没有，那就往远的地方（外层作用域）寻找，于是就找到了 greet_to_name 的 count 变量，然后就引用它，这也就说明了形成闭包的引用是怎么来的。但是，这里有个但是哈，R 中的作用域还有另外一个特征，那就是如果在内层对外层变量进行赋值操作，是不会成功的，它只是在内层生成了一个与外层被引用变量相同名字的新变量，此时，比如 count 在 <code>count &lt;- count + 1</code> 之后，就不是原来的 count （外层的）了。要避免这个情况，需要使用 <code>&lt;&lt;-</code> 超赋值语句，它只会对外层变量进行赋值。换句话说，即便内层有 count 变量，<code>count &lt;&lt;- count + 1</code> 还是会赋值给外层。</p>
+<ul>
+<li>内层有 count 变量，普通赋值</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 内层有 count 变量</span></span><br><span class="line">greet_to_name &lt;- <span class="keyword">function</span>(name) &#123;</span><br><span class="line">	count &lt;- <span class="number">0</span></span><br><span class="line">	<span class="keyword">function</span>(greet) &#123;</span><br><span class="line">		cat(paste(greet, name, count, <span class="string">"\n"</span>, sep=<span class="string">", "</span>))</span><br><span class="line">		count &lt;- <span class="number">100</span></span><br><span class="line">		count &lt;- count + <span class="number">1</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">greet &lt;- greet_to_name(<span class="string">"xizhihui"</span>)</span><br><span class="line">greet(<span class="string">"hello"</span>)</span><br><span class="line">greet(<span class="string">"hello"</span>)</span><br><span class="line"><span class="comment">#&gt; hello, xizhihui, 0,</span></span><br><span class="line"><span class="comment">#&gt; hello, xizhihui, 0,</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>内层有 count 变量，进行超赋值</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 内层有 count 变量</span></span><br><span class="line">greet_to_name &lt;- <span class="keyword">function</span>(name) &#123;</span><br><span class="line">	count &lt;- <span class="number">0</span></span><br><span class="line">	<span class="keyword">function</span>(greet) &#123;</span><br><span class="line">		cat(paste(greet, name, count, <span class="string">"\n"</span>, sep=<span class="string">", "</span>))</span><br><span class="line">		count &lt;- <span class="number">100</span></span><br><span class="line">		count &lt;&lt;- count + <span class="number">1</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">greet &lt;- greet_to_name(<span class="string">"xizhihui"</span>)</span><br><span class="line">greet(<span class="string">"hello"</span>)</span><br><span class="line">greet(<span class="string">"hello"</span>)</span><br><span class="line"><span class="comment">#&gt; hello, xizhihui, 0,</span></span><br><span class="line"><span class="comment">#&gt; hello, xizhihui, 101,</span></span><br></pre></td></tr></table></figure>
+<p>在使用超赋值后，第二次 greet(“hello”) 输出的是 “hello, xizhihui, 101,”。</p>
+<h2 id="那些支持函数式编程的常用函数"><a href="#那些支持函数式编程的常用函数" class="headerlink" title="那些支持函数式编程的常用函数"></a>那些支持函数式编程的常用函数</h2><p>由于 first-class function 可以输出函数，这类输出的函数叫做 higher-order function。</p>
+<h3 id="apply-族"><a href="#apply-族" class="headerlink" title="apply 族"></a>apply 族</h3><ul>
+<li>lapply: any collection -&gt; Func -&gt; list</li>
+<li>sapply: any collection -&gt; Func -&gt; matrix/vector</li>
+<li>apply: matrix/dataframe + margin -&gt; Func -&gt; matrix/vector</li>
+<li>tapply: vector + factor_list -&gt; Func -&gt; list/vector (like aggregte)</li>
+<li>mapply: 类似 sapply(df, function(x) sapply(x, Func)), Func + params -&gt; list</li>
+</ul>
+<h3 id="common-higher-order-function"><a href="#common-higher-order-function" class="headerlink" title="common higher-order function"></a>common higher-order function</h3><ul>
+<li>Reduce(fun, x, init, right=False, accumulate=False): 归并函数, init 设定起始值</li>
+<li>Filter(fun, x): 按照 fun 返回的逻辑值对 x 进行过滤</li>
+<li>Find(fun, x, right=False, nomatch=False)：找到首个使 fun 为真的元素</li>
+<li>Position(fun, x, right=False, nomatch=NA_integer_)：找到所有使 fun 为真的元素的 index</li>
+<li>Map(fun, …)：执行 func(…)</li>
+<li>Negate(fun): 生成 fun 的反函数，比如 Negate(Find) 就是等于 Find(!fun)</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://adv-r.had.co.nz/Functional-programming.html" target="_blank" rel="noopener">advanced R</a></li>
+<li><a href="https://www.r-bloggers.com/functional-programming-in-r/" target="_blank" rel="noopener">r-bloggers</a></li>
+<li><a href="https://en.wikipedia.org/wiki/First-class_function" target="_blank" rel="noopener">wiki</a></li>
+</ul>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/11/27/Bugs/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-11-27 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/R/">R<span>1</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/R基础/">R基础<span>1</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#函数式编程"><span class="toc-article-text">函数式编程</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#一类函数-first-class-function"><span class="toc-article-text">一类函数 first-class function</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#匿名函数-anonymous-function"><span class="toc-article-text">匿名函数 anonymous function</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#闭包-closures"><span class="toc-article-text">闭包 closures</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#作用域-scope"><span class="toc-article-text">作用域 scope</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#那些支持函数式编程的常用函数"><span class="toc-article-text">那些支持函数式编程的常用函数</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#apply-族"><span class="toc-article-text">apply 族</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#common-higher-order-function"><span class="toc-article-text">common higher-order function</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#参考"><span class="toc-article-text">参考</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

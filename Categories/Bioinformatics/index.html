@@ -212,38 +212,6 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-15 </div>
-			<div class="article-title"><a href="/2018/10/15/扩增子分析-mothur使用示例/" title="mothur, 搞那么长的命名后缀，让你想骂你 “mothur”">扩增子测序 mothur使用示例</a></div>						
-		</h3>
-	
-
-
-		     <div class="entry">
-  <div class="row">
-	
-	
-		<h2 id="1-初始说明"><a href="#1-初始说明" class="headerlink" title="1 初始说明"></a>1 初始说明</h2><ul>
-<li>测序数据类型</li>
-</ul>
-<p>Illumina Miseq paired-end reads</p>
-<ul>
-<li>实验设计</li>
-</ul>
-<p>断奶后365天(dpw 365)的小鼠排泄物，比较初始10天(dpw 10)和中间10天(dpw140-150)的排泄物的微生物组的稳定性(肠道微生物组的变化情况)。为了简化操作，只用到一只小鼠的十个时间点(前5后5)的数据。这里还有模拟了由21种细菌组成的菌群的全基因组测序数据。先用小鼠的排泄物测序数据学习分析微生物群落，然后用模拟的菌落判断分析的错误率和它在其他分析中的作用。</p>
-<ul>
-<li>关于软件</li>
-</ul>
-<p>mothur既提供交互模式(像python)，也提供命令行模式；后者可以进行批量操作。</p>
-	
-	</div>
-  <a type="button" href="/2018/10/15/扩增子分析-mothur使用示例/#more" class="btn btn-default more">Read More</a>
-</div>
-
-	       
-		     
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-15 </div>
 			<div class="article-title"><a href="/2018/10/15/扩增子测序-QIIME1/">扩增子测序 QIIME1</a></div>						
 		</h3>
 	
@@ -296,6 +264,38 @@ var _hmt = _hmt || [];
 	
 	</div>
   <a type="button" href="/2018/10/15/扩增子测序-QIIME1/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-15 </div>
+			<div class="article-title"><a href="/2018/10/15/扩增子分析-mothur使用示例/" title="mothur, 搞那么长的命名后缀，让你想骂你 “mothur”">扩增子测序 mothur使用示例</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="1-初始说明"><a href="#1-初始说明" class="headerlink" title="1 初始说明"></a>1 初始说明</h2><ul>
+<li>测序数据类型</li>
+</ul>
+<p>Illumina Miseq paired-end reads</p>
+<ul>
+<li>实验设计</li>
+</ul>
+<p>断奶后365天(dpw 365)的小鼠排泄物，比较初始10天(dpw 10)和中间10天(dpw140-150)的排泄物的微生物组的稳定性(肠道微生物组的变化情况)。为了简化操作，只用到一只小鼠的十个时间点(前5后5)的数据。这里还有模拟了由21种细菌组成的菌群的全基因组测序数据。先用小鼠的排泄物测序数据学习分析微生物群落，然后用模拟的菌落判断分析的错误率和它在其他分析中的作用。</p>
+<ul>
+<li>关于软件</li>
+</ul>
+<p>mothur既提供交互模式(像python)，也提供命令行模式；后者可以进行批量操作。</p>
+	
+	</div>
+  <a type="button" href="/2018/10/15/扩增子分析-mothur使用示例/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -368,7 +368,7 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-14 </div>
-			<div class="article-title"><a href="/2018/10/14/基因组变异检测(Variance-Calling-with-GATK)/" title="变异是适应自然的前提。">基因组变异检测(Variance Calling with GATK)</a></div>						
+			<div class="article-title"><a href="/2018/10/14/ChIP-seq专题-MACS2_ChIPSeeker_deeptools/" title="搞了个基于 snakemake 的 ChIP 分析流程，详见 github.com/xizhiui/bioinformatic_learning/pipelines/ChIP-seq">ChIP-seq专题 MACS2_ChIPSeeker_deeptools</a></div>						
 		</h3>
 	
 
@@ -377,14 +377,11 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<h2 id="一、基本概念"><a href="#一、基本概念" class="headerlink" title="一、基本概念"></a>一、基本概念</h2><h3 id="1-1-名词解释"><a href="#1-1-名词解释" class="headerlink" title="1.1 名词解释"></a>1.1 名词解释</h3><ul>
-<li><strong>基因组</strong>：个体全部DNA序列的无重复集.这里的基因组不仅仅包含了基因在内,由于目前尚有许多DNA序列不编码蛋白,也可能不会转录,反正就是这些序列的功能还没有研究清楚, 这些序列也都包含在基因组这个范畴里面.</li>
-<li><strong>Reads</strong>：二代测序中的一个专有名词,表示着测序仪对某个DNA片段的一次测序结果,是该DNA序列的序列组成. 其长度依据测序仪不同而不同.</li>
-<li><strong>变异</strong>：variants, 变异是一个相对的概念,产生于比较之中, 比较是指同耳熟能详的参考基因组相比较. 对于人类基因组的变异来讲,参考基因组是经过“人类基因组”计划测序所得到的最终人类基因组序列.</li>
-</ul>
+		<p>ChIP-seq是使用抗体捕获富集DNA片段和高通量测序技术来获得某些marker与DNA的结合位点的一项综合技术。ChIP是染色质免疫共沉淀, 通过特异抗体将DNA结合蛋白免疫沉淀, 用于捕获蛋白质的DNA靶点, 比如转录因子啊, 组蛋白修饰啊. 它主要分为以下四步：cross-linking、sonication、IP、Sequencing。在DNA与蛋白交联以后, 通过超声的方式随机打断染色体, 在利用抗体将目的交联物筛选出来, 再反交联获取DNA,最后上机测序.获取到测序数据后,典型的分析流程如图.</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_jpg/MPBFtnFrw4m2jWmOk9ic1ZkZ8VrQBrr8oCMwfEZDZG75OY3ic9qMqHhibpiafgZVfJaCSp7gqI87ETibVltjV4GgXkQ/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="ChIP分析流程"></p>
 	
 	</div>
-  <a type="button" href="/2018/10/14/基因组变异检测(Variance-Calling-with-GATK)/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2018/10/14/ChIP-seq专题-MACS2_ChIPSeeker_deeptools/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -434,6 +431,8 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
 		
+			<li><a href="/categories/R/">R<span>1</span></a></li>
+		
 			<li><a href="/categories/杂货铺/">杂货铺<span>1</span></a></li>
 		
 			<li><a href="/categories/随想/">随想<span>1</span></a></li>
@@ -447,31 +446,33 @@ var _hmt = _hmt || [];
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
+			<li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
 		
 			<li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
 		
-			<li><a href="/tags/可视化/">可视化<span>1</span></a></li>
-		
 			<li><a href="/tags/随想/">随想<span>1</span></a></li>
 		
-			<li><a href="/tags/定量/">定量<span>3</span></a></li>
-		
-			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
-		
-			<li><a href="/tags/流程/">流程<span>1</span></a></li>
+			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
 		
 			<li><a href="/tags/组装/">组装<span>1</span></a></li>
 		
-			<li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
+			<li><a href="/tags/流程/">流程<span>1</span></a></li>
+		
+			<li><a href="/tags/R基础/">R基础<span>1</span></a></li>
+		
+			<li><a href="/tags/定量/">定量<span>3</span></a></li>
 		
 			<li><a href="/tags/bug/">bug<span>1</span></a></li>
+		
+			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
 		
 			<li><a href="/tags/富集分析/">富集分析<span>1</span></a></li>
 		
 			<li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
 		
 			<li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
+		
+			<li><a href="/tags/可视化/">可视化<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -483,6 +484,10 @@ var _hmt = _hmt || [];
 <div class="widget">
   <h4>Recent Posts</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2018/11/27/R-中的函数式/" title="函数式编程，纯碎的函数。"><i class="fa fa-file-o"></i>R 中的函数式</a>
+      </li>
     
       <li>
         <a href="/2018/11/27/Bugs/" title="当你打开这里，你要承认，你无时无刻都在产生各种 Bugs，别人写代码，你写 Bug，whatever，这里给你提供杀虫剂。"><i class="fa fa-file-o"></i>杀虫剂</a>
@@ -498,10 +503,6 @@ var _hmt = _hmt || [];
     
       <li>
         <a href="/2018/11/02/数据处理-dplyr/"><i class="fa fa-file-o"></i>数据处理 dplyr</a>
-      </li>
-    
-      <li>
-        <a href="/2018/10/28/流程构建-Snakemake使用初步/" title="呦呦呦"><i class="fa fa-file-o"></i>流程构建 Snakemake使用初步</a>
       </li>
     
   </ul>
