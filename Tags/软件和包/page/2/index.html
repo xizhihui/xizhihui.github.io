@@ -120,7 +120,7 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/差异分析-edgeR/">差异分析 edgeR</a></div>						
+			<div class="article-title"><a href="/2018/10/12/差异分析-limma/">差异分析 limma</a></div>						
 		</h3>
 	
 
@@ -129,22 +129,10 @@
   <div class="row">
 	
 	
-		<p>下方的代码把edgeR的三种差异分析整合成一个函数, 调用时直接指定参数即可.</p>
-<ul>
-<li>classcial</li>
-<li>glm: likelihood ratio test/ quasi-likelihood F-test</li>
-<li><ul>
-<li>quasi-likelihood(qlf): 推荐用于差异分析，因为他对错误率限制较好。</li>
-</ul>
-</li>
-<li><ul>
-<li>likelihood(lrt)：对与单细胞RNA-测序和没有重复的数据较好</li>
-</ul>
-</li>
-</ul>
+		<p>limma最开始是用于芯片数据分析的,不过现在也支持RNA-seq等数据的差异分析，但是需要通过voom函数进行校正表达矩阵。</p>
 	
 	</div>
-  <a type="button" href="/2018/10/12/差异分析-edgeR/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2018/10/12/差异分析-limma/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -166,6 +154,27 @@
 	
 	</div>
   <a type="button" href="/2018/10/12/GO_KEGG富集分析-clusterProfiler/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/差异分析-RSEM/" title="呦呦呦">差异分析 RSEM</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>RSEM利用的是transcripts而非genome。我们有两种方式来构建RSEM转录参考，其一是利用参考基因组来构建；另外一种方式是从许多转录本中构建。</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/差异分析-RSEM/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -222,6 +231,60 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/差异分析-edgeR/">差异分析 edgeR</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>下方的代码把edgeR的三种差异分析整合成一个函数, 调用时直接指定参数即可.</p>
+<ul>
+<li>classcial</li>
+<li>glm: likelihood ratio test/ quasi-likelihood F-test</li>
+<li><ul>
+<li>quasi-likelihood(qlf): 推荐用于差异分析，因为他对错误率限制较好。</li>
+</ul>
+</li>
+<li><ul>
+<li>likelihood(lrt)：对与单细胞RNA-测序和没有重复的数据较好</li>
+</ul>
+</li>
+</ul>
+	
+	</div>
+  <a type="button" href="/2018/10/12/差异分析-edgeR/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/比对-STAR/">比对 STAR</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>STAR 的比对速率要比 bowtie 快那么一丢丢。</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/比对-STAR/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
 			<div class="article-title"><a href="/2018/10/12/比对-subread/">比对 subread</a></div>						
 		</h3>
 	
@@ -244,7 +307,7 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/差异分析-RSEM/" title="呦呦呦">差异分析 RSEM</a></div>						
+			<div class="article-title"><a href="/2018/10/12/比对软件-Hisat2/">比对软件 Hisat2</a></div>						
 		</h3>
 	
 
@@ -253,10 +316,10 @@
   <div class="row">
 	
 	
-		<p>RSEM利用的是transcripts而非genome。我们有两种方式来构建RSEM转录参考，其一是利用参考基因组来构建；另外一种方式是从许多转录本中构建。</p>
+		<p>hisat2是快速灵敏的比对软件,可用于全基因组测序，转录组测序，外显子测序的数据比对.基于GCSA（bwt的拓展），我们设计了graph FM index用于比对。hisat2的比对结果是sam格式文件，你可以使用samtools，GATK等软件进行后续的分析.</p>
 	
 	</div>
-  <a type="button" href="/2018/10/12/差异分析-RSEM/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2018/10/12/比对软件-Hisat2/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -287,70 +350,6 @@
 </div>
 
 	       
-		     
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/比对软件-Hisat2/">比对软件 Hisat2</a></div>						
-		</h3>
-	
-
-
-		     <div class="entry">
-  <div class="row">
-	
-	
-		<p>hisat2是快速灵敏的比对软件,可用于全基因组测序，转录组测序，外显子测序的数据比对.基于GCSA（bwt的拓展），我们设计了graph FM index用于比对。hisat2的比对结果是sam格式文件，你可以使用samtools，GATK等软件进行后续的分析.</p>
-	
-	</div>
-  <a type="button" href="/2018/10/12/比对软件-Hisat2/#more" class="btn btn-default more">Read More</a>
-</div>
-
-	       
-		     
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/组装或定量-kallisto_sleuth/">组装或定量 kallisto_sleuth</a></div>						
-		</h3>
-	
-
-
-		     <div class="entry">
-  <div class="row">
-	
-	
-		<h2 id="免比对的定量：kallisto"><a href="#免比对的定量：kallisto" class="headerlink" title="免比对的定量：kallisto"></a>免比对的定量：kallisto</h2><p><a href="https://pachterlab.github.io/kallisto/manual.html" target="_blank" rel="noopener">kallisto</a>是一个align-free的测序结果定量工具。速度快得很.他可以在10min内完成index的构建，然后花3min完成30 million的human reads的定量。它不仅快速而且准确。</p>
-<p>Pseudoalignment保存了用于定量的关键信息。An important feature of kallisto is that it outputs bootstraps along with the estimates of transcript abundances</p>
-	
-	</div>
-  <a type="button" href="/2018/10/12/组装或定量-kallisto_sleuth/#more" class="btn btn-default more">Read More</a>
-</div>
-
-	       
-		     
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/比对-STAR/">比对 STAR</a></div>						
-		</h3>
-	
-
-
-		     <div class="entry">
-  <div class="row">
-	
-	
-		<p>STAR 的比对速率要比 bowtie 快那么一丢丢。</p>
-	
-	</div>
-  <a type="button" href="/2018/10/12/比对-STAR/#more" class="btn btn-default more">Read More</a>
-</div>
-
-	       
 	     </div>
 	     <div>
 	       <center>
@@ -358,13 +357,13 @@
 <ul class="pagination">
 	 
 		
-    	<li class="prev"><a href="/tags/软件和包/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i> Prev</a></li>
+    	<li class="prev"><a href="/Tags/软件和包/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i> Prev</a></li>
   		
 
         <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
 
 		
-		   <li class="next"> <a href="/tags/软件和包/page/3/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
+		   <li class="next"> <a href="/Tags/软件和包/page/3/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
         
 	
 </ul>
@@ -395,9 +394,9 @@
 		<h4>Categories</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+			<li><a href="/Categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
 		
-			<li><a href="/categories/随想/">随想<span>1</span></a></li>
+			<li><a href="/Categories/随想/">随想<span>1</span></a></li>
 		
 		</ul>
 	</div>
@@ -408,29 +407,29 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
+			<li><a href="/Tags/可视化/">可视化<span>1</span></a></li>
 		
-			<li><a href="/tags/富集分析/">富集分析<span>1</span></a></li>
+			<li><a href="/Tags/变异检测/">变异检测<span>1</span></a></li>
 		
-			<li><a href="/tags/随想/">随想<span>1</span></a></li>
+			<li><a href="/Tags/差异分析/">差异分析<span>4</span></a></li>
 		
-			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
+			<li><a href="/Tags/数据处理/">数据处理<span>1</span></a></li>
 		
-			<li><a href="/tags/定量/">定量<span>3</span></a></li>
+			<li><a href="/Tags/扩增子/">扩增子<span>5</span></a></li>
 		
-			<li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
+			<li><a href="/Tags/流程/">流程<span>1</span></a></li>
 		
-			<li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
+			<li><a href="/Tags/软件和包/">软件和包<span>22</span></a></li>
 		
-			<li><a href="/tags/组装/">组装<span>1</span></a></li>
+			<li><a href="/Tags/富集分析/">富集分析<span>1</span></a></li>
 		
-			<li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
+			<li><a href="/Tags/生信基础/">生信基础<span>13</span></a></li>
 		
-			<li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
+			<li><a href="/Tags/定量/">定量<span>3</span></a></li>
 		
-			<li><a href="/tags/流程/">流程<span>1</span></a></li>
+			<li><a href="/Tags/随想/">随想<span>1</span></a></li>
 		
-			<li><a href="/tags/可视化/">可视化<span>1</span></a></li>
+			<li><a href="/Tags/组装/">组装<span>1</span></a></li>
 		
 		 
 		</ul>

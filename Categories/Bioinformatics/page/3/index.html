@@ -120,6 +120,69 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/比对软件-Hisat2/">比对软件 Hisat2</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>hisat2是快速灵敏的比对软件,可用于全基因组测序，转录组测序，外显子测序的数据比对.基于GCSA（bwt的拓展），我们设计了graph FM index用于比对。hisat2的比对结果是sam格式文件，你可以使用samtools，GATK等软件进行后续的分析.</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/比对软件-Hisat2/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/差异分析-limma/">差异分析 limma</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>limma最开始是用于芯片数据分析的,不过现在也支持RNA-seq等数据的差异分析，但是需要通过voom函数进行校正表达矩阵。</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/差异分析-limma/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/生信基础-reads-重复和比对重复/" title="呦呦呦">生信基础 reads 重复和比对重复</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>在说duplication之前,我们有必要说一下PCR bias和unique reads. PCR bias是指在PCR扩增的过程中,PCR引物会偏好性地同某条DNA链结合,导致的结果就是这条DNA链被扩增的数目要更多;而不是所有的DNA链被平行扩增.那么什么又是unique reads呢?在得到测序结果后,对于任意两条reads,只要其reads的起点,中间序列,终点这三点有一点不同,这两条reads就是互为unique reads. 所以我们来看, 建库后PCR扩增的测序结果里面,肯定有很多条reads不是unique reads,这些reads就是所谓的duplication, 这其中肯定也包含了PCR bias引起的额外重复.</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/生信基础-reads-重复和比对重复/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
 			<div class="article-title"><a href="/2018/10/12/生信基础-unique比对的获取/">生信基础 unique比对的获取</a></div>						
 		</h3>
 	
@@ -137,6 +200,52 @@
 	
 	</div>
   <a type="button" href="/2018/10/12/生信基础-unique比对的获取/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/生信基础-各种数据的下载/">生信基础 各种数据的下载</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="三大数据库版本对应情况"><a href="#三大数据库版本对应情况" class="headerlink" title="三大数据库版本对应情况"></a>三大数据库版本对应情况</h2><table>
+<thead>
+<tr>
+<th>NCBI</th>
+<th>UCSC</th>
+<th>Ensemble</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GRCh36</td>
+<td>hg18</td>
+<td>ENSEMBL release_52</td>
+</tr>
+<tr>
+<td>GRCh37</td>
+<td>hg19</td>
+<td>ENSEMBL release_59/61/64/68/69/75</td>
+</tr>
+<tr>
+<td>GRCh38</td>
+<td>hg38</td>
+<td>ENSEMBL release_76/77/78/80/81/82</td>
+</tr>
+</tbody>
+</table>
+	
+	</div>
+  <a type="button" href="/2018/10/12/生信基础-各种数据的下载/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -211,7 +320,7 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/生信基础-各种数据的下载/">生信基础 各种数据的下载</a></div>						
+			<div class="article-title"><a href="/2018/10/12/生信基础-无重复样本的差异分析/">生信基础 无重复样本的差异分析</a></div>						
 		</h3>
 	
 
@@ -220,35 +329,14 @@
   <div class="row">
 	
 	
-		<h2 id="三大数据库版本对应情况"><a href="#三大数据库版本对应情况" class="headerlink" title="三大数据库版本对应情况"></a>三大数据库版本对应情况</h2><table>
-<thead>
-<tr>
-<th>NCBI</th>
-<th>UCSC</th>
-<th>Ensemble</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>GRCh36</td>
-<td>hg18</td>
-<td>ENSEMBL release_52</td>
-</tr>
-<tr>
-<td>GRCh37</td>
-<td>hg19</td>
-<td>ENSEMBL release_59/61/64/68/69/75</td>
-</tr>
-<tr>
-<td>GRCh38</td>
-<td>hg38</td>
-<td>ENSEMBL release_76/77/78/80/81/82</td>
-</tr>
-</tbody>
-</table>
+		<ul>
+<li>edgeR</li>
+<li>DESeq2</li>
+<li>GFOLD</li>
+</ul>
 	
 	</div>
-  <a type="button" href="/2018/10/12/生信基础-各种数据的下载/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2018/10/12/生信基础-无重复样本的差异分析/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -270,31 +358,6 @@
 	
 	</div>
   <a type="button" href="/2018/10/12/生信基础-测序原理/#more" class="btn btn-default more">Read More</a>
-</div>
-
-	       
-		     
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/生信基础-无重复样本的差异分析/">生信基础 无重复样本的差异分析</a></div>						
-		</h3>
-	
-
-
-		     <div class="entry">
-  <div class="row">
-	
-	
-		<ul>
-<li>edgeR</li>
-<li>DESeq2</li>
-<li>GFOLD</li>
-</ul>
-	
-	</div>
-  <a type="button" href="/2018/10/12/生信基础-无重复样本的差异分析/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -325,61 +388,6 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/生信基础-链特异性/">生信基础 链特异性</a></div>						
-		</h3>
-	
-
-
-		     <div class="entry">
-  <div class="row">
-	
-	
-		<h2 id="1-链特异性的基本知识"><a href="#1-链特异性的基本知识" class="headerlink" title="1.链特异性的基本知识"></a>1.链特异性的基本知识</h2><ul>
-<li><a href="http://www.genek.tv/article/27" target="_blank" rel="noopener">http://www.genek.tv/article/27</a></li>
-<li><a href="http://databeauty.com/blog/opinion/2016/09/21/RNA-seq-strand-issues.html" target="_blank" rel="noopener">http://databeauty.com/blog/opinion/2016/09/21/RNA-seq-strand-issues.html</a></li>
-</ul>
-<p>在建库的时候,选择的建库方法可以是链特异性的,链特异性的文库可以清楚地分出reads的方向是否与转录本相同;常用的链特异性文库方法是基于dUTP的方法.</p>
-<table>
-<thead>
-<tr>
-<th>文库类型</th>
-<th>PE</th>
-<th>SE</th>
-<th>建库方法</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>非特异性</td>
-<td>无</td>
-<td>无</td>
-<td>Standard Illumina</td>
-</tr>
-<tr>
-<td>fr-firststrand</td>
-<td>RF</td>
-<td>R</td>
-<td>dUTP,NSR,NNSR</td>
-</tr>
-<tr>
-<td>fr-secondstrand</td>
-<td>FR</td>
-<td>F</td>
-<td>Ligation,Standard SOLiD</td>
-</tr>
-</tbody>
-</table>
-	
-	</div>
-  <a type="button" href="/2018/10/12/生信基础-链特异性/#more" class="btn btn-default more">Read More</a>
-</div>
-
-	       
-		     
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-12 </div>
 			<div class="article-title"><a href="/2018/10/12/生信基础-质控的那些事/">生信基础 质控的那些事</a></div>						
 		</h3>
 	
@@ -396,54 +404,6 @@
 </div>
 
 	       
-		     
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/组装或定量-eXpress/">组装或定量 eXpress</a></div>						
-		</h3>
-	
-
-
-		     <div class="entry">
-  <div class="row">
-	
-	
-		<a id="more"></a>
-<blockquote>
-<p><a href="https://pachterlab.github.io/eXpress/downloads/express-1.5.1/express-1.5.1-linux_x86_64.tgz" target="_blank" rel="noopener">https://pachterlab.github.io/eXpress/downloads/express-1.5.1/express-1.5.1-linux_x86_64.tgz</a></p>
-</blockquote>
-<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">express [options]* &lt;target_seqs.fasta&gt; &lt;aligned_reads.(sam/bam)&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># &lt;target_seqs.fasta&gt;:	参考序列的fasta文件</span></span><br><span class="line"><span class="comment"># &lt;aligned_reads.(sam/bam)&gt;:	比对结果文件</span></span><br><span class="line"><span class="comment"># -o path: 	指定输出路径</span></span><br><span class="line"><span class="comment"># -B n:	指定进行batch EM rounds计算的次数,以时间为代价提高定量准确性</span></span><br><span class="line"><span class="comment"># -O n:	指定进行online EM rounds计算的次数,以时间为代价提高定量准确性</span></span><br><span class="line"><span class="comment"># -m n:	指定fragment的平均长度</span></span><br><span class="line"><span class="comment"># -s n：指定fragment长度的标准差</span></span><br><span class="line"><span class="comment"># -H str:	以逗号分隔的位置坐标,指定haplotypes的位置。利于等位基因的特异表达定量</span></span><br><span class="line"><span class="comment"># --output-align-samp:	</span></span><br><span class="line"><span class="comment"># --output-align-prob:</span></span><br><span class="line"><span class="comment"># --fr-stranded: 指定链特异性比对的方向,read1比对到forward链,read2比对到reverse链</span></span><br><span class="line"><span class="comment"># --rf-stranded：指定链特异性比对的方向,read1比对到reverse链,read2比对到forward链</span></span><br><span class="line"><span class="comment"># --f-stranded:	 single-end, read比对到forward链</span></span><br><span class="line"><span class="comment"># --r-stranded:	 single-end, read比对到reverse链</span></span><br><span class="line"><span class="comment">#</span></span><br></pre></td></tr></table></figure>
-<h2 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h2><p>eXpress需要一个multi-fasta格式的输入文件,计算该文件序列的转录丰度。</p>
-
-	
-	</div>
-  <a type="button" href="/2018/10/12/组装或定量-eXpress/#more" class="btn btn-default more">Read More</a>
-</div>
-
-	       
-		     
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/比对软件-Hisat2/">比对软件 Hisat2</a></div>						
-		</h3>
-	
-
-
-		     <div class="entry">
-  <div class="row">
-	
-	
-		<p>hisat2是快速灵敏的比对软件,可用于全基因组测序，转录组测序，外显子测序的数据比对.基于GCSA（bwt的拓展），我们设计了graph FM index用于比对。hisat2的比对结果是sam格式文件，你可以使用samtools，GATK等软件进行后续的分析.</p>
-	
-	</div>
-  <a type="button" href="/2018/10/12/比对软件-Hisat2/#more" class="btn btn-default more">Read More</a>
-</div>
-
-	       
 	     </div>
 	     <div>
 	       <center>
@@ -451,13 +411,13 @@
 <ul class="pagination">
 	 
 		
-    	<li class="prev"><a href="/categories/Bioinformatics/page/2/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i> Prev</a></li>
+    	<li class="prev"><a href="/Categories/Bioinformatics/page/2/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i> Prev</a></li>
   		
 
         <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
 
 		
-		   <li class="next"> <a href="/categories/Bioinformatics/page/4/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
+		   <li class="next"> <a href="/Categories/Bioinformatics/page/4/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
         
 	
 </ul>
@@ -488,9 +448,9 @@
 		<h4>Categories</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+			<li><a href="/Categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
 		
-			<li><a href="/categories/随想/">随想<span>1</span></a></li>
+			<li><a href="/Categories/随想/">随想<span>1</span></a></li>
 		
 		</ul>
 	</div>
@@ -501,29 +461,29 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/定量/">定量<span>3</span></a></li>
+			<li><a href="/Tags/定量/">定量<span>3</span></a></li>
 		
-			<li><a href="/tags/组装/">组装<span>1</span></a></li>
+			<li><a href="/Tags/生信基础/">生信基础<span>13</span></a></li>
 		
-			<li><a href="/tags/随想/">随想<span>1</span></a></li>
+			<li><a href="/Tags/富集分析/">富集分析<span>1</span></a></li>
 		
-			<li><a href="/tags/流程/">流程<span>1</span></a></li>
+			<li><a href="/Tags/数据处理/">数据处理<span>1</span></a></li>
 		
-			<li><a href="/tags/富集分析/">富集分析<span>1</span></a></li>
+			<li><a href="/Tags/扩增子/">扩增子<span>5</span></a></li>
 		
-			<li><a href="/tags/可视化/">可视化<span>1</span></a></li>
+			<li><a href="/Tags/流程/">流程<span>1</span></a></li>
 		
-			<li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
+			<li><a href="/Tags/差异分析/">差异分析<span>4</span></a></li>
 		
-			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
+			<li><a href="/Tags/软件和包/">软件和包<span>22</span></a></li>
 		
-			<li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
+			<li><a href="/Tags/变异检测/">变异检测<span>1</span></a></li>
 		
-			<li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
+			<li><a href="/Tags/可视化/">可视化<span>1</span></a></li>
 		
-			<li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
+			<li><a href="/Tags/组装/">组装<span>1</span></a></li>
 		
-			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
+			<li><a href="/Tags/随想/">随想<span>1</span></a></li>
 		
 		 
 		</ul>

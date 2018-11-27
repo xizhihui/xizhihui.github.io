@@ -120,7 +120,7 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/生信基础-质控的那些事/">生信基础 质控的那些事</a></div>						
+			<div class="article-title"><a href="/2018/10/12/生信基础-链特异性/">生信基础 链特异性</a></div>						
 		</h3>
 	
 
@@ -129,10 +129,44 @@
   <div class="row">
 	
 	
-		<h2 id="质控的方向"><a href="#质控的方向" class="headerlink" title="质控的方向"></a>质控的方向</h2><p>就平常的生物实验而言，质控是要贯穿到实验的各个阶段的，比如那些阳性阴性对照就可以认为是在进行质控了。而在测序数据的分析过程中，也同样需要将质控贯穿到分析的各个阶段。质控基本上可以分为三个阶段，依据你的分析对象和分析目的不同而有所变化：raw sequence data, alignment, variant calling. 目前比较常见的质控多是局限在raw data的质控这个阶段。虽然如此，另外两个阶段的质控也应该是需要的，因为后续的许多分析也是基于这两个阶段。Raw data 质控的方向通常有以下几类：quality trimming, adapter removal, contaminant filtering. 而在alignment阶段，我们可以通过uniquely mapped reads, signed noise ratio 进行质控。在variant calling阶段，还在调查中……</p>
+		<h2 id="1-链特异性的基本知识"><a href="#1-链特异性的基本知识" class="headerlink" title="1.链特异性的基本知识"></a>1.链特异性的基本知识</h2><ul>
+<li><a href="http://www.genek.tv/article/27" target="_blank" rel="noopener">http://www.genek.tv/article/27</a></li>
+<li><a href="http://databeauty.com/blog/opinion/2016/09/21/RNA-seq-strand-issues.html" target="_blank" rel="noopener">http://databeauty.com/blog/opinion/2016/09/21/RNA-seq-strand-issues.html</a></li>
+</ul>
+<p>在建库的时候,选择的建库方法可以是链特异性的,链特异性的文库可以清楚地分出reads的方向是否与转录本相同;常用的链特异性文库方法是基于dUTP的方法.</p>
+<table>
+<thead>
+<tr>
+<th>文库类型</th>
+<th>PE</th>
+<th>SE</th>
+<th>建库方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>非特异性</td>
+<td>无</td>
+<td>无</td>
+<td>Standard Illumina</td>
+</tr>
+<tr>
+<td>fr-firststrand</td>
+<td>RF</td>
+<td>R</td>
+<td>dUTP,NSR,NNSR</td>
+</tr>
+<tr>
+<td>fr-secondstrand</td>
+<td>FR</td>
+<td>F</td>
+<td>Ligation,Standard SOLiD</td>
+</tr>
+</tbody>
+</table>
 	
 	</div>
-  <a type="button" href="/2018/10/12/生信基础-质控的那些事/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2018/10/12/生信基础-链特异性/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -206,7 +240,7 @@
 <ul class="pagination">
 	 
 		
-    	<li class="prev"><a href="/tags/生信基础/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i> Prev</a></li>
+    	<li class="prev"><a href="/Tags/生信基础/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i> Prev</a></li>
   		
 
         <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
@@ -243,9 +277,9 @@
 		<h4>Categories</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+			<li><a href="/Categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
 		
-			<li><a href="/categories/随想/">随想<span>1</span></a></li>
+			<li><a href="/Categories/随想/">随想<span>1</span></a></li>
 		
 		</ul>
 	</div>
@@ -256,29 +290,29 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
+			<li><a href="/Tags/数据处理/">数据处理<span>1</span></a></li>
 		
-			<li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
+			<li><a href="/Tags/富集分析/">富集分析<span>1</span></a></li>
 		
-			<li><a href="/tags/定量/">定量<span>3</span></a></li>
+			<li><a href="/Tags/扩增子/">扩增子<span>5</span></a></li>
 		
-			<li><a href="/tags/流程/">流程<span>1</span></a></li>
+			<li><a href="/Tags/可视化/">可视化<span>1</span></a></li>
 		
-			<li><a href="/tags/富集分析/">富集分析<span>1</span></a></li>
+			<li><a href="/Tags/流程/">流程<span>1</span></a></li>
 		
-			<li><a href="/tags/可视化/">可视化<span>1</span></a></li>
+			<li><a href="/Tags/生信基础/">生信基础<span>13</span></a></li>
 		
-			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
+			<li><a href="/Tags/随想/">随想<span>1</span></a></li>
 		
-			<li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
+			<li><a href="/Tags/软件和包/">软件和包<span>22</span></a></li>
 		
-			<li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
+			<li><a href="/Tags/变异检测/">变异检测<span>1</span></a></li>
 		
-			<li><a href="/tags/组装/">组装<span>1</span></a></li>
+			<li><a href="/Tags/差异分析/">差异分析<span>4</span></a></li>
 		
-			<li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
+			<li><a href="/Tags/组装/">组装<span>1</span></a></li>
 		
-			<li><a href="/tags/随想/">随想<span>1</span></a></li>
+			<li><a href="/Tags/定量/">定量<span>3</span></a></li>
 		
 		 
 		</ul>
