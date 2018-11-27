@@ -1,0 +1,357 @@
+---
+title: 扩增子测序 QIIME2使用示例
+date: 2018-10-15
+toc: true
+categories: Bioinformatics
+tags:
+  - 软件和包
+  - 扩增子
+---
+
+**如果数据来源是分批次的话，需要分别导入，在去噪和生成特征表之后，把这些表进行合并，再进行后续分析。也就是说 1-3 对于分批次数据要分批次跑。**
+
+<!--more-->
+
+```bash
+wget -O sample_metadata.tsv https://data.qiime2.org/2018.6/tutorials/moving-pictures/sample_metadata.tsv
+mkdir emp-single-end-sequences
+wget -O emp-single-end-sequences/barcodes.fastq.gz https://data.qiime2.org/2018.6/tutorials/moving-pictures/barcodes.fastq.gz
+wget -O emp-single-end-sequences/sequences.fastq.gz https://data.qiime2.org/2018.6/tutorials/moving-pictures/sequences.fastq.gz
+```
+
+## 1 导入数据到QIIME2
+
+注意，metadata要放在input-path外部，同级存放。
+
+
+```bash
+qiime tools import \
+		--type EMPSingleEndSequences \
+		--input-path emp-single-end-sequences \
+		--output-path emp-single-end-sequences.qza
+```
+
+## 2 拆分序列
+在QIIME1中，我们通常使用split_libraries.py / split_libraries_fastq.py进行拆分序列，并同时进行质量过滤。但是在QIIME2中，序列拆分和质量过滤分开进行。所以你既可以从未拆分序列开始，也可以从已拆分序列开始。这里我们从未拆分的序列开始。
+
+```bash
+# 拆分序列
+qiime demux emp-single \
+		--i-seqs emp-single-end-sequences.qza \
+		--m-barcodes-file sample-metadata.tsv \
+		--m-barcodes-column BarcodeSequence \
+		--o-per-sample-sequences demux.qza
+
+# 统计拆分后的序列，了解每个样品有多少序列和序列碱基质量值分布
+qiime demux summarize --i-data demux.qza --o-visualization demux.qzv
+```
+在qiime2中，凡是通过--o-visualiztion参数生成的.qzv文件都可以通过qiime tools view来查看。如果是headless环境的话，你可以把.qzv文件解压，下载到本地来查看。
+
+```bash
+qiime tools view demux.qzv
+```
+
+## 3 序列质控和构建特征表（feature  table） 
+QIIME2中有许多中质控方法可供选择，比如DADA2、Deblur和基于质量分数过滤。这里我们使用DADA2和Deblur来进行质控，你可以选择任何一个方法。这些方法都会生成一个特征表( FeatureTable[Frequency])和特征数据( FeatureData[Frequency] )，前者包含每个样品中每条唯一序列的counts(frequences)，后者包含特征标识在特征表中对应的序列。FeatureTable与QIIME1中的OTU或biom表相对应，FeatureData同QIIME1中的rep_seqs.fna(代表序列)相对应。因为DADA2和Deblur的结果是通过聚类唯一序列得到的，所以这些结果与QIIME1得到的OTUs是一致的。但是在QIIME2中，获得的OTUs分辨率更高，这是因为在QIIME2中的质控效果更好。
+
+### 3.1 DADA2
+DADA2是一个检测和校正Illumina扩增测序数据的流程，里面的质控步骤会额外地过滤任何在测序数据中的phiX reads和嵌合序列。dada2 denoise-single方法需要2个参数用于质量过滤：--p-trim-left m, 会把序列的前m个碱基进行修剪, --p-trunc-len n, 会在第n个碱基处截断序列。这允许用户去除低质控的序列区域。具体的m和n值，你应该查看拆分序列后的序列质量统计结果才能确定。根据demux.qzv的结果，可以确定m=0，n=120.
+
+
+```bash
+# 去噪和构建
+qiime dada2 denoise-single \
+		--i-demultiplexed-seqs demux.qza \
+		--p-trim-left 0 \
+		--p-trunc-len 120 \
+		--o-representative-sequences rep-seqs-dada2.qza \
+		--o-table table-dada2.qza \
+		--o-denoising-stats stats-dada2.qza
+
+## 把获得stats-dada2.qza统计数据变成可视化的结果
+qiime metadata tabulate \
+		--m-input-file stats-dada2.qza \
+		--o-visualization stats-dada2.qzv
+```
+
+### 3.2 Deblur
+Deblur使用序列错误分析来获得高质量的序列数据，这里面经历了2个步骤，第一步就是基于质量分数进行质量过滤。第二步是使用qiime deblur denoise-16s方法。这个方法需要--p-trim-length n来截断第n位碱基。通常推荐n值取质量值中值开始下降到较低值时的碱基位置。根据前面的demux.qzv中质量分布图，115-130的质量值显著下降。在有些情况下，比如同时分析多批次的测序数据时，你要保证所有的序列都是等长的，以避免出现study-specific bias。由于我们在dada2中使用了120的长度，这里同样使用120.
+
+```bash
+# 质量过滤
+qiime quality-filter q-score \
+		--i-demux demux.qza \
+		--o-filtered-sequences demux-filtered.qza \
+		--o-filter-stats demux-filter-stats.qza
+# 过滤后可视化
+qiime metadata tabulate \
+		--m-input-file demux-filter-stats.qza \
+		--o-visualization demux-filter-stats.qzv
+
+# 去噪和构建
+qiime deblur denoise-16S \
+		--i-demultiplexed-seqs demux-filtered.qza \
+		--p-trim-length 120 \
+		--o-representative-sequences rep-seqs-deblur.qza \
+		--o-table table-deblur.qza \
+		--p-sample-stats \
+		--o-stats deblur-stats.qza
+
+# 可视化特种表
+qiime deblur visualize-stats \
+		--i-deblur-stats deblur-stats.qza \
+		--o-visualization deblur-stats.qzv
+```
+
+## 4 特种表和特征数据统计
+在完成质控和构建之后，你可能想探索一下生成的结果，feature-table summarize可以对特征表('OTUs')做各种统计图；feature-table tabulate-seqs可以生成特征标识符和序列的映射文件，让你易于进行BLAST. 后续的可视化对于你了解特征表的各个细节大有裨益。
+
+需要注意的是，正如开头所言，如果你的数据是分批次的话，那你应该先把各个特征表进行合并。
+
+
+```bash
+# 可选，合并分批次的特征表, 这里的rep-seqs-1/2.qza就是4.3中--o-representative-sequences参数指定的输出
+qiime feature-table merge \
+		--i-tables table-1.qza \
+		--i-tables table-2.qza \
+		--o-merged-table table-merge.qza
+qiime feature-table merge-seqs \
+		--i-data rep-seqs-1.qza \
+		--i-data rep-seqs-2.qza \
+		--i-merged-data rep-seqs.qza
+
+
+# 这里使用deblur生成的表，如果要接上合并分批次的特征表，type=merge
+type='deblur'
+qiime feature-table summarize \
+		--i-table table-${type}.qza \
+		--o-visualization table.qzv \
+		--m-sample-metadata-file sample-metadata.tsv
+
+qiime feature-table tabulate-seqs \
+		--i-data rep-seqs-${type}.qza \
+		--o-visualization rep-seqs.qzv
+```
+
+## 5 生成系统发育树用于多样性分析
+QIIME2支持多个系统多样性矩阵，包含Faith's Phylogenetic diversity和weighted/unweighted UniFrac.除了计算每个样品的counts (比如FeatureTable[Frequency]的数据) 以外, 这些多样性矩阵需要一个根系统发育树将各个特征联系起来。这个信息存储在 Phylogeny[Rooted]中，本步的目的就是生成这样一个Phylogeny[Rooted]文件。
+首先我们需要使用qiime alignment mafft对代表序列进行比对。
+然后我们用qiime alignment mask 把序列中的高度可变区屏蔽掉，因为这些区域会影响发育树的生成。
+接着使用qiime phylogeny fasttree生成聚类树，这是一个无根树
+最后，我们用qiime phylogeny midpoint-root，把无根树的中点节点作为其midpoint-root。
+```
+# 这里仍然使用deblur的表
+type='deblur'
+# 1. 比对
+qiime alignment mafft \
+		--i-sequences rep-seqs-${type}.qza \
+		--o-alignment aligned-rep-seqs.qza
+# 2. 屏蔽高变区
+qiime alignment mask \
+		--i-alignment aligned-rep-seqs.qza \
+		--o-masked-alignment masked-aligned-rep-seqs.qza
+# 3. 生成无根树
+qiime phylogeny fasttree \
+		--i-alignment masked-aligned-rep-seqs.qza \
+		--o-tree unrooted-tree.qza
+# 4. 转化为有根树
+qiime phylogney midpoint-root \
+		--i-tree unrooted-tree.qza \
+		--o-rooted-tree rooted-tree.qza
+```
+
+## 6 alpha和beta多样性分析
+
+qiime2的多样性分析可以通过q2-diversity插件实现，它支持计算alpha和beta多样性矩阵、相关的统计检验、生成交互可视化表等。我们首先使用core-metrics-phylogenetic方法，根据用户指定的深度(--p-sampling-depth)进行抽样，从而计算多样性矩阵，生成PCoA图。默认计算的矩阵类型有如下这些：
++ alpha diversity
++ + Shannon's diversity index : 群落丰富度的定量指标
++ + Observed OTUs: 群落丰富度的定性指标
++ + Faith's Phylogenetic Diversity: 群落丰富度的定性指标，考虑各个特征之间的系统发育关系
++ + Pielou's Evenness: 群落均匀度的指标
+
++ beta diversity
++ + Jaccard distanc： 群落相异性(群落多样性)的定性指标
++ + Bray-Curits distance: 群落相异性(群落多样性)的定量指标
++ + unweighted UniFrac distance: 群落相异性(群落多样性)的定性指标，考虑到各个特征之间的系统发育关系
++ + weighted UniFrac distance：群落相异性(群落多样性)的定量指标，考虑到各个特征之间的系统发育关系
+
+值得注意的是，--p-samping-depth的值是十分重要的，因为不同的抽样深度，最后统计出来的结果是不一样的，多样性矩阵对此很敏感。如果有样品的序列counts低于这个设定值时，这个样品将被丢弃。这个值的选择可以根据前面生成的特征表统计结果来选择（第四步的table.qzv)。如果数据量都很大，选最小的就好。但是有异常小的值，去掉这个值再选最小的。
+
+### 6.1 计算多样性矩阵
+
+
+```bash
+qiime diversity core-metrics-phylogenetic \
+		--i-phylogeny rooted-tree.qza \
+		--i-table table.qza \
+		--p-sampling-depth 653 \
+		--m-metadata-file sample-metadata.tsv \
+		--output-dir core-metrics-results
+```
+
+### 6.2 alpha diversity analysis
+
+在计算完多样性矩阵之后，我们可以探究各个样品中的微生物群落组成。
+首先我们检验一下metadata中类别与alpha 多样性之间的联系，这里我们使用Faith Phylogenetic Diversity和evenness metrics来计算。
+
+```bash
+qiime diversity alpha-group-significance \
+		--i-alpha-diversity core-metrics-results/faith_pd_vector.qza \
+		--m-metadata-file sample-metadata.tsv \
+		--o-visualization core-metrics-results/faith-pd-group-significance.qzv
+
+qiime diversity alpha-group-significance \
+		--i-alpha-diversity core-metrics-results/evenness_vector.qza \
+		--m-metadata-file sample-metadata.tsv \
+		--o-visualization core-metrics-results/evenness-group-significance.qzv
+```
+
+
+如果想探究某个条件同群落多样性（alpha diversity relation）的相关性的话，可以使用qiime diversity alpha-correlation来检验。
+
+### 6.3 beta diversity analysis
+
+接下来我们分析特定分组下的样品组成，这里使用permanova统计方法，命令是qiime diversity beta-group-significance. 它将探究组内样品的距离与组间样品的距离的差异所在。--p-pairwise用于设定成对检验，比如本例中可以是gut vs. tongue。下面我们将检验不同组之间的unweighted UniFrac distance差异。
+
+```bash
+# 分组为 BodySite, 统计unweighted_unifrace距离的组间是否有显著差异
+qiime diversity beta-group-significance \
+		--i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
+		--m-metadata-file sample-metadata.tsv \
+		--m-metadata-column BodySite \
+		--o-visualization core-metrics-results/unweighted-unifrac-body-site-significance.qzv \
+		--p-pairwise
+
+# 分组为Subject, 统计unweighted_unifrace距离的组间是否有显著差异
+qiime diversity beta-group-significance \
+		--i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
+		--m-metadata-file sample-metadata.tsv \
+		--m-metadata-column Subject \
+		--o-visualization core-metrics-results/unweighted-unifrac-subject-significance.qzv \
+		--p-pairwise
+```
+
+由于这里没有数据与样品的组成有关，我们就没有检验其中的关系。如果你对检验某个条件/分组对样品组成(sample composition)的相关性的话，可以结合使用qiime metadata distance-matrix, qiime diversity mantel, qiime diversity bioenv三个命令来实现。
+
+### 6.4 PCoA分析
+最后，分类是探究微生物群落组成的流行方法。我们可以使用Emperor工具来进行PCoA分析。虽然前面qiime diversity core-metrics-phylogenetic 生成了一些PCoA图，但是我们可以使用--p-custom-axes来个性化这个分析，这对探究时间序列数据十分有用。这里我们使用unweihted UniFrac和Bray-Curtis来进行PCoA分析，新的分析将加入daysSinceExperimentStart作为轴，以此来探究样品随时间的变化情况。
+
+```
+# 三维可视化展示unweighted_unifrac的PCoA分析
+qiime emperor plot \
+		--i-pcoa core-metrics-results/unweighted_unifrac_pcoa_results.qza \
+		--m-metadata-file sample-metadata.tsv \
+		--p-custom-axes DaysSinceExperimentStart \
+		--o-visualization core-metrics-results/unweighted-unifrac-emperor-DaysSinceExperimentStart.qzv
+# 三维可视化展示unweighted_unifrac的PCoA分析
+qiime emperor plot \
+		--i-pcoa core-metrics-results/bray_curtis_pcoa_results.qza \
+		--m-metadata-file sample-metadata.tsv \
+		--p-custom-axes DaysSinceExperimentStart \
+		--o-visualization core-metrics-results/bray_curtis-emperor-DaysSinceExperimentStart.qzv
+```
+
+## 7 alpha稀释性曲线分析
+稀释性曲线(rarefaction curve)：一般是从样本中随机抽取一定数量的个体，统计出这些个体所代表物种数目，并以个体数与物种数来构建曲线。它可以用来比较测序数量不同的样本物种的丰富度，也可以用来说明样本的取样大小是否合理。分析采用对优化序列进行随机抽样的方法，以抽到的序列数与它们所能代表OTU的数目构建rarefaction curve。稀释性曲线图中，当曲线趋向平坦时，说明取样的数量合理，更多的取样只会产生少量新的OTU，反之则表明继续取样还可能产生较多新的OTU。因此，通过作稀释性曲线，可以得出样品的取样深度情况。
+接下来我将使用qiime diversity alpha-rarefaction来探究抽样深度(sampling depth)与alpha diversity的关系。该命令将计算不同抽样深度下的一至多个α多样性矩阵，抽样深度由--p-min-depth/--p-max-depth指定。在每个抽样深度下，有10个多样性矩阵稀释表生成，稀释表迭代次数可由--p-iterations指定.你可以通过--me-metadata-file指定metadata进行样品分组。
+
+生成的可视化文件有2个图。上面的那个图是alpha稀释曲线，注意用于判定样品的群落丰富度是否已经完全被观测/测序到。如果该曲线趋于平滑的话，表明对应x轴的抽样深度已经足以发现所有的群落种类（物种）。下面的那个图在有分组的时候很重要。它表明了抽样稀释时各个组剩余的样品数。如果抽样的深度d大于某样品的总计counts的话，往后的深度该样品就无法进行抽样了。这个图显示这在一定抽样深度下，稀释曲线的可信度。如果在某个抽样深度时，有某个组的剩余样品数为0，那么在该抽样深度下计算个多样性矩阵值就不可靠。
+
+因此，你设定的--p-max-depth的值应该根据特征表统计的可视化图来选择，一般选择median frequency的值。如果稀释性曲线结果不好的话，可以适当提高或降低，但通常不能超出[low total frequency, max total frequency]的范围。
+
+
+```bash
+qiime diversity alpha-rarefaction \
+		--i-table table.qza \
+		--i-phylogeny rooted-tree.qza \
+		--p-max-depth 4000 \
+		--m-metadata-file sample-metadata.tsv \
+		--o-visualization alpha-rarefaction.qzv
+```
+
+
+## 8 物种分类
+接下来，我们将探究样品的物种组成，并将其同样品表型信息联系起来。
+
+第一步要对特征序列进行物种注释, 这里用到前面生成的特征数据(FeatureData[Sequence]).我们将使用一个预先训练过的朴素贝叶斯分类器(native bayes classifier)和q2-feature-classifier插件。这个分类器用Greengenes 13_8 99% OTUs (16s, 250 bases, v4 region, 515F/806R)的数据训练过。
+
+值得注意的是，物种分类器在经过你的特有样品类似产生的数据训练后将表现更好，所以你可以用自己的数据完成[分类器的训练](https://docs.qiime2.org/2018.6/tutorials/feature-classifier/)。在[资源页面](https://docs.qiime2.org/2018.6/data-resources/)中，我们有提供其他数据类型训练过的分类器,你需要下载你数据的相同类型数据训练过的分类器来进行后续的分析。
+
+```
+# 进行物种分类
+wget https://data.qiime2.org/2018.6/common/gg-13-8-99-515-806-nb-classifier.qza
+qiime feature-classifier classify-sklearn \
+		--i-classifier gg-13-8-99-515-806-nb-classifier.qza \
+		--i-reads rep-seqs.qza \
+		--o-classification taxonomy.qza
+# 可视化分类结果
+qiime metadata tabulate \
+		--m-input-file taxonomy.qza \
+		--o-visualization taxonomy.qzv
+# 物种分类柱状图
+qiime taxa barplot \
+		--i-table table.qza \
+		--i-taxonomy taxonomy.qza \
+		--m-metadata-file sample-metadata.tsv \
+		--o-visualization taxa-bar-plots.qzv
+```
+
+## 9 ANCOM (微生物组成/丰度差异分析)
+ANCOM，analysis of composition of microbiomes，可以用于确定不同样品间的微生物组成的丰度差异特征，在使用之前，你应该了解使用ANCOM的假设和局限性。丰度差异分析的研究比较活跃，目前已经有两个插件可以用于这个分析：q2-gneiss和q2-composition，这里我们使用q2-composition，如果你感兴趣的话，可以[在这里学习前者的使用](https://docs.qiime2.org/2018.6/tutorials/gneiss/).
+
+ANCOM假定只有少于25%的features会在样品之间发生改变。如果你确信你的研究有更多的features会发生改变，你应该舍弃ANCOM的使用，因为这将产生更多的错误，不论是一类还是二类错误。由于在各个身体部位的样品之间的丰度变化应该很大，所以我们只使用gut组样品进行这个分析。
+在提取出gut组的特征表后，使用ANCOM分析该表。ANCOM基于每个样品的特征频率，但是不能容忍0值的存在。这里分为2步。首先要生成组成特征表(FeatureTable[Composition]),然后才能进行差异分析。
+
+```bash
+# 对特征表进行过滤，只剩gut组
+qiime feature-table filter-samples \
+		--i-table table.qza \
+		--m-metadata-file sample-metadata.tsv \
+		--p-where "BodySite='gut'" \
+		--o-filtered-table gut-table.qza
+
+# 添加假的count（0值不容忍），生成组成特征表
+qiime composition add-pseudocount \
+		--i-table gut-table.qza \
+		--o-composition-table comp-gut-table.qza
+
+# ANCOM分析
+qiime composition ancom \
+		--i-table comp-gut-table.qza \
+		--m-metadata-file sample-metadata.tsv \
+		--m-metadata-column Subject \
+		--o-visualization ancom-Subject.qzv
+```
+
+有时候，我们会在特定的分类水平进行丰度差异分析，为了实现这个目标，我们可以对特征频数表进行聚合，然后再做ANCOM分析。
+
+```bash
+# 在level 6的分类水平聚合数据
+qiime taxa collapse \
+		--i-table gut-table.qza \
+		--i-taxonomy taxonomy.qza \
+		--p-level 6
+		--o-collapsed-table gut-table-L6.qza
+
+qiime composition add-pseudocount \
+		--i-table gut-table-L6.qza \
+		--o-composition-table comp-gut-table-L6.qza
+
+qiime composition ancom \
+		--i-table comp-gut-table-L6.qza \
+		--m-metadata-file sample-metadata.tsv \
+		--m-metadata-column Subject \
+		--o-visualization L6-ancom-Subject.qzv
+```
+
+
+## 10 成对差异比较/时间序列分析
+
+这部分是从fecal microbiota transplant教程里面整合的，主要使用的qiime longitudinal模块。要适应前面的数据，进行更改即可，具体的用法可以见**第三节 3.7 使用q2-longitudinal进行纵向和成对差异比较**。
+
+
+```bash
+# 这里有2个坑
+# 第一个是metadata里面donor的行在week列的值都为-1；而我们设定的值是0和18的比较。要把donor行都去掉
+# 第二个是pairwise-difference里面的metadata，evenness_vector对应的metric列名是pielou_e。
+```
