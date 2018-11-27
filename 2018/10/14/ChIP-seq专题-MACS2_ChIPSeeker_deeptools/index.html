@@ -1,0 +1,558 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>ChIP-seq专题 MACS2_ChIPSeeker_deeptools | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  <meta name="description" content="搞了个基于 snakemake 的 ChIP 分析流程，详见 github.com/xizhiui/bioinformatic_learning/pipelines/ChIP-seq">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="ChIP-seq专题 MACS2_ChIPSeeker_deeptools">
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+    <script src="/js/marked.js"></script>
+    <script src="/js/comment.js"></script>
+    <script src="/js/timeago.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+	<script src="/js/spin.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> ChIP-seq专题 MACS2_ChIPSeeker_deeptools</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>搞了个基于 snakemake 的 ChIP 分析流程，详见 github.com/xizhiui/bioinformatic_learning/pipelines/ChIP-seq</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <p>ChIP-seq是使用抗体捕获富集DNA片段和高通量测序技术来获得某些marker与DNA的结合位点的一项综合技术。ChIP是染色质免疫共沉淀, 通过特异抗体将DNA结合蛋白免疫沉淀, 用于捕获蛋白质的DNA靶点, 比如转录因子啊, 组蛋白修饰啊. 它主要分为以下四步：cross-linking、sonication、IP、Sequencing。在DNA与蛋白交联以后, 通过超声的方式随机打断染色体, 在利用抗体将目的交联物筛选出来, 再反交联获取DNA,最后上机测序.获取到测序数据后,典型的分析流程如图.</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_jpg/MPBFtnFrw4m2jWmOk9ic1ZkZ8VrQBrr8oCMwfEZDZG75OY3ic9qMqHhibpiafgZVfJaCSp7gqI87ETibVltjV4GgXkQ/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="ChIP分析流程"></p>
+<a id="more"></a>
+<p>文字版: rawdata -&gt; QC -&gt; mapping -&gt; peak calling(binding site) -&gt; visualization/annotation/MotifAnalysis.<br>在peak calling完成之后,我们首先会可视化看一下数据，接下来就会想知道这些peak都和什么样的基因有关. </p>
+<h2 id="一、Overview"><a href="#一、Overview" class="headerlink" title="一、Overview"></a>一、Overview</h2><h3 id="1-1-抗体的种类"><a href="#1-1-抗体的种类" class="headerlink" title="1.1 抗体的种类"></a>1.1 抗体的种类</h3><ul>
+<li>转录因子或抑制因子(transcription factors/repressors)如CTCT</li>
+<li>组蛋白或组蛋白修饰(histones/histone modifications)如H3/H3K4me3</li>
+<li>DNA修饰(DNA modfications)如DNA甲基化</li>
+<li>染色质重塑蛋白(chromatin remodelling proteins)如BMI1</li>
+<li>其他转录机制相关蛋白(transcription machinery)如Pol2</li>
+</ul>
+<h3 id="1-2-实验结果简要展示"><a href="#1-2-实验结果简要展示" class="headerlink" title="1.2 实验结果简要展示"></a>1.2 实验结果简要展示</h3><p><img src="https://s1.ax1x.com/2018/10/14/iUEKwq.png" alt="ChIP结果简要展示"></p>
+<h3 id="1-3-富集的类型"><a href="#1-3-富集的类型" class="headerlink" title="1.3 富集的类型"></a>1.3 富集的类型</h3><p>经过抗体富集的DNA可以是单个结合点，也可以是较宽的结合区域，当然也可能是任何地方。</p>
+<p><img src="https://s1.ax1x.com/2018/10/14/iUElkV.png" alt="type of enrichment"></p>
+<h3 id="1-4-表征结果的形式"><a href="#1-4-表征结果的形式" class="headerlink" title="1.4. 表征结果的形式"></a>1.4. 表征结果的形式</h3><p>ChIP测的是富集, 而且是相对富集, 就是指A/B两个区域的富集信号的富集差别.如果要得到绝对值的话,那就要进行归一化或者校正.影响富集的因素有,比如mark结合的起始位点, 能结合的位点种类或数目,富集时的信号强度.</p>
+<h2 id="二、step1-数据预处理"><a href="#二、step1-数据预处理" class="headerlink" title="二、step1: 数据预处理"></a>二、step1: 数据预处理</h2><h3 id="2-1-ChIP文库"><a href="#2-1-ChIP文库" class="headerlink" title="2.1 ChIP文库"></a>2.1 ChIP文库</h3><ul>
+<li>potential technical problems</li>
+<li><ul>
+<li>adapter contimination</li>
+</ul>
+</li>
+<li><ul>
+<li>PCR duplication</li>
+</ul>
+</li>
+<li>potential biological problems</li>
+<li><ul>
+<li>lack of enrichment</li>
+</ul>
+</li>
+<li><ul>
+<li>other selection bias</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2-质控"><a href="#2-2-质控" class="headerlink" title="2.2 质控"></a>2.2 质控</h3><ul>
+<li>QC of reads: fastqc, multiqc</li>
+<li>QC of alignment: multiqc</li>
+<li>Filtering of alignment with MAPQ: samtools</li>
+<li>Deduplication: picard</li>
+<li>基于read density去除outliers</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用MAPQ进行过滤其值低于20的</span></span><br><span class="line">samtools view -q 20 -b -o filtered.bam input.bam</span><br></pre></td></tr></table></figure>
+<h4 id="what-about-deduplication-为何不直接去掉所有的重复？"><a href="#what-about-deduplication-为何不直接去掉所有的重复？" class="headerlink" title="what about deduplication?为何不直接去掉所有的重复？"></a>what about deduplication?为何不直接去掉所有的重复？</h4><p>重复可以是由PCR引起的，也可能是由enrich引起的同一序列存在多个的情况，一般来说，重复使得富集更为明显，对识别富集区域(可能的结合区域/位点)有一定帮助。基于此，我们不能一股脑地去掉所有重复。</p>
+<h2 id="三、step2：peak-calling"><a href="#三、step2：peak-calling" class="headerlink" title="三、step2：peak calling"></a>三、step2：peak calling</h2><h3 id="3-1-Peak-callers-workflow"><a href="#3-1-Peak-callers-workflow" class="headerlink" title="3.1 Peak callers workflow"></a>3.1 Peak callers workflow</h3><p><img src="https://s1.ax1x.com/2018/10/14/iUVn3D.png" alt="Peak callers workflow"></p>
+<ul>
+<li>优化初始数据：校正forwar/reverse peak offset, deduplication</li>
+<li>构建模型：peak = Observed + Model</li>
+<li>滑动窗口: 窗口大小=fragmentSize/2, 保留counts数大于Model的窗口</li>
+<li>校正：若合并后的窗口counts数大于合并后model的counts，则合并相邻窗口生成总的候选peak set</li>
+</ul>
+<h3 id="3-2-Peak-calling-失败的原因"><a href="#3-2-Peak-calling-失败的原因" class="headerlink" title="3.2 Peak calling 失败的原因"></a>3.2 Peak calling 失败的原因</h3><p>Peak calling是富集程度、背景值、序列总数的综合结果。</p>
+<ul>
+<li>用于Observed的data是进行Model的data的子集(比如处理无效果，无处理的两组)</li>
+<li>Observed data有peak的地方，Model data连数据都没有(With no input the region around the peak is used to model the background)</li>
+</ul>
+<h3 id="3-3-结果可靠吗？"><a href="#3-3-结果可靠吗？" class="headerlink" title="3.3 结果可靠吗？"></a>3.3 结果可靠吗？</h3><ul>
+<li>多数ChIP enrichment不是链特异性的，你应该在两条链上都能看到富集</li>
+<li>重复之间的结果应该是一致的</li>
+</ul>
+<h3 id="3-4-下游分析"><a href="#3-4-下游分析" class="headerlink" title="3.4 下游分析"></a>3.4 下游分析</h3><ul>
+<li>composition and motif analysis: 前者分析peak所在DNA组成，后者分析序列潜在生物学功能</li>
+<li>GO：peak所在基因的GO富集</li>
+</ul>
+<h2 id="四、step3：探索peak-data"><a href="#四、step3：探索peak-data" class="headerlink" title="四、step3：探索peak data"></a>四、step3：探索peak data</h2><h3 id="4-1-可视化peak在序列上的分布情况"><a href="#4-1-可视化peak在序列上的分布情况" class="headerlink" title="4.1 可视化peak在序列上的分布情况"></a>4.1 可视化peak在序列上的分布情况</h3><ul>
+<li>Is there any enrichment?</li>
+<li>What is the size / patterning of enrichment?</li>
+<li>How well are my controls behaving?</li>
+<li>What is the best way to quantitate this data?</li>
+<li>Are there any technical artefacts?</li>
+<li>Are my peaks narrow or broad</li>
+<li>Do peak positions obviously correspond to existing features(like TSS)?</li>
+</ul>
+<h4 id="IGV查看enrichment"><a href="#IGV查看enrichment" class="headerlink" title="IGV查看enrichment"></a>IGV查看enrichment</h4><blockquote>
+<p>请注意，因为你需要使用IGV可视化查看enrichment的分布情况，这里IGV的input bam文件是sorted bam文件。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">samtools sort -O bam -o <span class="variable">$name</span>.sorted.bam <span class="variable">$name</span>.bam</span><br></pre></td></tr></table></figure>
+<h3 id="4-2-检查对照"><a href="#4-2-检查对照" class="headerlink" title="4.2 检查对照"></a>4.2 检查对照</h3><p>如果有使用IgG或Mock IP，不同的片段化DNA的方法的话，检查它们各自的peak中，peak coverage是均匀的吗？peak的分布模式是一致的吗？如果不是，那么：</p>
+<ul>
+<li>Low coverage：Repetitive unmappable regions, Holes in the assembly</li>
+<li>High coverage: Mismapped reads from outside the assembly</li>
+<li>Biases: DNA stability, GC content, Segmental Duplication</li>
+</ul>
+<h3 id="4-3-compare-samples"><a href="#4-3-compare-samples" class="headerlink" title="4.3 compare samples"></a>4.3 compare samples</h3><ul>
+<li>可视化比较peak分布</li>
+<li>scatterplot比较input/chip，input/input，chip/chip</li>
+<li>correlation metrix, correlation tree, pca-plot, tSNE plot</li>
+<li>Cumulative Distribution Plot, Q-Q plot</li>
+</ul>
+<h3 id="4-4-把enrichment-peak同序列特征相联系：trend-plots"><a href="#4-4-把enrichment-peak同序列特征相联系：trend-plots" class="headerlink" title="4.4 把enrichment/peak同序列特征相联系：trend plots"></a>4.4 把enrichment/peak同序列特征相联系：trend plots</h3><p>可视化peak在features(Gene body,promoter,CpG islands, Tss)的分布情况，查看是否符合一般性质(比如甲基化修饰应该在CpG islands富集), 然后分析可能的feature.</p>
+<ul>
+<li><p>查看总的enrich情况，看是否有peak在某个feature<br><img src="https://s1.ax1x.com/2018/10/14/iUZSat.png" alt="overall average"></p>
+</li>
+<li><p>查看不同sample在单个feature的enrichment<br><img src="https://s1.ax1x.com/2018/10/14/iUZAMQ.md.png" alt="enrichment of single feature"></p>
+</li>
+</ul>
+<h2 id="五、使用MACS2进行peak-calling"><a href="#五、使用MACS2进行peak-calling" class="headerlink" title="五、使用MACS2进行peak calling"></a>五、使用MACS2进行peak calling</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一个方法,使用python的pip</span></span><br><span class="line"><span class="comment"># 1.先用conda info --envs查看当前的环境, 我的是有base(python3.7)和env_name(python2.7)</span></span><br><span class="line"><span class="comment"># 2.如果没有python2.7的环境,可以创建一个名为py27的环境</span></span><br><span class="line">conda create -n py27 python=2.7</span><br><span class="line"><span class="built_in">source</span> activate py27</span><br><span class="line">pip install MACS2</span><br><span class="line"><span class="built_in">source</span> deactivate py27</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 进入python2.7环境</span></span><br><span class="line"><span class="built_in">source</span> activate env_name</span><br><span class="line">macs2 callpeak -c control.bam -t treat.bam \</span><br><span class="line">		-m 10 30 -p 1e-5 \</span><br><span class="line">		-f BAM -g mm -n treat</span><br><span class="line">    <span class="comment"># -c &lt;bam&gt;		进行peak calling的对照</span></span><br><span class="line">    <span class="comment"># -t &lt;bam&gt;		进行peak calling的目标</span></span><br><span class="line">    <span class="comment"># -m 10 30		建立双峰模型的参数</span></span><br><span class="line">    <span class="comment"># -p &lt;pvalue&gt;	显著性阈值,1e-5</span></span><br><span class="line">    <span class="comment"># -f BAM 		输入的文件类型</span></span><br><span class="line">    <span class="comment"># -g &lt;organism&gt; 进行peak calling的物种, hg(人), mm(小鼠), rn(rat)</span></span><br><span class="line">    <span class="comment"># -n &lt;string&gt;   输出文件的前缀</span></span><br><span class="line">nohup macs2 callpeak -c ../02alignment/IgGold.sorted.bam -t ../02alignment/suz12.sorted.bam -m 10 30 -p 1e-5 -f BAM -g mm -n suz12 2&gt;suz12.masc2.log &amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 每个样本共输出四个文件:</span></span><br><span class="line">    <span class="comment"># 1. name_peaks.xls         存放peak信息,格式与bed一致;坐标从1开始,而bed从0开始.</span></span><br><span class="line">    <span class="comment"># 2. name_model.r           peak模型,可直接进行R作图.</span></span><br><span class="line">    <span class="comment"># 3. name_peaks.narrowpeak  peak矩阵,与.broadpeak相似.可导入R等进行数据分析.BED6+4 format file.</span></span><br><span class="line">    <span class="comment"># 4. name_summits.bed       每个peak的peak summits(极值点的位置),用此寻找结合位点的motif.</span></span><br><span class="line"><span class="comment"># 查看peaks数目</span></span><br><span class="line">ls *.bed | xargs -i wc -l &#123;&#125; <span class="comment"># 6514 suz12_summits.bed</span></span><br></pre></td></tr></table></figure>
+<h2 id="六、使用ChIPseeker进行可视化"><a href="#六、使用ChIPseeker进行可视化" class="headerlink" title="六、使用ChIPseeker进行可视化"></a>六、使用ChIPseeker进行可视化</h2><h3 id="6-0-BED-文件格式"><a href="#6-0-BED-文件格式" class="headerlink" title="6.0 BED 文件格式"></a>6.0 BED 文件格式</h3><table>
+<thead>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>chrom</td>
+<td>start</td>
+<td>end</td>
+<td>name</td>
+<td>score</td>
+<td>strand</td>
+<td>thickStart</td>
+<td>thickEnd</td>
+<td>itemRgb</td>
+<td>blockCount</td>
+<td>blockSizes</td>
+<td>blockStarts</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>在这12列中,前3列是必需的字段.</li>
+<li>score是在genome browser中上色的分值(0-1000),就是peak峰的峰高(summit height of fragment pileup)</li>
+<li>strand值链的正负性, 但是在ChIP中我们无法区分链的正负性</li>
+<li>thickStart/End是在genome browser画矩形的起点和中点</li>
+<li>itemRgb是上色的颜色</li>
+<li>block是子元件,比如外显子内含子,5’utr之类的.</li>
+</ul>
+<h3 id="6-1-包和文件"><a href="#6-1-包和文件" class="headerlink" title="6.1 包和文件"></a>6.1 包和文件</h3><p>TxDb数据库依据你的ChIP实验动物的物种下载对应物种的数据库.也可以自己通过makeTxDbFromBiomart/makeTxDbFromUCSC包来准备TxDb类型的数据库.hg38(TxDb.Hsapiens.UCSC.hg38.knownGene)、hg19(TxDb.Hsapiens.UCSC.hg19.knownGene)、mm10(TxDb.Mmusculus.UCSC.mm10.knownGene)、mm9(TxDb.Mmusculus.UCSC.mm9.knownGene)</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">library</span>(ChIPseeker)							<span class="comment"># for all</span></span><br><span class="line"><span class="keyword">library</span>(TxDb.Hsapiens.UCSC.hg19.knownGene)	<span class="comment"># for 6.3</span></span><br><span class="line"><span class="keyword">library</span>(org.Hs.eg.db)						<span class="comment"># for 6.3,6.5</span></span><br><span class="line"><span class="keyword">library</span>(clusterProfiler)					<span class="comment"># for 6.5,6.6</span></span><br><span class="line"><span class="keyword">library</span>(ReactomePA)							<span class="comment"># for 6.5,6.6</span></span><br><span class="line">txdb = TxDb.Hsapiens.UCSC.hg19.knownGene</span><br><span class="line">peak = readPeakFile(filename)</span><br></pre></td></tr></table></figure>
+<h3 id="6-2-可视化peak在基因组上的富集区域-peaks-coverage-plot"><a href="#6-2-可视化peak在基因组上的富集区域-peaks-coverage-plot" class="headerlink" title="6.2 可视化peak在基因组上的富集区域(peaks coverage plot)"></a>6.2 可视化peak在基因组上的富集区域(peaks coverage plot)</h3><p>除了peak文件, GRangeList也支持作为出入,来比较不同bed文件的peak情况。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">covplot(peak, weightCol=<span class="string">'V5'</span>)		<span class="comment"># V5是peakfile的第五列(scores)</span></span><br><span class="line"><span class="comment"># 指定染色体区域</span></span><br><span class="line">covplot(peak, weightCol=<span class="string">'V5'</span>, chrs=c(<span class="string">'chr10'</span>, <span class="string">'chr12'</span>), xlim=c(<span class="number">4.5e7</span>, <span class="number">5e7</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="6-3-结合到TSS区域的peaks分析"><a href="#6-3-结合到TSS区域的peaks分析" class="headerlink" title="6.3 结合到TSS区域的peaks分析"></a>6.3 结合到TSS区域的peaks分析</h3><h4 id="6-3-1-peaks热图分析"><a href="#6-3-1-peaks热图分析" class="headerlink" title="6.3.1 peaks热图分析"></a>6.3.1 peaks热图分析</h4><p>为了分析结合到TSS区域的peaks, 我们需要准备好表示TSS regions的文件, 然后再进行计算.注意,我们这里指定了TSS上下游3000bp的区域, 你也可以指定其他区域(getBioRegion和getTagMatrix联合使用)</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">promoter = getPromoter(TxDb=txdb, upstream=<span class="number">3000</span>, downstream=<span class="number">3000</span>, by=<span class="string">'gene'</span>) <span class="comment"># by=gene/transcript</span></span><br><span class="line"><span class="comment"># getBioRegion(TxDb = NULL, upstream = 1000, downstream = 1000, by = "gene") # by=gene/transcript/exon/intron</span></span><br><span class="line">tagMatrix = getTagMatrix(peak, windows=promoter)</span><br><span class="line">tagHeatmap(tagMatrix, xlim=c(-<span class="number">3000</span>, <span class="number">3000</span>), color=<span class="string">'red'</span>)</span><br><span class="line"><span class="comment"># 一步法热图</span></span><br><span class="line">peakHeatmap(filename, TxDb=txdb, upstream=<span class="number">3000</span>, downstream=<span class="number">3000</span>, color=<span class="string">'red'</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="6-3-2-peaks的平均read-count-frequency"><a href="#6-3-2-peaks的平均read-count-frequency" class="headerlink" title="6.3.2 peaks的平均read count frequency"></a>6.3.2 peaks的平均read count frequency</h4><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">plotAvgProf(tagMatrix, xlim=c(-<span class="number">3000</span>,<span class="number">3000</span>), </span><br><span class="line">			xlab=<span class="string">"Genomic Region (5'-&gt;3')"</span>, ylab=<span class="string">"Read Count Frequency"</span>,</span><br><span class="line">			conf=<span class="number">0.95</span>, resample=<span class="number">1000</span>)	<span class="comment"># 添加置信区间</span></span><br><span class="line"><span class="comment"># 由文件名一步到位</span></span><br><span class="line">plotAvgProf2(filename, TxDb=txdb, upstream=<span class="number">3000</span>, </span><br><span class="line">			downstream=<span class="number">3000</span>, xlab=<span class="string">"Genomic Region (5'-&gt;3')"</span>, </span><br><span class="line">			ylab=<span class="string">"Read Count Frequency"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="6-4-注释及其可视化"><a href="#6-4-注释及其可视化" class="headerlink" title="6.4 注释及其可视化"></a>6.4 注释及其可视化</h3><ul>
+<li>获取peak附近最近的基因(6.4.2)</li>
+<li>注释peak所在的基因组区域(6.4.1)</li>
+</ul>
+<p>就像拿到fastq进行比对,你需要提供全基因组的参考序列, peak的注释同样需要参考信息, 也就是注释信息, 这些信息包含基因的起始和结束位置, 在基因的哪个区域是内含子, 哪里是外显子等信息.ChIP支持所有的有基因位置注释信息的物种, 这些注释我们要存储在TxDb对象里面.  </p>
+<p>注释有好几种种, 一种是genomic annotation(annotation列),另一种是nearest gene annotation(其他咧).第一种genomic annotation的注释peak的位置,在基因的什么地方,比如UTR,外显子内含子之类的, 这个位置可能就是调控的根本, 可变剪切的调控就属于这类.而nearest gene annotation的注释是最近的基因, 是离peak的距离最近的TSS, 这个TSS所在的基因,这个关注的是启动子区域, 这个基因最有可能被调控. 然后由于一个基因有多个TSS, 多个转录本, 所以有一列transcriptId的列. 还有第三种注释,那就是注释peak区域上下游某个范围, 看这个范围的基因都有些啥.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># peakAnno是个csAnno实例, 可以用as.GRanges把它转化成GRanges实例.</span></span><br><span class="line"><span class="comment"># as.data.frame可以把csAnno转换成data.frame,以供写入文件</span></span><br><span class="line"><span class="comment"># annoDb可选,用以添加各种ID的列. 物种要对应正确</span></span><br><span class="line">peakAnno = annotatePeak(filename, tssRegion=c(-<span class="number">3000</span>, <span class="number">3000</span>), TxDb=txdb, annoDb=<span class="string">'org.Hs.eg.db'</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="6-4-1-peaks分布区域的饼图-柱形图"><a href="#6-4-1-peaks分布区域的饼图-柱形图" class="headerlink" title="6.4.1 peaks分布区域的饼图, 柱形图"></a>6.4.1 peaks分布区域的饼图, 柱形图</h4><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">plotAnnoPie(peakAnno)</span><br><span class="line">plotAnnoBar(peakAnno)</span><br><span class="line"><span class="comment"># vennpie(peakAnno)</span></span><br><span class="line">upsetplot(peakAnno, vennpie=<span class="literal">T</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="6-4-2-peak-binding-site-与最近基因的TSS距离"><a href="#6-4-2-peak-binding-site-与最近基因的TSS距离" class="headerlink" title="6.4.2 peak(binding site)与最近基因的TSS距离"></a>6.4.2 peak(binding site)与最近基因的TSS距离</h4><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plotDistToTSS(peakAnno, title=<span class="string">'Distribution of transcription factor-binding loci\n relative to TSS'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="6-5-进行功能富集分析"><a href="#6-5-进行功能富集分析" class="headerlink" title="6.5 进行功能富集分析"></a>6.5 进行功能富集分析</h3><p>一旦我们掌握peak区域(TF-binding site)最近的基因信息后,就可以对这些基因进行富集分析啦, 看看它们有什么功能咯.这就有好多方向.Go、KEGG、DO(基因和人类疾病,DOSE)、Reactome（基因与pathways和reactions,ReactomePA).为了进行这些富集分析,就可能要用到seq2gene函数了.它可以以多对多的形式把基因组区域同基因联系起来.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pathway1 = ReactomePA::enrichPathway(as.data.frame(peakAnno)$geneId)</span><br><span class="line">head(pathway1)</span><br><span class="line">gene = seq2gene(peak, tssRegion=c(-<span class="number">1000</span>, <span class="number">1000</span>), flankDistance=<span class="number">3000</span>, TxDb=txdb)</span><br><span class="line">pathway2 = ReactomePA::enrichPathway(gene)</span><br><span class="line">head(pathway2, <span class="number">2</span>)</span><br><span class="line">dotplot(pathway2)</span><br></pre></td></tr></table></figure>
+<h3 id="6-6-比较不同的peak-data-set-多个peak结果一起分析咯"><a href="#6-6-比较不同的peak-data-set-多个peak结果一起分析咯" class="headerlink" title="6.6 比较不同的peak data set (多个peak结果一起分析咯)"></a>6.6 比较不同的peak data set (多个peak结果一起分析咯)</h3><h4 id="6-6-1-结合到TSS-region的peak分析-频率和热图"><a href="#6-6-1-结合到TSS-region的peak分析-频率和热图" class="headerlink" title="6.6.1 结合到TSS region的peak分析: 频率和热图"></a>6.6.1 结合到TSS region的peak分析: 频率和热图</h4><p>plotAvgProf,tagHeatmap都支持tagMatrixList的输入, plotAvgProf2和peakHeatmap也接受filenameList</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">peaks = sapply(filenames, readPeakFile)</span><br><span class="line">tagMatrixList = lapply(peaks, getTagMatrix, window=promoter)</span><br><span class="line">plotAvgProf(tagMatrixList, xlim=c(-<span class="number">3000</span>,<span class="number">3000</span>))		<span class="comment"># average profiles of ChIP peaks among different experiments</span></span><br><span class="line">plotAvfProf(tagMatrixList, xlim=c(-<span class="number">3000</span>,<span class="number">3000</span>), conf=<span class="number">0.95</span>, resample=<span class="number">500</span>, facet=<span class="string">'row'</span>)	<span class="comment"># 置信区间和按行作图</span></span><br><span class="line">tagHeatmap(tagMatrixList, xlim=c(-<span class="number">3000</span>,<span class="number">3000</span>), color=<span class="literal">NULL</span>)	<span class="comment"># heatmap of peaks among different experiments</span></span><br></pre></td></tr></table></figure>
+<h4 id="6-6-2-peak注释比较"><a href="#6-6-2-peak注释比较" class="headerlink" title="6.6.2 peak注释比较"></a>6.6.2 peak注释比较</h4><p>多个annotatePeak输出的结果整合成列表, 也可以输入到plotAnnoBar和plotDistToTSS里面去.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">peakAnnoList = lapply(filenames, annotatePeak, TxDb=txdb, tssRegion=c(-<span class="number">3000</span>, <span class="number">3000</span>), verbose=<span class="literal">F</span>)</span><br><span class="line">plotAnnoBar(peakAnnoList)	<span class="comment"># Genomic Annotation among different ChIPseq data</span></span><br><span class="line">plotDistToTSS(peakAnnoList)	<span class="comment"># Distribution of Binding Sites among different ChIPseq data</span></span><br></pre></td></tr></table></figure>
+<h4 id="6-6-3-功能富集比较"><a href="#6-6-3-功能富集比较" class="headerlink" title="6.6.3 功能富集比较"></a>6.6.3 功能富集比较</h4><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">genes = lapply(peakAnnoList, <span class="keyword">function</span>(x) as.data.frame(x)$geneId)</span><br><span class="line">names(genes) = sub(<span class="string">'_'</span>, <span class="string">'\n'</span>, names(genes))</span><br><span class="line">compKEGG = clusterProfiler::compareCluster(geneCluster=<span class="string">'genes'</span>, fun=<span class="string">'enrichKEGG'</span>,</span><br><span class="line">							<span class="comment"># One of "groupGO", "enrichGO", "enrichKEGG", "enrichDO" or "enrichPathway"</span></span><br><span class="line">							pvalueCutoff=<span class="number">0.05</span>,</span><br><span class="line">							pAdjustMethod=<span class="string">'BH'</span>)</span><br><span class="line">dotplot(compKEGG, showCategory=<span class="number">15</span>, title=<span class="string">'KEGG Pathway Enrichment Analysis'</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="6-6-4-peak和注释后基因的重叠"><a href="#6-6-4-peak和注释后基因的重叠" class="headerlink" title="6.6.4 peak和注释后基因的重叠"></a>6.6.4 peak和注释后基因的重叠</h4><p>这个可以用于实验重复/样品重复peak结果的一致性. 也可以看不同样品peak结果的交叉点.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">genes = lapply(peakAnnoList, <span class="keyword">function</span>(x) as.data.frame(x)$geneId)</span><br><span class="line">vennplot(genes)</span><br></pre></td></tr></table></figure>
+<h3 id="6-7-ChIP-seq-peak结果重叠的统计分析"><a href="#6-7-ChIP-seq-peak结果重叠的统计分析" class="headerlink" title="6.7 ChIP-seq peak结果重叠的统计分析"></a>6.7 ChIP-seq peak结果重叠的统计分析</h3><p>如果两个不同的ChIP实验的peak结果有很大重叠的话, 表明这两个实验中用于IP的蛋白极有可能是分子伴侣(cooperative in regulation). 所以,通过对重叠进行统计分析可以确认这个事实的显著性.<br>当然,这里面有一些理论前提.我们把基因组位置随机打断的话, 在把这些片段进行peak calling, 我们会得到一个peak的概率分布. 基于此, 我们可以统计ChIP-seq peak calling的显著性.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">p = GRanges(seqnames=c(<span class="string">'chr1'</span>, <span class="string">'chr3'</span>), ranges=IRanges(start=c(<span class="number">1</span>,<span class="number">100</span>), end=c(<span class="number">50</span>,<span class="number">130</span>)))</span><br><span class="line">shuffle(p, TxDb=txdb)</span><br><span class="line"><span class="comment"># 基于基因组坐标计算的overlap显著性</span></span><br><span class="line"><span class="comment">#（overlap significant of ChIP experiments based on the genome coordinations)</span></span><br><span class="line">enrichPeakOverlap(queryPeak=files[[<span class="number">5</span>]], targetPeak=unlist(files[<span class="number">1</span>:<span class="number">4</span>]),</span><br><span class="line">				  TxDb=txdb, pAdjustMethod=<span class="string">'BH'</span>,</span><br><span class="line">				  nShuffle=<span class="number">50</span>, chainFile=<span class="literal">NULL</span>,</span><br><span class="line">				  verbose=<span class="literal">F</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 基于最近TSS的基因注释计算overlap显著性</span></span><br><span class="line"><span class="comment"># overlap sig. calculated based on their nearest gene annotation</span></span><br><span class="line">enrichAnnoOverlap(queryPeak = filename, targetPeak = filename(s),</span><br><span class="line">				  TxDb=txdb, pAdjustMethod=<span class="string">'BH'</span>,</span><br><span class="line">				  chainFile=<span class="literal">NULL</span>, distanceToTSS_cutoff=<span class="literal">NULL</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="6-8-GEO中ChIP-seq数据挖掘"><a href="#6-8-GEO中ChIP-seq数据挖掘" class="headerlink" title="6.8 GEO中ChIP-seq数据挖掘"></a>6.8 GEO中ChIP-seq数据挖掘</h3><p>我们已经可以计算不同ChIP-seq实验peak数据的重叠显著性了.而在GEO上有相当多的数据,那么我们可以拿自己的数据与里面的peak数据去找重叠,如果找到了新的蛋白-蛋白复合转录体,又是个新发现了.<br>这个包里面涵盖了17000个GEO bed文件, 可以通过getGEOspecies来获取这些文件的概要.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">getGEOspecies()	<span class="comment"># 基于物种</span></span><br><span class="line">getGEOgenomeVersion() <span class="comment"># 基于基因组版本</span></span><br><span class="line"><span class="comment"># 获取详细信息</span></span><br><span class="line">hg19 = getGEOInfo(genome=<span class="string">'hg19'</span>, simplify=<span class="literal">T</span>)</span><br><span class="line"><span class="comment"># 下载数据</span></span><br><span class="line">downloadGEObedFiles(genome=<span class="string">'hg19'</span>, destDir=<span class="string">'hg19'</span>)	<span class="comment"># 根据基因组版本</span></span><br><span class="line">downloadGSMbedFiles(gsm_vector, destDir=<span class="string">'hg19'</span>)	    <span class="comment"># 根据gsm accession来下载</span></span><br></pre></td></tr></table></figure>
+<h2 id="七、使用deeptools进行可视化"><a href="#七、使用deeptools进行可视化" class="headerlink" title="七、使用deeptools进行可视化"></a>七、使用deeptools进行可视化</h2><p>deeptools可以用于处理比对结果的多项质控, 并基于比对文件生成校正后的bed或bigwig格式的覆盖度文件(normalized coverage file),这就允许多个处理组的比较了. 当然,利用这些文件, 你还可以进行多种可视化.</p>
+<p><img src="http://deeptools.readthedocs.io/en/latest/_images/start_workflow.png" alt="deeptools in ChIP-seq"></p>
+<ul>
+<li>多个Bam文件的相关性: multiBamSummary, plotCorrelation, multiBigWigSummary</li>
+<li>比对后read的覆盖度: plotCoverage(–ignoreDuplicates is useful), bamPEFragmentSize(for PE)</li>
+<li>GC-bias: computeGCBias, correctGCBias</li>
+<li>估测ChIP信号强度:</li>
+</ul>
+<h3 id="7-1-质控和数据处理"><a href="#7-1-质控和数据处理" class="headerlink" title="7.1 质控和数据处理"></a>7.1 质控和数据处理</h3><ol>
+<li>从bam文件生成bigwig<br><a href="http://deeptools.readthedocs.io/en/latest/content/tools/bamCoverage.html" target="_blank" rel="noopener">bamCoverage</a></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">bamCoverage -b reads.bam -o coverage.bw \</span><br><span class="line">			--binSize 10 \</span><br><span class="line">			--normalizeUsing RPGC \</span><br><span class="line">			--extendReads \</span><br><span class="line"><span class="comment"># -b,--bam 			输入的bam文件</span></span><br><span class="line"><span class="comment"># -o 				输出文件名</span></span><br><span class="line"><span class="comment"># -of 				输出格式, bigwig, bedgraph</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>检测多个测序结果之间的可重复性</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">multiBamSummary, plotCorrelation</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>检测和校正 GC bias</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">computeGCBias</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>以特定文件校正ChIP的覆盖率度</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bamCompare with ChIP = treatment, input=control</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>检测不同ChIP实验的信号强度</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plotFingerprint</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>得到TSS(转录起始位点)富集基因的覆盖度热图</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">computeMatrix, plotHeatmap</span><br></pre></td></tr></table></figure>
+<ol start="7">
+<li>比较基因在常染色体与性染色体之间的信号差别</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. 过滤出欲比较的基因</span><br><span class="line">2. computeMatrix</span><br><span class="line">3. plotProfile</span><br><span class="line">4. plotting the summary plots <span class="keyword">for</span> multiple samples</span><br></pre></td></tr></table></figure>
+<h3 id="7-2-函数的使用"><a href="#7-2-函数的使用" class="headerlink" title="7.2 函数的使用"></a>7.2 函数的使用</h3><h4 id="7-2-1-computeMatrix"><a href="#7-2-1-computeMatrix" class="headerlink" title="7.2.1 computeMatrix"></a>7.2.1 computeMatrix</h4><p>对基因组上的任何一个区域进行打分(peak 数),生成供plotHeatMap和plotProfiles用的中间文件。它的输入的是多个打分文件如bigwig文件,bed文件。当然，这个函数还可以根据输入的bw/bed文件对基因组上的区域进行筛选.<br>它有两种模式,参考点模式(reference-point)和大区域模式(scale-regions).</p>
+<p>bw文件可以通过bamCoverage/bamCompare函数得到.</p>
+<ul>
+<li>computeMatrix scale-regions模式</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">computeMatrix scale-regions -S &lt;bw/bed files&gt; -R &lt;bed file&gt; -b 1000</span><br><span class="line"></span><br><span class="line"><span class="comment"># -R,--regionsFileName 			你想可视化的区域的文件名,以BED/GTF格式.</span></span><br><span class="line"><span class="comment">#								多个文件的话,可以使用#进行分组.分组的文件将画在一起.</span></span><br><span class="line"><span class="comment"># -S,--scoreFileName 			打分文件, 以bw,bed格式.看这里,就需要打分文件啦.bigwig.</span></span><br><span class="line"><span class="comment"># -o,-out,--outFileName 		输出.gz文件以供plotHeatMap和plotProfile使用</span></span><br><span class="line"><span class="comment"># --outFileNameMatrix 			输出peak calling矩阵,可以进行差异分析</span></span><br><span class="line"><span class="comment"># --outFileSortedRegions 		在你设置一个筛选条件后输出的筛选后文件名</span></span><br><span class="line"><span class="comment"># -a,--downstream				转录起始位点下游的bp数</span></span><br><span class="line"><span class="comment"># -b,--upstream 				转录起始位点上游的bp数</span></span><br><span class="line"><span class="comment"># 具体筛选参数设定见handbook</span></span><br><span class="line"></span><br><span class="line">computeMatrix scale-regions \</span><br><span class="line">                -R genes_chr19_firstHalf.bed genes_chr19_secondHalf.bed \ <span class="comment"># separate multiple files with spaces</span></span><br><span class="line">                -S testFiles/log2ratio_*.bw  \ or use the wild card approach</span><br><span class="line">                -b 3000 -a 3000 \</span><br><span class="line">                --regionBodyLength 5000 \</span><br><span class="line">                --skipZeros -o matrix2_multipleBW_l2r_twoGroups_scaled.gz \</span><br><span class="line">                --outFileNameMatrix matrix2_multipleBW_l2r_twoGroups_scaled.tab \</span><br><span class="line">                --outFileSortedRegions regions2_multipleBW_l2r_twoGroups_genes.bed</span><br></pre></td></tr></table></figure>
+<ul>
+<li>computeMatrix reference-point模式</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">computedMatrix reference-point -S &lt;bw/bed file(s)&gt; -R &lt;bed file&gt; -a 3000 -b 3000</span><br><span class="line"></span><br><span class="line"><span class="comment"># 参数可见scale-regions模式</span></span><br><span class="line"><span class="comment"># --referencePoint 		指定参考点,可选的参考点为TSS,TES,center.TSS(region start) TES(region end), center(region center)</span></span><br><span class="line">						不管你用的啥参考点, 可视化时都是用TSS作为默认标签。</span><br><span class="line"></span><br><span class="line">computeMatrix reference-point --referencePoint TSS \ <span class="comment"># alternatives: TES, center</span></span><br><span class="line">       -b 3000 -a 10000 \ <span class="comment"># define the region you are interested in</span></span><br><span class="line">       -R testFiles/genes.bed \</span><br><span class="line">       -S testFiles/log2ratio_H3K4Me3_chr19.bw  \</span><br><span class="line">       --skipZeros \</span><br><span class="line">       -o matrix1_H3K4me3_l2r_TSS.gz \ <span class="comment"># to be used with plotHeatmap and plotProfile</span></span><br><span class="line">       --outFileSortedRegions regions1_H3K4me3_l2r_genes.bed</span><br></pre></td></tr></table></figure>
+<h4 id="7-2-2-multiBamSummary"><a href="#7-2-2-multiBamSummary" class="headerlink" title="7.2.2 multiBamSummary"></a>7.2.2 multiBamSummary</h4><p>multiBamSummary计算多个bam文件的基因组区域的read覆盖率,这个可以通过指定‘bins’模式来实现。你也可以通过‘BED-file’模式来计算指定区域的read覆盖度。它的标准输出是压缩后的numpy array(.npz). 可以使用plotCorrelation函数直接计算和可视化成对相关性。你还可以用plotPCA函数来对整个numpy文件进行主成分分析。我们并不推荐你只输入单个bw文件, 如果你只是想生成bedGraph文件的话, 倒是可以使用,但你要指定–outRawCounts选项.</p>
+<ul>
+<li>multiBamSummary bins</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">multiBamSummary bins --bamfiles file1.bam file2.bam ... -o results.npz</span><br><span class="line"></span><br><span class="line"><span class="comment"># --bamfiles 			你输入的bam文件,用空格隔开</span></span><br><span class="line"><span class="comment"># -o 					输出文件名, read覆盖度矩阵. .npz文件</span></span><br><span class="line"><span class="comment"># -l,--labels			指定输入文件的标签,应该是在覆盖度矩阵里作为列名</span></span><br><span class="line"><span class="comment"># --smartLabels 		自动指定标签, 使用文件名(basename filename)</span></span><br><span class="line"><span class="comment"># -r,--region 			指定计算覆盖度的区域.形式为-region chr10, -region chr10:456700:891000</span></span><br><span class="line"><span class="comment"># --ignoreDuplicates 	忽略重复的reads</span></span><br><span class="line"><span class="comment"># --outRawCounts 		把counts per region以\t分隔的形式写入文件</span></span><br><span class="line"><span class="comment"># -e,--extendReads 		当read的长度不足,允许read延伸到与fragment一致的长度.</span></span><br><span class="line">						不推荐在含有spliced-read的数据里使用, 如RNA-seq。</span><br><span class="line"><span class="comment"># --minMappingQuality	最低的比对质量分数,低于此的reads不进行计算</span></span><br><span class="line"><span class="comment"># --centerReads 		指定reads要覆盖到fragment长度的中心</span></span><br><span class="line"><span class="comment"># 其他设定fragment长短的选项见handbook</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>multiBamSummary BED-file </li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">multiBamSummary BED-file --BED selection.bed --bamfiles file1.bam file2.bam -o results.npz</span><br><span class="line"></span><br><span class="line"><span class="comment"># -b,--bamfiles 			索引后的bam文件,以空格分隔</span></span><br><span class="line"><span class="comment"># -o 						生成覆盖度的矩阵文件名</span></span><br><span class="line"><span class="comment"># --BED 					指定计算覆盖度的区域文件</span></span><br></pre></td></tr></table></figure>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2018/10/14/基因组变异检测(Variance-Calling-with-GATK)/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/10/12/差异分析-Ballgown/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+    	 
+	 <div id="comment-thread"></div>
+	 <div id="loading-spin"></div>
+	 <script type="text/javascript">
+	   getComments({
+           type: "github" ? "github" : "github",       
+	       user: "xizhihui",
+	       repo: "",
+		   client_id: "",
+           client_secret: "",
+		   no_comment: "No comments yet. Press the button and go to comment now!",
+		   go_to_comment: "Go to comment",
+		   no_issue: "no_issue",
+		   issue_title: "ChIP-seq专题 MACS2_ChIPSeeker_deeptools",
+		   issue_id: "",
+		   btn_class: "btn btn-primary",
+		   comments_target: "#comment-thread",
+		   loading_target: "#loading_spin"
+		   });
+	 </script>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-10-14 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#一、Overview"><span class="toc-article-text">一、Overview</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-1-抗体的种类"><span class="toc-article-text">1.1 抗体的种类</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-2-实验结果简要展示"><span class="toc-article-text">1.2 实验结果简要展示</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-3-富集的类型"><span class="toc-article-text">1.3 富集的类型</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-4-表征结果的形式"><span class="toc-article-text">1.4. 表征结果的形式</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#二、step1-数据预处理"><span class="toc-article-text">二、step1: 数据预处理</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-1-ChIP文库"><span class="toc-article-text">2.1 ChIP文库</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-2-质控"><span class="toc-article-text">2.2 质控</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#what-about-deduplication-为何不直接去掉所有的重复？"><span class="toc-article-text">what about deduplication?为何不直接去掉所有的重复？</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#三、step2：peak-calling"><span class="toc-article-text">三、step2：peak calling</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-1-Peak-callers-workflow"><span class="toc-article-text">3.1 Peak callers workflow</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-2-Peak-calling-失败的原因"><span class="toc-article-text">3.2 Peak calling 失败的原因</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-3-结果可靠吗？"><span class="toc-article-text">3.3 结果可靠吗？</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-4-下游分析"><span class="toc-article-text">3.4 下游分析</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#四、step3：探索peak-data"><span class="toc-article-text">四、step3：探索peak data</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#4-1-可视化peak在序列上的分布情况"><span class="toc-article-text">4.1 可视化peak在序列上的分布情况</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#IGV查看enrichment"><span class="toc-article-text">IGV查看enrichment</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#4-2-检查对照"><span class="toc-article-text">4.2 检查对照</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#4-3-compare-samples"><span class="toc-article-text">4.3 compare samples</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#4-4-把enrichment-peak同序列特征相联系：trend-plots"><span class="toc-article-text">4.4 把enrichment/peak同序列特征相联系：trend plots</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#五、使用MACS2进行peak-calling"><span class="toc-article-text">五、使用MACS2进行peak calling</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#六、使用ChIPseeker进行可视化"><span class="toc-article-text">六、使用ChIPseeker进行可视化</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#6-0-BED-文件格式"><span class="toc-article-text">6.0 BED 文件格式</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#6-1-包和文件"><span class="toc-article-text">6.1 包和文件</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#6-2-可视化peak在基因组上的富集区域-peaks-coverage-plot"><span class="toc-article-text">6.2 可视化peak在基因组上的富集区域(peaks coverage plot)</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#6-3-结合到TSS区域的peaks分析"><span class="toc-article-text">6.3 结合到TSS区域的peaks分析</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#6-3-1-peaks热图分析"><span class="toc-article-text">6.3.1 peaks热图分析</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#6-3-2-peaks的平均read-count-frequency"><span class="toc-article-text">6.3.2 peaks的平均read count frequency</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#6-4-注释及其可视化"><span class="toc-article-text">6.4 注释及其可视化</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#6-4-1-peaks分布区域的饼图-柱形图"><span class="toc-article-text">6.4.1 peaks分布区域的饼图, 柱形图</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#6-4-2-peak-binding-site-与最近基因的TSS距离"><span class="toc-article-text">6.4.2 peak(binding site)与最近基因的TSS距离</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#6-5-进行功能富集分析"><span class="toc-article-text">6.5 进行功能富集分析</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#6-6-比较不同的peak-data-set-多个peak结果一起分析咯"><span class="toc-article-text">6.6 比较不同的peak data set (多个peak结果一起分析咯)</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#6-6-1-结合到TSS-region的peak分析-频率和热图"><span class="toc-article-text">6.6.1 结合到TSS region的peak分析: 频率和热图</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#6-6-2-peak注释比较"><span class="toc-article-text">6.6.2 peak注释比较</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#6-6-3-功能富集比较"><span class="toc-article-text">6.6.3 功能富集比较</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#6-6-4-peak和注释后基因的重叠"><span class="toc-article-text">6.6.4 peak和注释后基因的重叠</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#6-7-ChIP-seq-peak结果重叠的统计分析"><span class="toc-article-text">6.7 ChIP-seq peak结果重叠的统计分析</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#6-8-GEO中ChIP-seq数据挖掘"><span class="toc-article-text">6.8 GEO中ChIP-seq数据挖掘</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#七、使用deeptools进行可视化"><span class="toc-article-text">七、使用deeptools进行可视化</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#7-1-质控和数据处理"><span class="toc-article-text">7.1 质控和数据处理</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#7-2-函数的使用"><span class="toc-article-text">7.2 函数的使用</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#7-2-1-computeMatrix"><span class="toc-article-text">7.2.1 computeMatrix</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#7-2-2-multiBamSummary"><span class="toc-article-text">7.2.2 multiBamSummary</span></a></li></ol></li></ol></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+  <script>
+  marked.setOptions({
+    highlight: function (code, lang) {
+        return hljs.highlightAuto(code).value;
+    }
+  });
+  function Highlighting(){
+    var markdowns = document.getElementsByClassName('markdown');
+    for(var i=0;i<markdowns.length;i++){
+        if(markdowns[i].innerHTML) markdowns[i].innerHTML =marked(markdowns[i].innerHTML);
+    }
+  }
+  window.addEventListener('DOMContentLoaded', Highlighting, false);
+  window.addEventListener('load', Highlighting, false);
+  </script>
+
+
+</body>
+   </html>

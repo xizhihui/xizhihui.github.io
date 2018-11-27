@@ -1,0 +1,551 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Page 2 | Bioinformatics | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+    <script src="/js/marked.js"></script>
+    <script src="/js/comment.js"></script>
+    <script src="/js/timeago.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+	<script src="/js/spin.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+<!-- title -->
+<div class="page-header ">
+  <h1 class="archive-title-category title ">Bioinformatics</h1>
+</div>
+
+<div class="row page">
+  <!-- cols -->
+  
+  <div class="col-md-9">
+	
+
+	  <div id="top_search"></div>
+
+      
+         <!-- display as entry -->
+	     <div class="mypage">
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-14 </div>
+			<div class="article-title"><a href="/2018/10/14/ChIP-seq专题-MACS2_ChIPSeeker_deeptools/" title="搞了个基于 snakemake 的 ChIP 分析流程，详见 github.com/xizhiui/bioinformatic_learning/pipelines/ChIP-seq">ChIP-seq专题 MACS2_ChIPSeeker_deeptools</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>ChIP-seq是使用抗体捕获富集DNA片段和高通量测序技术来获得某些marker与DNA的结合位点的一项综合技术。ChIP是染色质免疫共沉淀, 通过特异抗体将DNA结合蛋白免疫沉淀, 用于捕获蛋白质的DNA靶点, 比如转录因子啊, 组蛋白修饰啊. 它主要分为以下四步：cross-linking、sonication、IP、Sequencing。在DNA与蛋白交联以后, 通过超声的方式随机打断染色体, 在利用抗体将目的交联物筛选出来, 再反交联获取DNA,最后上机测序.获取到测序数据后,典型的分析流程如图.</p>
+<p><img src="http://mmbiz.qpic.cn/mmbiz_jpg/MPBFtnFrw4m2jWmOk9ic1ZkZ8VrQBrr8oCMwfEZDZG75OY3ic9qMqHhibpiafgZVfJaCSp7gqI87ETibVltjV4GgXkQ/640?wx_fmt=jpeg&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="ChIP分析流程"></p>
+	
+	</div>
+  <a type="button" href="/2018/10/14/ChIP-seq专题-MACS2_ChIPSeeker_deeptools/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/加权共表达基因网络分析-WGCNA/" title="呦呦呦">加权共表达基因网络分析 WGCNA</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>在拿到高通量测序数据以后(特别是基因表达数据),通常要分析基因与表型之间的相关性,以探究基因对表型所起关键的调节功能；而加权基因共表达网络分析(Weighted Gene Coexpression Network Analysis)就是其中比较实用的一种分析方法。那么,什么是加权基因共表达网络分析呢？要了解这个,我们需要对以下前提有所了解。</p>
+<ul>
+<li>功能相关的基因,其表达水平/表达模式也基本上是相似的</li>
+<li>表达水平高度相关的基因具有潜在的共有调控机制或参与相似的生物学过程</li>
+<li>如果得到某个表达模式中涉及到许多基因,其中有些基因是已知的,基于上面两点,那么就可以通过该已知基因的功能推测未知基因的功能</li>
+</ul>
+<p>根据上面三点,我们就要得到有许多基因涉及的表达模式,而这个可以通过对基因的表达数据进行聚类得到.讲到这里,WGCNA实质上也是一种聚类方法.而在WGCNA之前,现在也在使用的另一种基因与表型的分析方法,那就是基因共表达网络分析.而WGCNA相较于后者来讲,有何优势?</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/加权共表达基因网络分析-WGCNA/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/差异分析-Ballgown/" title="呦呦呦">差异分析 Ballgown</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>Ballgown是一款灵活的用于RNA-seq数据差异分析的软件，除了差异分析，他还可以进行转录本的组织、可视化和分析表达程度。</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/差异分析-Ballgown/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/质控软件-raw_data质控/">质控软件 raw_data质控</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>测序数据的质控是必须的，也是主要的。</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/质控软件-raw_data质控/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/差异分析-DESeq2/">差异分析 DESeq2</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<blockquote>
+<p>与DESeq类似的包有：edgeR、limma、DSS、EBSeq、baySeq</p>
+</blockquote>
+<h2 id="一、核心逻辑代码"><a href="#一、核心逻辑代码" class="headerlink" title="一、核心逻辑代码"></a>一、核心逻辑代码</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># countData: 以样品为列名,基因为行名的表达矩阵</span></span><br><span class="line"><span class="comment"># colData的形式: 以样品作为行名,列是样品对应的分组类型</span></span><br><span class="line"><span class="comment"># 生成count matrix</span></span><br><span class="line">dds &lt;- DESeqDataSetFromMatrix(countData = cts,</span><br><span class="line">                              colData = coldata,</span><br><span class="line">                              design = ~ batch + condition)</span><br><span class="line"><span class="comment"># 生成DESeq数据集</span></span><br><span class="line">dds &lt;- DESeq(dds)</span><br><span class="line"><span class="comment"># 进行比较，获得结果</span></span><br><span class="line">res &lt;- results(dds, contrast=c(<span class="string">'condition'</span>, <span class="string">'treat'</span>, <span class="string">'ctrl'</span>))</span><br><span class="line">resultsNames(dds)</span><br><span class="line">res &lt;- lfcShrink(dds, coef=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#  DESeqDataSetFromTximport:   由Salmon, Saifish, kallisto生成</span></span><br><span class="line"><span class="comment">#  DESeqDataSetFromHTSeq:      由htseq-counts生成</span></span><br><span class="line"><span class="comment">#  DESeqDataSet:               由RangedSummarizedExpriment生成</span></span><br></pre></td></tr></table></figure>
+	
+	</div>
+  <a type="button" href="/2018/10/12/差异分析-DESeq2/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/差异分析-RSEM/" title="呦呦呦">差异分析 RSEM</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>RSEM利用的是transcripts而非genome。我们有两种方式来构建RSEM转录参考，其一是利用参考基因组来构建；另外一种方式是从许多转录本中构建。</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/差异分析-RSEM/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/差异分析-edgeR/">差异分析 edgeR</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>下方的代码把edgeR的三种差异分析整合成一个函数, 调用时直接指定参数即可.</p>
+<ul>
+<li>classcial</li>
+<li>glm: likelihood ratio test/ quasi-likelihood F-test</li>
+<li><ul>
+<li>quasi-likelihood(qlf): 推荐用于差异分析，因为他对错误率限制较好。</li>
+</ul>
+</li>
+<li><ul>
+<li>likelihood(lrt)：对与单细胞RNA-测序和没有重复的数据较好</li>
+</ul>
+</li>
+</ul>
+	
+	</div>
+  <a type="button" href="/2018/10/12/差异分析-edgeR/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/比对-Bowtie2/">比对 Bowtie2</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>bowtie2是个超快的、内存占用少的序列比对工具，善于比对相对较长的基因组。bowtie2有gapped、pair-end和local比对模式，可以多线程进行。它是许多pipeline的首个步骤，例如变异检测，CHIP-seq，RNA-seq，BS-seq等等。<br>bowtie2不像常规目的的比对工具如MUMmer，Blast等。它在大的参考基因组的比对上表现更好，因为它针对当前各个测序平台的测序reads进行过优化。如果你的目的是比对很大的两个序列，比如基因组之间的比对，你应考虑使用MUMmer。如果你的目的是比对相对较短的序列如大肠杆菌的基因组，用bowtie2可以大大减少你的时间。</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/比对-Bowtie2/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/GO_KEGG富集分析-clusterProfiler/">GO_KEGG富集分析 clusterProfiler</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>首先呢,要详细了解的话,需要看这篇文献(Ten Years of Pathway Analysis: Current Approaches and Outstanding Challenges),他把基本的信号通路分析方法进行了总结.</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/GO_KEGG富集分析-clusterProfiler/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/比对-subread/">比对 subread</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>subread是个套件,里面有subread aligner, subjunc aligner, featureCounts, exactSNP.</p>
+<p>subread aligner可以用于DNA-seq和RNA-seq.当用于RNA-seq时,subread只适用于差异分析;对于检测基因组变异如可变剪接之类的,需要reads的完全比对,这时候可以使用subjunc进行比对.在比对RNA-seq数据时,subread不会取检测exon-exon junctions的存在,只会把exon-spanning eads的最大可比对区域作为比对结果.但是,如果只是进行差异分析的话,subread的结果足以进行.subread的比对上reads可能会比subjunc多.</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/比对-subread/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+	     </div>
+	     <div>
+	       <center>
+	         <div class="pagination">
+<ul class="pagination">
+	 
+		
+    	<li class="prev"><a href="/categories/Bioinformatics/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i> Prev</a></li>
+  		
+
+        <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+
+		
+		   <li class="next"> <a href="/categories/Bioinformatics/page/3/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
+        
+	
+</ul>
+</div>
+
+	       </center>
+	     </div>	
+      
+
+</div> <!-- col-md-9/col-md-12 -->
+
+
+<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search" class="st-search-input st-default-search-input form-control">
+   </div>  
+  <div id="local-search-result"></div>
+  </div>
+
+
+		
+			
+	<div class="widget">
+		<h4>Categories</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+		
+			<li><a href="/categories/随想/">随想<span>1</span></a></li>
+		
+		</ul>
+	</div>
+
+		
+			
+	<div class="widget">
+		<h4>Tag Cloud</h4>
+		<ul class="tag_box inline list-unstyled">		
+		
+			<li><a href="/tags/可视化/">可视化<span>1</span></a></li>
+		
+			<li><a href="/tags/流程/">流程<span>1</span></a></li>
+		
+			<li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
+		
+			<li><a href="/tags/富集分析/">富集分析<span>1</span></a></li>
+		
+			<li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
+		
+			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
+		
+			<li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
+		
+			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
+		
+			<li><a href="/tags/定量/">定量<span>3</span></a></li>
+		
+			<li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
+		
+			<li><a href="/tags/随想/">随想<span>1</span></a></li>
+		
+			<li><a href="/tags/组装/">组装<span>1</span></a></li>
+		
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>Recent Posts</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2018/11/26/第一次写的文/" title="有了第一次写的文，还差第一个爱的人"><i class="fa fa-file-o"></i>第一次写的文</a>
+      </li>
+    
+      <li>
+        <a href="/2018/11/02/可视化-ggplot2入门/" title="听说你要画图？试试 ggplot2 吧，可以搭积木的。"><i class="fa fa-file-o"></i>可视化 ggplot2入门</a>
+      </li>
+    
+      <li>
+        <a href="/2018/11/02/数据处理-dplyr/"><i class="fa fa-file-o"></i>数据处理 dplyr</a>
+      </li>
+    
+      <li>
+        <a href="/2018/10/28/流程构建-Snakemake使用初步/" title="呦呦呦"><i class="fa fa-file-o"></i>流程构建 Snakemake使用初步</a>
+      </li>
+    
+      <li>
+        <a href="/2018/10/28/可变剪切-rMATS和rmats2sashimiplot/"><i class="fa fa-file-o"></i>可变剪切 rMATS和rmats2sashimiplot</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>Links</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="fa fa-github"></i><a href="https://github.com/wzpan/freemind/" title="Freemind's Github repository." target="_blank" ]);"="">Freemind</a></li>
+	
+		<li><i class="fa fa-github"></i><a href="http://www.github.com/xizhihui" title="My Github account." target="_blank" ]);"="">xizhihui</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+
+
+</div>
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+  <script>
+  marked.setOptions({
+    highlight: function (code, lang) {
+        return hljs.highlightAuto(code).value;
+    }
+  });
+  function Highlighting(){
+    var markdowns = document.getElementsByClassName('markdown');
+    for(var i=0;i<markdowns.length;i++){
+        if(markdowns[i].innerHTML) markdowns[i].innerHTML =marked(markdowns[i].innerHTML);
+    }
+  }
+  window.addEventListener('DOMContentLoaded', Highlighting, false);
+  window.addEventListener('load', Highlighting, false);
+  </script>
+
+
+</body>
+   </html>

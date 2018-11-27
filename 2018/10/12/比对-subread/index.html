@@ -1,0 +1,348 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>比对 subread | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  <meta name="description" content="subread是个套件,里面有subread aligner, subjunc aligner, featureCounts, exactSNP.
+subread aligner可以用于DNA-seq和RNA-seq.当用于RNA-seq时,subread只适用于差异分析;对于检测基因组变异如可变剪接之类的,需要reads的完全比对,这时候可以使用subjunc进行比对.在比对RNA-seq数据时,subread不会取检测exon-exon junctions的存在,只会把exon-spanning eads的最大可比对区域作为比对结果.但是,如果只是进行差异分析的话,subread的结果足以进行.subread的比对上reads可能会比subjunc多.">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="比对 subread">
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+    <script src="/js/marked.js"></script>
+    <script src="/js/comment.js"></script>
+    <script src="/js/timeago.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+	<script src="/js/spin.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> 比对 subread</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>subread是个套件,里面有subread aligner, subjunc aligner, featureCounts, exactSNP.</p>
+<p>subread aligner可以用于DNA-seq和RNA-seq.当用于RNA-seq时,subread只适用于差异分析;对于检测基因组变异如可变剪接之类的,需要reads的完全比对,这时候可以使用subjunc进行比对.在比对RNA-seq数据时,subread不会取检测exon-exon junctions的存在,只会把exon-spanning eads的最大可比对区域作为比对结果.但是,如果只是进行差异分析的话,subread的结果足以进行.subread的比对上reads可能会比subjunc多.</p>
+<a id="more"></a>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载源文件</span></span><br><span class="line">https://sourceforge.net/projects/subread/files/</span><br><span class="line">tar zxvf subread-1.6.2.tar.gz</span><br><span class="line">make -f Makefile.Linux</span><br><span class="line"></span><br><span class="line"><span class="comment"># in R</span></span><br><span class="line">biocLite(<span class="string">'Rsubread'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="subread-aligner"><a href="#subread-aligner" class="headerlink" title="subread aligner"></a>subread aligner</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">subread-buildindex -o my_index ref.fa  			<span class="comment">#允许单染色体文件</span></span><br><span class="line"><span class="comment"># -B 					把index进行分割多个文件;会覆盖-M的设置</span></span><br><span class="line"><span class="comment"># -c 					构建color-space索引</span></span><br><span class="line"><span class="comment"># -f &lt;int&gt; 				去除高度重复序列的重复阈值,高于该阈值的重复序列将被去除</span></span><br><span class="line"><span class="comment"># -F 					构建一个完全索引,小鼠的完全索引达14G</span></span><br><span class="line"><span class="comment"># -M &lt;int&gt; 				可以用int MB的RAM</span></span><br><span class="line"><span class="comment"># -o &lt;string&gt;			index的basename</span></span><br><span class="line"></span><br><span class="line">subread-align -t 1 -i my_index -r reads.fastq -o subread_results.bam</span><br><span class="line"><span class="comment"># -t &lt;int&gt;				进行比对的数据类型, 0是RNA-seq, 1是DNA-seq</span></span><br><span class="line"><span class="comment"># --multiMapping 		允许多比对</span></span><br><span class="line"><span class="comment"># -B &lt;int&gt; 				允许的多比对数指定为int</span></span><br><span class="line"><span class="comment"># -T &lt;int&gt;				指定用int个threads</span></span><br><span class="line"><span class="comment"># -I &lt;int&gt; 				检测的indel长度最长为int bp</span></span><br><span class="line"><span class="comment"># -d &lt;int&gt; 				minFragLength指定为50</span></span><br><span class="line"><span class="comment"># -D 600				maxFragLength指定为600</span></span><br><span class="line"><span class="comment"># -r fastq文件			输入的reads</span></span><br><span class="line"><span class="comment"># -R read2.fastq 		如果是paired-end,由此指定read2</span></span><br><span class="line"><span class="comment"># -a &lt;string&gt;			指定注释文件</span></span><br><span class="line"><span class="comment"># -A &lt;string&gt; 			指定参考基因组和注释之间的chr名对应关系的文件</span></span><br><span class="line"><span class="comment">#						第一列是注释里面的染色体名,第二列是参考基因组对应的染色体名.不需要列名.</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -b 					当比对color space文件时,输出的比对结果保持正常格式,而非color-space</span></span><br><span class="line"><span class="comment"># -F &lt;string&gt; 			指定注释文件的格式, 'GTF', 'GFF', 'SAF'(在Rsubread里默认这个)</span></span><br><span class="line"><span class="comment"># -m &lt;int&gt; 				指定一致性阈值,当比对一致性超过该阈值则认为比对上</span></span><br><span class="line"><span class="comment"># -n &lt;int&gt; 				允许的最大错配数</span></span><br><span class="line"><span class="comment"># -p &lt;int&gt; 				当是paired-end时,两个reads的比对一致性最低值,应该小于-m的指定值</span></span><br><span class="line"><span class="comment"># -P 3/6/33/64			指定使用的phred质量值,3指phred+33; 在Rsubread中,33值phred+33.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 其他有关genomic variance的设置见handbook.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 比对microRNA-seq reads</span></span><br><span class="line"><span class="comment"># 注释下载: http://www.mirbase.org/</span></span><br><span class="line">subread-buildindex -F -B -o mm10_full_index mm10.fa</span><br><span class="line">subread-align -t 1 -i mm10_full_index \</span><br><span class="line">			  -n 35 -m 4 -M 3 -T 10 -I 0 \</span><br><span class="line">			  --multiMapping -B 10 \</span><br><span class="line">			  -r miRNA_reads.fastq -o results.sam</span><br></pre></td></tr></table></figure>
+<h2 id="subjunc"><a href="#subjunc" class="headerlink" title="subjunc"></a>subjunc</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">subjunc -i my_index -r rnaseq-reads1.txt -R rnaseq-read2.txt -o subjunc_result</span><br></pre></td></tr></table></figure>
+<h2 id="featureCounts定量"><a href="#featureCounts定量" class="headerlink" title="featureCounts定量"></a>featureCounts定量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">featureCounts -T 5 -a annotation.gtf -t exon -g gene_id \</span><br><span class="line">			  -o counts.txt mapping_results_SE.sam</span><br><span class="line">			  # 可以有多个bam文件</span><br><span class="line"># paired-end</span><br><span class="line">featureCounts -p -a annotation.gtf -t exon -g gene_id \</span><br><span class="line">			  # -P -d 50 -D 600		# 指定了fragment长度</span><br><span class="line">			  # -B 	# 不考虑fragment,但两个read都要比对上,才计数</span><br><span class="line">			  # -C  # 排除嵌合(chimeric fragments)</span><br><span class="line">			  -o counts.txt mapping_results_PE.bam</span><br></pre></td></tr></table></figure>
+<h2 id="SNP-calling"><a href="#SNP-calling" class="headerlink" title="SNP calling"></a>SNP calling</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">exactSNP [options] -i input -g reference genome -o output</span><br><span class="line"></span><br><span class="line"><span class="comment"># -a &lt;file&gt; 			指定vcf格式的snp注释文件</span></span><br><span class="line"><span class="comment"># -b 					指定输入文件是bam文件</span></span><br><span class="line"><span class="comment"># -f &lt;float&gt; 			指定含SNP位点区域的错配碱基的最小区域</span></span><br><span class="line"><span class="comment"># -g &lt;file&gt; 			指定参考基因组文件, fasta格式</span></span><br><span class="line"><span class="comment"># -i &lt;file&gt;				指定输入文件,SAM或BAM,如果是BAM,指定-b选项</span></span><br><span class="line"><span class="comment"># -n &lt;int&gt; 				指定出现错配碱基的最小数目</span></span><br><span class="line"><span class="comment"># -Q &lt;int&gt; 				指定在50x测序深度是的SNPcalling的q-value的cutoff值</span></span><br><span class="line"><span class="comment"># -r &lt;int&gt; 				判定为SNp时需要的最少比对上reads数目</span></span><br><span class="line"><span class="comment"># -s &lt;int&gt; 				指定作为SNP位点的碱基质量值阈值</span></span><br><span class="line"><span class="comment"># -t &lt;int&gt; 				read两端切除的碱基数</span></span><br><span class="line"><span class="comment"># -T &lt;int&gt; 				Threads</span></span><br><span class="line"><span class="comment"># -x &lt;int&gt; 				判断为SNP的位点的最大测序深度</span></span><br></pre></td></tr></table></figure>
+<h2 id="在R里面"><a href="#在R里面" class="headerlink" title="在R里面"></a>在R里面</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">library</span>(Rsubread)</span><br><span class="line">buildindex(basename=<span class="string">'my_index'</span>, reference=<span class="string">'genome.fa'</span>)</span><br><span class="line">align(index=<span class="string">'my_index'</span>, type=<span class="string">'dna'</span>,</span><br><span class="line">	  readfile1=<span class="string">'reads.txt.gz'</span>,</span><br><span class="line">	  output_file=<span class="string">'rsubread.bam'</span>,</span><br><span class="line">	  nthreads=<span class="number">5</span>,</span><br><span class="line">	  indels=<span class="number">16</span>,</span><br><span class="line">	  unique=<span class="literal">F</span>, nBestLocations=<span class="number">3</span>)</span><br><span class="line"><span class="comment"># pairedd-end</span></span><br><span class="line">align(index=<span class="string">'my_index'</span>,</span><br><span class="line">	  readfile1=<span class="string">'reads1.fq.fz'</span>, readfile2=<span class="string">'reads2.fq.gz'</span>,</span><br><span class="line">	  type=<span class="string">'dna'</span>,</span><br><span class="line">	  output_file=<span class="string">'rsubread.bam'</span>,</span><br><span class="line">	  minFragLength=<span class="number">50</span>, maxFragLength=<span class="number">600</span>)</span><br><span class="line"></span><br><span class="line">subjunc(index=<span class="string">'my_index'</span>, readfile1=<span class="string">'rnaseq-reads.txt.gz'</span>, output_file=<span class="string">'subjunc_results.bam'</span>)</span><br><span class="line"></span><br><span class="line">featureCounts(files=<span class="string">"mapping_results_SE.sam"</span>, nthreads=<span class="number">5</span>)</span><br><span class="line"><span class="comment"># 提供参考注释的话</span></span><br><span class="line">featureCounts(files=<span class="string">"mapping_results_SE.sam"</span>,annot.ext=<span class="string">"annotation.gtf"</span>,</span><br><span class="line">isGTFAnnotationFile=<span class="literal">TRUE</span>,GTF.featureType=<span class="string">"exon"</span>,GTF.attrType=<span class="string">"gene_id"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># paired-end</span></span><br><span class="line">featureCounts(files=c(<span class="string">'read1_mapped.bam'</span>, <span class="string">'read2_mapped.bam'</span>))</span><br><span class="line">featureCounts(files=<span class="string">'PE_mapped.bam'</span>, isPairedEnd=<span class="literal">T</span>,</span><br><span class="line">			 requireBothEndsMapped=<span class="literal">TRUE</span>, <span class="comment"># 要两个reads都比对上才计数</span></span><br><span class="line">			 countChimericFragments=<span class="literal">FALSE</span>) <span class="comment"># 不考虑chimeric fragment</span></span><br></pre></td></tr></table></figure>
+<h2 id="其他小功能"><a href="#其他小功能" class="headerlink" title="其他小功能"></a>其他小功能</h2><ul>
+<li>repair: 把paired-end.bam文件里面的reads成对放置</li>
+<li>coverageCount: 计算基因组中某个区域的read coverage</li>
+<li>flattenGTF: 把GTF里面的某个feature的行提取成SAF文件.如提取所有的exons注释</li>
+<li>promoterRegions:只在Rsubread里面有,提取出每个基因的启动子区域位置.</li>
+<li>removeDunp: 去除SAM文件里面的重复reads</li>
+<li>subread-fullscan：提取目标序列在染色体上的高度同源序列位置</li>
+</ul>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2018/10/12/GO_KEGG富集分析-clusterProfiler/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/10/12/比对软件-Hisat2/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+    	 
+	 <div id="comment-thread"></div>
+	 <div id="loading-spin"></div>
+	 <script type="text/javascript">
+	   getComments({
+           type: "github" ? "github" : "github",       
+	       user: "xizhihui",
+	       repo: "",
+		   client_id: "",
+           client_secret: "",
+		   no_comment: "No comments yet. Press the button and go to comment now!",
+		   go_to_comment: "Go to comment",
+		   no_issue: "no_issue",
+		   issue_title: "比对 subread",
+		   issue_id: "",
+		   btn_class: "btn btn-primary",
+		   comments_target: "#comment-thread",
+		   loading_target: "#loading_spin"
+		   });
+	 </script>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-10-12 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安装"><span class="toc-article-text">安装</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#subread-aligner"><span class="toc-article-text">subread aligner</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#subjunc"><span class="toc-article-text">subjunc</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#featureCounts定量"><span class="toc-article-text">featureCounts定量</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#SNP-calling"><span class="toc-article-text">SNP calling</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#在R里面"><span class="toc-article-text">在R里面</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#其他小功能"><span class="toc-article-text">其他小功能</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+  <script>
+  marked.setOptions({
+    highlight: function (code, lang) {
+        return hljs.highlightAuto(code).value;
+    }
+  });
+  function Highlighting(){
+    var markdowns = document.getElementsByClassName('markdown');
+    for(var i=0;i<markdowns.length;i++){
+        if(markdowns[i].innerHTML) markdowns[i].innerHTML =marked(markdowns[i].innerHTML);
+    }
+  }
+  window.addEventListener('DOMContentLoaded', Highlighting, false);
+  window.addEventListener('load', Highlighting, false);
+  </script>
+
+
+</body>
+   </html>

@@ -1,0 +1,381 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>数据处理 dplyr | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  <meta name="description" content="以前就看过一些 dplyr 的使用，记得当初说是和 tplyr，reshape2 并称 R 数据处理三剑客，想想和 web 开发的 HTML，JavaScript，CSS 的三剑客有些类似。这两天又在《R 数据科学》看到 dplyr 的使用，还挺详细的。现在把书里的相关用法记录在此，刚好也把书上的习题在这里做个回答，以加强使用。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="数据处理 dplyr">
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+    <script src="/js/marked.js"></script>
+    <script src="/js/comment.js"></script>
+    <script src="/js/timeago.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+	<script src="/js/spin.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> 数据处理 dplyr</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>以前就看过一些 dplyr 的使用，记得当初说是和 tplyr，reshape2 并称 R 数据处理三剑客，想想和 web 开发的 HTML，JavaScript，CSS 的三剑客有些类似。这两天又在《R 数据科学》看到 dplyr 的使用，还挺详细的。现在把书里的相关用法记录在此，刚好也把书上的习题在这里做个回答，以加强使用。</p>
+<a id="more"></a>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>dplyr 的这些函数的第一个参数是一个数据框，随后的参数是对数框的操作，使用列名（不带引号）引用列，输出一个新的数据框，不会更改源数据。这里使用的数据是 nycflights13 包里的 flights，不是 tidyverse 里的，需要我们通过 <em>install.packages</em> 安装。具体的列名代表了什么意思，可以通过 <em>?flights</em> 查看。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">suppressPackageStartupMessages(<span class="keyword">library</span>(nycflights13))</span><br><span class="line">suppressPackageStartupMessages(<span class="keyword">library</span>(tidyverse))</span><br><span class="line">suppressPackageStartupMessages(<span class="keyword">library</span>(dplyr))</span><br><span class="line">flights[<span class="number">1</span>:<span class="number">4</span>,]</span><br></pre></td></tr></table></figure>
+<h2 id="使用-filter-筛选行"><a href="#使用-filter-筛选行" class="headerlink" title="使用 filter 筛选行"></a>使用 filter 筛选行</h2><p>我们使用 filter 对数据框的行进行筛选，对于数据框列的操作有以下几种。</p>
+<ul>
+<li>比较运算：&gt;, &gt;=, &lt;=, &lt;, !=, ==（比较浮点数使用 near 函数）</li>
+<li>逻辑运算：&amp;, |, !, xor(x,y), isTRUE(x), isFALSE(x), %in%</li>
+<li>缺失值：is.na(x)</li>
+</ul>
+<p>问题是我们要找到“在夏季 7、8、9 月出发的航班”和“到达时间延误 2 小时，但出发时间没有延误的航班”。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 问题 1，有多种解法, 看下方</span></span><br><span class="line">filter(flights, month == <span class="number">7</span> | month == <span class="number">8</span> | month == <span class="number">9</span>)</span><br><span class="line">filter(flights, month %<span class="keyword">in</span>% c(<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>))</span><br><span class="line">filter(flights, between(momtn, <span class="number">7</span>, <span class="number">9</span>))</span><br><span class="line"><span class="comment"># 问题 2,</span></span><br><span class="line">filter(flights, arr_delay == <span class="number">120</span> &amp; dep_delay == <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="使用-arrange-排列行"><a href="#使用-arrange-排列行" class="headerlink" title="使用 arrange 排列行"></a>使用 arrange 排列行</h2><p>arrange 的作用是改变行的顺序，如果有多个参数，那么就按输入参数的顺序对数据框依次进行排序，注意排序的效果是嵌套的。如果要使用降序，可以使用 <em>des()</em> 函数。一般来说，NA 值总是排在最后的。</p>
+<p>这里的问题是“如何将缺失值排序在前面”和“在所有航班中，哪个航班的飞行时间最长，哪个最短”。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 问题 1，比如把到达时间的 NA 排在前面</span></span><br><span class="line">arrange(flights, desc(is.na(flights$arr_time)))</span><br><span class="line"><span class="comment"># 问题 2,</span></span><br><span class="line">arrange(flights, air_time)</span><br><span class="line">arrange(flights, desc(air_time))</span><br></pre></td></tr></table></figure>
+<h2 id="使用-select-选择列"><a href="#使用-select-选择列" class="headerlink" title="使用 select 选择列"></a>使用 select 选择列</h2><p>select 选择列的时候，可以直接指定待选列的列名，也可以使用切片语法（闭区间），和排除语法“-”。此外，还有以下一些辅助函数。对于 everything，通常在对待选列重排到列首有奇效。在指定一个列名多次时，只会选取一次该列，一是因为列名不允许重复，二是我们从 everything 提取目标列到前面也能猜测到。</p>
+<ul>
+<li>starts_with(“abc”), ends_with(“abc”)</li>
+<li>contains(“abc”)：大小写不敏感的</li>
+<li>matches(“(.)\1”)</li>
+<li>num_range(“x”, 1:3): 获得 x1，x2，x3，两个参数不能同时为多个</li>
+<li>one_of(c(“abc”, “def”))</li>
+<li>everything(): 全选</li>
+</ul>
+<p>在 dplyr 中有个与 select 相近的函数 rename，他可以对列进行重命名。</p>
+<p>这里的问题是“使用尽可能多的方式来选择 dep_time, dep_delay, arr_time, arr_delay ”。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select(flights, starts_with(<span class="string">"dep"</span>), starts_with(<span class="string">"arr"</span>))</span><br><span class="line">select(flights, matches(<span class="string">"^(dep|arr)"</span>))</span><br><span class="line">select(flights, num_range(<span class="string">"dep"</span>, c(<span class="string">"_time"</span>, <span class="string">"_delay"</span>)), num_range(<span class="string">"arr"</span>, c(<span class="string">"_time"</span>, <span class="string">"_delay"</span>)))</span><br><span class="line">select(flights, num_range(c(<span class="string">"dep"</span>, <span class="string">"arr"</span>), <span class="string">"_delay"</span>), num_range(c(<span class="string">"dep"</span>, <span class="string">"arr"</span>), <span class="string">"_time"</span>))</span><br><span class="line">select(flights, one_of(c(<span class="string">"dep_time"</span>, <span class="string">"dep_delay"</span>, <span class="string">"arr_time"</span>, <span class="string">"arr_delay"</span>)))</span><br></pre></td></tr></table></figure>
+<h2 id="使用-mutate-添加新列"><a href="#使用-mutate-添加新列" class="headerlink" title="使用 mutate 添加新列"></a>使用 mutate 添加新列</h2><p>mutate 可以对数据框添加新列，但总是放在最后面。新列在添加时就可以使用。如果你只是想保留新列，则可以使用 transmute 代替。与 select 类似，有多种辅助函数来帮助创建新列，这些函数的一个共同点就是输入和输出都是一个向量数据结构，一维的，长度与数据框的行数相同。常见的辅助函数有下面这些。</p>
+<ul>
+<li>运算符：+, -, *, /, ^, %/%, %%</li>
+<li>运算函数: log, commin, cummax, [sum, min, max, lead, lag], 对于摘要性质的，需要与其他函数联用</li>
+<li>逻辑比较：&lt;, &lt;=, &gt;, &gt;=, !=, ==</li>
+<li>排秩：  min_rank, row_number, dense_rank, percent_rank, cume_dist, ntile</li>
+</ul>
+<p>这里的问题是“比较 air_time 和 arr_time - dep_time，你期望看到什么？实际结果是什么？”</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">transmute(flights, air_time = air_time, arr_dep = arr_time - dep_time)</span><br><span class="line"><span class="comment"># 因为 arr_tim 和 dep_time 是以“ HHMM ”的格式录入的，所以应该如下</span></span><br><span class="line">HMM2min = <span class="keyword">function</span>(HMM) &#123;</span><br><span class="line">    H = HMM %/% <span class="number">100</span></span><br><span class="line">    min = HMM %% <span class="number">100</span> + H * <span class="number">60</span></span><br><span class="line">    min</span><br><span class="line">&#125;</span><br><span class="line">transmute(flights, air_time = air_time, arr_dep = HMM2min(arr_time) - HMM2min(dep_time))</span><br></pre></td></tr></table></figure>
+<h2 id="使用-group-by-分组"><a href="#使用-group-by-分组" class="headerlink" title="使用 group_by 分组"></a>使用 group_by 分组</h2><p>group_by 可以根据使用的列名个数对数据框进行逐级分组，得到分组的统计总量。每进行一次摘要统计，就会使用掉一个分组。这里值得注意的是，进行摘要统计的函数必须是分组层级一致的，比如分组求均值和总体求均值结果一致，但是分组求中位数却不是这样。ungroup 函数可以取消分组，回到未分组的数据。单独使用 group_by 函数的情况较少，通常是与 summrise 联用。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">group_by(flights, year, month, day)</span><br></pre></td></tr></table></figure>
+<h2 id="使用-summarise-摘要数据"><a href="#使用-summarise-摘要数据" class="headerlink" title="使用 summarise 摘要数据"></a>使用 summarise 摘要数据</h2><p>summarise 函数可以对数据框进行摘要统计，把数据框整合成一行，它通常是同groupby联合使用，在 dplyr 中最常用的操作就是进行分组摘要。%&gt;% 的引入让分组摘要的流程更加明确、清晰、自然。在进行分组摘要的时候，由于 NA 具有扩撒性，na.rm 要记得指定为真，n() 与 sum(!is_na()) 总是会不一样。常用的摘要函数如下面所示。</p>
+<ul>
+<li>位置度量：mean, median</li>
+<li>分散程度度量：sd, IQR, mad</li>
+<li>秩度量：min, max, quantile(x, 0.25)</li>
+<li>定位度量：first, nth(x, 2), last</li>
+<li>数量度量：n, sum(!is.na(x)), distinct, count</li>
+</ul>
+<p>这里的问题是“每天取消航班的比例与平均延误时间有什么关系”。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义取消航班为 is.na(dep_time) &amp; is.na(dep_delay)</span></span><br><span class="line">filter(flights, is.na(dep_time) &amp; is.na(dep_delay)) %&gt;%</span><br><span class="line">    mutate(flight = flight, mean_time = HMM2min(sched_arr_time) - HMM2min(sched_dep_time)) %&gt;%</span><br><span class="line">    ggplot(mapping = aes(x=flight, y=abs(mean_time))) +</span><br><span class="line">        geom_point() +</span><br><span class="line">        geom_smooth(se=<span class="literal">F</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>《R 数据科学》</li>
+<li>vignette(“dplyr”)</li>
+</ul>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2018/11/02/可视化-ggplot2入门/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/10/28/流程构建-Snakemake使用初步/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+    	 
+	 <div id="comment-thread"></div>
+	 <div id="loading-spin"></div>
+	 <script type="text/javascript">
+	   getComments({
+           type: "github" ? "github" : "github",       
+	       user: "xizhihui",
+	       repo: "",
+		   client_id: "",
+           client_secret: "",
+		   no_comment: "No comments yet. Press the button and go to comment now!",
+		   go_to_comment: "Go to comment",
+		   no_issue: "no_issue",
+		   issue_title: "数据处理 dplyr",
+		   issue_id: "",
+		   btn_class: "btn btn-primary",
+		   comments_target: "#comment-thread",
+		   loading_target: "#loading_spin"
+		   });
+	 </script>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-11-02 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/软件和包/">软件和包<span>22</span></a></li> <li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#准备工作"><span class="toc-article-text">准备工作</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用-filter-筛选行"><span class="toc-article-text">使用 filter 筛选行</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用-arrange-排列行"><span class="toc-article-text">使用 arrange 排列行</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用-select-选择列"><span class="toc-article-text">使用 select 选择列</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用-mutate-添加新列"><span class="toc-article-text">使用 mutate 添加新列</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用-group-by-分组"><span class="toc-article-text">使用 group_by 分组</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用-summarise-摘要数据"><span class="toc-article-text">使用 summarise 摘要数据</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#参考"><span class="toc-article-text">参考</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+  <script>
+  marked.setOptions({
+    highlight: function (code, lang) {
+        return hljs.highlightAuto(code).value;
+    }
+  });
+  function Highlighting(){
+    var markdowns = document.getElementsByClassName('markdown');
+    for(var i=0;i<markdowns.length;i++){
+        if(markdowns[i].innerHTML) markdowns[i].innerHTML =marked(markdowns[i].innerHTML);
+    }
+  }
+  window.addEventListener('DOMContentLoaded', Highlighting, false);
+  window.addEventListener('load', Highlighting, false);
+  </script>
+
+
+</body>
+   </html>

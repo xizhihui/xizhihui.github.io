@@ -1,0 +1,683 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>生信基础 常用gene_ID的转换 | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  <meta name="description" content="ID 类型
+
+
+ID 示例
+ID 来源
+
+
+
+
+ENSG00000116717
+Ensemble ID
+
+
+GA45A_HUMAN
+UniProtKB/Swiss-Prot, entry name
+
+
+A5PJB2_BOVIN
+UniProtKB/TrEMBL, entry name
+
+
+A2BC19, P12345,
+A0A022YWF9    UniProt, accession number
+
+
+GLA, GLB, UGT1A1
+HGNC Gene Symbol
+
+
+U12345, AF123456
+GenBank, NCBI, accession number
+
+
+NT_123456, NM_123456, NP_123456
+RefSeq, NCBI, accession number
+
+
+10598, 717
+Entrez ID, NCBI
+
+
+uc001ett, uc031tla.1
+UCSC ID">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="生信基础 常用gene_ID的转换">
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+    <script src="/js/marked.js"></script>
+    <script src="/js/comment.js"></script>
+    <script src="/js/timeago.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+	<script src="/js/spin.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> 生信基础 常用gene_ID的转换</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="ID-类型"><a href="#ID-类型" class="headerlink" title="ID 类型"></a>ID 类型</h2><table>
+<thead>
+<tr>
+<th>ID 示例</th>
+<th>ID 来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ENSG00000116717</td>
+<td>Ensemble ID</td>
+</tr>
+<tr>
+<td>GA45A_HUMAN</td>
+<td>UniProtKB/Swiss-Prot, entry name</td>
+</tr>
+<tr>
+<td>A5PJB2_BOVIN</td>
+<td>UniProtKB/TrEMBL, entry name</td>
+</tr>
+<tr>
+<td>A2BC19, P12345,</td>
+<td>A0A022YWF9    UniProt, accession number</td>
+</tr>
+<tr>
+<td>GLA, GLB, UGT1A1</td>
+<td>HGNC Gene Symbol</td>
+</tr>
+<tr>
+<td>U12345, AF123456</td>
+<td>GenBank, NCBI, accession number</td>
+</tr>
+<tr>
+<td>NT_123456, NM_123456, NP_123456</td>
+<td>RefSeq, NCBI, accession number</td>
+</tr>
+<tr>
+<td>10598, 717</td>
+<td>Entrez ID, NCBI</td>
+</tr>
+<tr>
+<td>uc001ett, uc031tla.1</td>
+<td>UCSC ID</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<h2 id="1-Ensembl-stable-ID"><a href="#1-Ensembl-stable-ID" class="headerlink" title="1. Ensembl stable ID"></a>1. Ensembl stable ID</h2><p>Ensembl stable ID 的结构是根据不同物种设置的前缀, 加上数据所指的类型, 如基因蛋白质, 再加上一系列的数字. 有的时候可以有不同的版本, 则在 Ensembl ID 后面加上小数点和版本号.</p>
+<p>Ensembl_gene_identifier是Ensembl ID里的一种, Enseml ID包括exon, protein family, gene, gene tree, protein, regulatory feature 和 transcript.</p>
+<p>Ensembl ID的由5部分构成: ENS(species)(object type)(identifier).(version)<br>第一部分ENS代表这是一个Ensembl ID<br>第二部分代表物种, 如MUS代表小鼠(如果物种是人则此处为空)<br>第三部分代表ID的类型, 如G代表基因, T代表转录本, P代表蛋白, E代表外显子, S代表<br>第四部分是一个特殊的数字标志<br>第五部分代表版本号  </p>
+<p>如:ENSMUSG00000017167.6<br>我们知道这是一个Ensembl ID (ENS), 物种为小鼠(MUS), 代表一个基因(G), 并且这是第6个版本(.6).</p>
+<h3 id="物种前缀"><a href="#物种前缀" class="headerlink" title="物种前缀"></a>物种前缀</h3><table>
+<thead>
+<tr>
+<th>物种前缀</th>
+<th>学名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ENSCEL</td>
+<td>Caenorhabditis elegans (Caenorhabditis elegans)</td>
+</tr>
+<tr>
+<td>ENSCAF</td>
+<td>Canis lupus familiaris (Dog)</td>
+</tr>
+<tr>
+<td>ENSDAR</td>
+<td>Danio rerio (Zebrafish)</td>
+</tr>
+<tr>
+<td>FB</td>
+<td>Drosophila melanogaster (Fruitfly)</td>
+</tr>
+<tr>
+<td>ENS</td>
+<td>Homo sapiens (Human)</td>
+</tr>
+<tr>
+<td>ENSMUS</td>
+<td>Mus musculus (Mouse)</td>
+</tr>
+<tr>
+<td>ENSRNO</td>
+<td>Rattus norvegicus (Rat)</td>
+</tr>
+<tr>
+<td>ENSXET</td>
+<td>Xenopus tropicalis (Xenopus)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="类型前缀"><a href="#类型前缀" class="headerlink" title="类型前缀"></a>类型前缀</h3><table>
+<thead>
+<tr>
+<th>类型前缀</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E</td>
+<td>exon</td>
+</tr>
+<tr>
+<td>FM</td>
+<td>Ensembl protein family</td>
+</tr>
+<tr>
+<td>G</td>
+<td>gene</td>
+</tr>
+<tr>
+<td>GT</td>
+<td>gene tree</td>
+</tr>
+<tr>
+<td>P</td>
+<td>protein</td>
+</tr>
+<tr>
+<td>R</td>
+<td>regulatory feature</td>
+</tr>
+<tr>
+<td>T</td>
+<td>transcript</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-UniProt"><a href="#2-UniProt" class="headerlink" title="2. UniProt"></a>2. UniProt</h2><p>UniProt中录入的数据都被分配了一个唯一的entry name.</p>
+<ul>
+<li><p>UniProtKB/Swiss-Prot entry name 是最多有 11 位包含大写字母的字符串, 一般有着 “X_Y” 的形式, 其中 “X” 是最多五个便于记忆的蛋白质编号, “_” 是下划线, “Y” 是最多五个便于记忆的物种编号.</p>
+</li>
+<li><p>UniProtKB/TrEMBL entry name 是最多 16 位包含大写字母的字符串, 一般有着 “X_Y” 的形式, 其中 “X” 是 6 到 10 个字符组成的 accession number, “_” 是下划线, “Y” 是最多五个便于记忆的物种编号.</p>
+</li>
+</ul>
+<ul>
+<li>UniProtKB 的 Accession Number 相当于数据库的主键, 由 6 到 10 个大写字母或者数字组成. 其构成规律为: [OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z]<a href="[A-Z][A-Z0-9]{2}[0-9]">0-9</a>{1,2}</li>
+</ul>
+<h3 id="蛋白质编号示例"><a href="#蛋白质编号示例" class="headerlink" title="蛋白质编号示例"></a>蛋白质编号示例</h3><table>
+<thead>
+<tr>
+<th>Code(X)</th>
+<th>Recommended protein name</th>
+<th>Gene name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B2MG</td>
+<td>Beta-2-microglobulin</td>
+<td>B2M</td>
+</tr>
+<tr>
+<td>HBA</td>
+<td>Hemoglobin subunit alpha</td>
+<td>HBA1</td>
+</tr>
+<tr>
+<td>INS</td>
+<td>Insulin</td>
+<td>INS</td>
+</tr>
+<tr>
+<td>CAD17</td>
+<td>Cadherin-17</td>
+<td>CDH17</td>
+</tr>
+</tbody>
+</table>
+<h3 id="物种编号"><a href="#物种编号" class="headerlink" title="物种编号"></a>物种编号</h3><table>
+<thead>
+<tr>
+<th>编号</th>
+<th>物种</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BOVIN</td>
+<td>Bovine</td>
+</tr>
+<tr>
+<td>CHICK</td>
+<td>Chicken</td>
+</tr>
+<tr>
+<td>ECOLI</td>
+<td>Escherichia coli</td>
+</tr>
+<tr>
+<td>HORSE</td>
+<td>Horse</td>
+</tr>
+<tr>
+<td>HUMAN</td>
+<td>Homo sapiens</td>
+</tr>
+<tr>
+<td>MAIZE</td>
+<td>Maize (Zea mays)</td>
+</tr>
+<tr>
+<td>MOUSE</td>
+<td>Mouse</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-Gene-Symbol"><a href="#3-Gene-Symbol" class="headerlink" title="3. Gene Symbol"></a>3. Gene Symbol</h2><p>Gene Symbol 是用来表示基因的编码, 由大写字母构成, 或由大写字母和数字构成, 首字母均应该是字母.如: GLA “galactosidase, alpha”; GLB “galactosidase, beta”; UGT1A1 “UDP glycosyltransferase 1 family, polypeptide A1” 再到 UGT1A13 代表了 13 个不同的 gene symbol.</p>
+<h2 id="4-NCBI"><a href="#4-NCBI" class="headerlink" title="4. NCBI"></a>4. NCBI</h2><ul>
+<li>GenBank的通用accession number通常是由一个大写字母加上 5 个数字的组合, 或者两个大写字母加上6个数字的组合.</li>
+<li>RefSeq有一套特殊的Accesion Number.形式是: [A-Z]{2}[_][0-9]{6:},两个大写字母,一个下划线,6个或更多的数字.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Accession</th>
+<th>前缀</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AC_</td>
+<td>Genomic</td>
+<td>Complete genomic molecule, usually alternate assembly</td>
+</tr>
+<tr>
+<td>NC_</td>
+<td>Genomic</td>
+<td>Complete genomic molecule, usually reference assembly</td>
+</tr>
+<tr>
+<td>NG_</td>
+<td>Genomic</td>
+<td>Incomplete genomic region</td>
+</tr>
+<tr>
+<td>NT_</td>
+<td>Genomic</td>
+<td>Contig or scaffold, clone-based or WGS</td>
+</tr>
+<tr>
+<td>NW_</td>
+<td>Genomic</td>
+<td>Contig or scaffold, primarily WGS</td>
+</tr>
+<tr>
+<td>NS_</td>
+<td>Genomic</td>
+<td>Environmental sequence</td>
+</tr>
+<tr>
+<td>NZ_</td>
+<td>Genomic</td>
+<td>Unfinished WGS</td>
+</tr>
+<tr>
+<td>NM_</td>
+<td>mRNA</td>
+<td>none</td>
+</tr>
+<tr>
+<td>NR_</td>
+<td>RNA</td>
+<td>none</td>
+</tr>
+<tr>
+<td>XM_</td>
+<td>mRNA</td>
+<td>Predicted model</td>
+</tr>
+<tr>
+<td>XR_</td>
+<td>RNA</td>
+<td>Predicted model</td>
+</tr>
+<tr>
+<td>AP_</td>
+<td>Protein</td>
+<td>Annotated on AC_ alternate assembly</td>
+</tr>
+<tr>
+<td>NP_</td>
+<td>Protein</td>
+<td>Associated with an NM_ or NC_ accession</td>
+</tr>
+<tr>
+<td>YP_</td>
+<td>Protein</td>
+<td>none</td>
+</tr>
+<tr>
+<td>XP_</td>
+<td>Protein</td>
+<td>Predicted model, associated with an XM_ accession</td>
+</tr>
+<tr>
+<td>ZP_</td>
+<td>Protein</td>
+<td>Predicted model, annotated on NZ_ genomic records</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5-Entrez-ID"><a href="#5-Entrez-ID" class="headerlink" title="5. Entrez ID"></a>5. Entrez ID</h2><p>Entrez 是 NCBI 使用的能够对众多数据库进行联合搜索的搜索引擎, 其对不同的 Gene 进行了编号, 每个 gene 的编号就是 entrez gene id. 由于 entrez id 相对稳定, 所以也被众多其他数据库, 如 KEGG 等采用. Entrez Gene ID 就是一系列数字, 也比较容易辨识. R 或网站都有众多的工具可以帮助从不同的 ID 转换为 entrez id 或者反向转换.</p>
+<h2 id="6-UCSC-ID"><a href="#6-UCSC-ID" class="headerlink" title="6.UCSC ID"></a>6.UCSC ID</h2><p>UCSC ID由小写字母和数字构成, 起始均为 uc, 然后是三位数字, 接着又是三位小写字母, 最后有小数点和数字构成版本号.<br>如: uc010qfk.3, uc010qfk.3.</p>
+<h2 id="7-使用R包org-Hs-eg-db转换ID-org-xx-eg-db"><a href="#7-使用R包org-Hs-eg-db转换ID-org-xx-eg-db" class="headerlink" title="7.使用R包org.Hs.eg.db转换ID(org.xx.eg.db)"></a>7.使用R包org.Hs.eg.db转换ID(org.xx.eg.db)</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 类似数据库查询一样</span></span><br><span class="line"><span class="keyword">library</span>(org.Hs.eg.db)</span><br><span class="line"><span class="comment"># 显示可转换的ID类型</span></span><br><span class="line">keytypes(org.Hs.eg.db)</span><br><span class="line">ids = yourid_vector</span><br><span class="line"><span class="comment"># 你要转换的选项,由keytypes里面选</span></span><br><span class="line">cols &lt;- c(<span class="string">"SYMBOL"</span>, <span class="string">"GENENAME"</span>, <span class="string">'ENTREZID'</span>)</span><br><span class="line">getIDs = select(org.Hs.eg.db, keys=ensids, columns=cols, keytype=<span class="string">"ENSEMBL"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="8-使用biomaRt包转换"><a href="#8-使用biomaRt包转换" class="headerlink" title="8.使用biomaRt包转换"></a>8.使用biomaRt包转换</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">source</span>(<span class="string">"https://bioconductor.org/biocLite.R"</span>)</span><br><span class="line">biocLite(<span class="string">"biomaRt"</span>)</span><br><span class="line">listMarts()</span><br><span class="line"></span><br><span class="line">ensembl&lt;-useMart(<span class="string">"ENSEMBL_MART_ENSEMBL"</span>)</span><br><span class="line">all_datasets &lt;- listDatasets(ensembl)</span><br><span class="line"></span><br><span class="line"><span class="keyword">library</span>(DT)</span><br><span class="line">datatable(all_datasets,</span><br><span class="line">        options = list(searching = <span class="literal">FALSE</span>,pageLength = <span class="number">5</span>,lengthMenu = c(<span class="number">5</span>, <span class="number">10</span>, <span class="number">15</span>, <span class="number">20</span>)))</span><br><span class="line">        </span><br><span class="line">ensembl &lt;- useMart(<span class="string">"ensembl"</span>, dataset = <span class="string">"hsapiens_gene_ensembl"</span>)</span><br><span class="line">filters = listFilters(ensembl)</span><br><span class="line">datatable(filters, options = list(searching = <span class="literal">FALSE</span>,pageLength = <span class="number">5</span>,lengthMenu = c(<span class="number">5</span>, <span class="number">10</span>, <span class="number">15</span>, <span class="number">20</span>)))</span><br><span class="line">attributes = listAttributes(ensembl)</span><br><span class="line">datatable(attributes, options = list(searching = <span class="literal">FALSE</span>,pageLength = <span class="number">5</span>,lengthMenu = c(<span class="number">5</span>, <span class="number">10</span>, <span class="number">15</span>, <span class="number">20</span>)))</span><br><span class="line">entrez.mart&lt;-getBM(attributes=c(<span class="string">'ensembl_gene_id'</span>, <span class="string">'entrezgene'</span>), filters = <span class="string">'ensembl_gene_id'</span>, values = rownames(fpkmtpens), mart = ensembl)</span><br></pre></td></tr></table></figure>
+<h2 id="9-其他数据库整合包"><a href="#9-其他数据库整合包" class="headerlink" title="9. 其他数据库整合包"></a>9. 其他数据库整合包</h2><p><a href="http://www.bio-info-trainee.com/1399.html" target="_blank" rel="noopener">http://www.bio-info-trainee.com/1399.html</a></p>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2018/10/12/生信基础-各种数据的下载/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/10/12/生信基础-测序原理/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+    	 
+	 <div id="comment-thread"></div>
+	 <div id="loading-spin"></div>
+	 <script type="text/javascript">
+	   getComments({
+           type: "github" ? "github" : "github",       
+	       user: "xizhihui",
+	       repo: "",
+		   client_id: "",
+           client_secret: "",
+		   no_comment: "No comments yet. Press the button and go to comment now!",
+		   go_to_comment: "Go to comment",
+		   no_issue: "no_issue",
+		   issue_title: "生信基础 常用gene_ID的转换",
+		   issue_id: "",
+		   btn_class: "btn btn-primary",
+		   comments_target: "#comment-thread",
+		   loading_target: "#loading_spin"
+		   });
+	 </script>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-10-12 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#ID-类型"><span class="toc-article-text">ID 类型</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-Ensembl-stable-ID"><span class="toc-article-text">1. Ensembl stable ID</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#物种前缀"><span class="toc-article-text">物种前缀</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#类型前缀"><span class="toc-article-text">类型前缀</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-UniProt"><span class="toc-article-text">2. UniProt</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#蛋白质编号示例"><span class="toc-article-text">蛋白质编号示例</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#物种编号"><span class="toc-article-text">物种编号</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-Gene-Symbol"><span class="toc-article-text">3. Gene Symbol</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#4-NCBI"><span class="toc-article-text">4. NCBI</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#5-Entrez-ID"><span class="toc-article-text">5. Entrez ID</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#6-UCSC-ID"><span class="toc-article-text">6.UCSC ID</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#7-使用R包org-Hs-eg-db转换ID-org-xx-eg-db"><span class="toc-article-text">7.使用R包org.Hs.eg.db转换ID(org.xx.eg.db)</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#8-使用biomaRt包转换"><span class="toc-article-text">8.使用biomaRt包转换</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#9-其他数据库整合包"><span class="toc-article-text">9. 其他数据库整合包</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+  <script>
+  marked.setOptions({
+    highlight: function (code, lang) {
+        return hljs.highlightAuto(code).value;
+    }
+  });
+  function Highlighting(){
+    var markdowns = document.getElementsByClassName('markdown');
+    for(var i=0;i<markdowns.length;i++){
+        if(markdowns[i].innerHTML) markdowns[i].innerHTML =marked(markdowns[i].innerHTML);
+    }
+  }
+  window.addEventListener('DOMContentLoaded', Highlighting, false);
+  window.addEventListener('load', Highlighting, false);
+  </script>
+
+
+</body>
+   </html>

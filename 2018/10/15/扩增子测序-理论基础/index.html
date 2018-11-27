@@ -1,0 +1,527 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>扩增子测序 理论基础 | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  <meta name="description" content="一、 基础概念">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="扩增子测序 理论基础">
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+    <script src="/js/marked.js"></script>
+    <script src="/js/comment.js"></script>
+    <script src="/js/timeago.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+	<script src="/js/spin.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> 扩增子测序 理论基础</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="一、-基础概念"><a href="#一、-基础概念" class="headerlink" title="一、 基础概念"></a>一、 基础概念</h2><p><img src="https://media.nature.com/full/nature-assets/nrurol/journal/v12/n2/images/nrurol.2014.361-f1.jpg" alt="microbiota, microbiome, metagenome"></p>
+<a id="more"></a>
+<h3 id="1-1-微生物群-microbiota"><a href="#1-1-微生物群-microbiota" class="headerlink" title="1.1 微生物群,  microbiota"></a>1.1 微生物群,  microbiota</h3><p>16s rRNA surveys are used to taxonomically identify the microorganisms in the environment. A microbiota is an “ecological community of commensal, symbiotic and pathogenic microorganisms” found in and on all multicellular organisms studied to date from plants to animals. 从方法上看，采用16s rRNA的研究方法从分类上对环境中的微生物进行研究，这一过程称为微生物组。从宿主上看，微生物组研究的是动植物体上共生或者病理性的微生物生态群体。这其中包含细菌、古菌、原生动物、真菌和病毒，他们在宿主的免疫、代谢、激素等方面作用巨大。microbiota侧重的是鉴定微生物种类。</p>
+<h3 id="1-2-宏基因组-metagenome"><a href="#1-2-宏基因组-metagenome" class="headerlink" title="1.2 宏基因组, metagenome"></a>1.2 宏基因组, metagenome</h3><p>The genes and genomes of the microbiota, including plasmids, highlighting the genetic potential of the population. 宏基因组也称微生物环境基因组或者元基因组，指生境中群补微小遗传物质的总和，包含可培养和当前不可培养的微生物基因组。也就是说，宏基因组可以认为是微生物中的基因和基因组的总称，强调群体中基因的遗传潜在性。目前主要指环境样品中的细菌和真菌基因组的总和。</p>
+<h3 id="1-3-微生物组-microbiome"><a href="#1-3-微生物组-microbiome" class="headerlink" title="1.3 微生物组, microbiome"></a>1.3 微生物组, microbiome</h3><p>Microbiome, the synonymous term of microbiota, describes either the collective genomes of the microorganisms that reside in an environmental niche or the microorganisms themselves. 与microbiota意思相近，但更加偏向与从环境整体中的基因和基因组入手研究，偏向的是环境中所有的基因和基因组。</p>
+<h3 id="1-4-分类单元"><a href="#1-4-分类单元" class="headerlink" title="1.4 分类单元"></a>1.4 分类单元</h3><p>分类单元指分类学中的各个分类级别，从大的级别讲，分为七级，就是我们常说的界(kingdom),门(phylum, 亚门),纲(class,总纲,亚纲),目(order,总目,亚目),科(familay,总科,亚科),属(genus,亚属),种(species,变种). 也有用非七以外的多级分类。在对新种进行命名时，常使用双命名法：属名加上种名加词，如果有新种/属的话,则在种属缩写后添加.nov表示，如sp.nov表示新种.</p>
+<h3 id="1-5-微生物组研究的科学问题"><a href="#1-5-微生物组研究的科学问题" class="headerlink" title="1.5 微生物组研究的科学问题"></a>1.5 微生物组研究的科学问题</h3><table>
+<thead>
+<tr>
+<th>组学</th>
+<th>目的</th>
+<th>组学</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>培养组学</td>
+<td>什么菌可以培养</td>
+<td>扩增子</td>
+<td>微生物组的种群组成及其成分的相对丰度</td>
+</tr>
+<tr>
+<td>宏基因组</td>
+<td>微生物组中有什么功能基因</td>
+<td>宏转录组</td>
+<td>有哪些基因表达了</td>
+</tr>
+<tr>
+<td>宏病毒组</td>
+<td>有哪些DNA/RNA病毒</td>
+<td>宏蛋白组</td>
+<td>有哪些基因翻译成蛋白</td>
+</tr>
+<tr>
+<td>宏代谢组</td>
+<td>有哪些种类的代谢产物</td>
+<td>宏表观组</td>
+<td>有哪些表观修饰</td>
+</tr>
+<tr>
+<td>单菌基因组</td>
+<td>目标菌有哪些基因</td>
+<td>泛基因组</td>
+<td>某种菌与亲缘菌之间的异同 </td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-6-扩增子测序"><a href="#1-6-扩增子测序" class="headerlink" title="1.6 扩增子测序"></a>1.6 扩增子测序</h3><p>原核生物如细菌的rRNA分类经常会根据rRNA的沉降系数进行，分别为5s, 16s, 23s rRNA. 其中16s rRNA是核糖体RNA的一个亚基，16s rDNA是编码该亚基的基因，其长度约为1.5kb。它是细菌的系统分类研究中最为有用和常用的分子钟，种类少，含量多，大小适中，在结构与功能上具有高度保守性。类似地，真核生物生物的rRNA分为4类，5s，5.8s，18s，28s rRNA，其中18s与16s大小相近，作用类似。在真核生物中核糖体DNA由ETS(外部转录间隔区),18s gene, ITS1(内部转录间隔区1), 5.8s gene, ITS2, 28s gene和IGS(基因间隔序列)组成, 在进化中，18s，5.8s，28s较为保守, ITS变化性较大。所以可以选择ITS鉴别不同种类。</p>
+<p>扩增子测序就是针对原核生物的16s、真核生物的18s/ITS区域设计引物扩增目标区域，产物就是扩增子，然后对扩增子进行测序，基于测序数据的分析结果对扩增子进行微生物组成分析或其他目的。</p>
+<h3 id="1-7-OTUs"><a href="#1-7-OTUs" class="headerlink" title="1.7 OTUs"></a>1.7 OTUs</h3><p>OTUs，operational taxonomic units, 操作分类单元，是在系统发生学研究或群体遗传学研究中，为了便于进行分析，人为给某一个分类单元设置的同一标志。在生物信息分析中，一般来说，测序得到的每一条序列来自一个菌。要了解一个样品测序结果中的菌种、菌属等数目信息，需要对序列进行聚类（cluster）。OTU的聚类方法很多，如Uclust，cd-hit，BLAST，mothur，usearch，prefix/suffix等，均可在QIIME实现。通过聚类，把序列按照彼此的相似性（97%）分归为许多小组，一个小组就是一个OTU。在实际归类时，算法通过一定的距离度量方法计算两两不同序列之间的距离度量火相似性，继而设定特定的分类阈值（97%），获得同一阈值下的距离矩阵，进行聚类操作，形成不同的分类单元。在聚类完成后，通常会选择OTU中丰度最高的序列作为代表序列。使用该代表序列与RDP、Sliva、GreenGene等数据库比对，进行物种注释。但是，OTU聚类只是低分辨率的分析方法，它的分析只能到属的水平；OTU也无法与具体的菌对应；不同批次的实验结果无法比较。 由于高通量测序获得的16s rDNA序列非常多，无法对每条序列都进行物种注释；引入OTU的话，基于分类单元进行后续的物种注释可以简化工作量、提高分析效率和准确性。</p>
+<h3 id="1-8-扩增子分析的公共数据库"><a href="#1-8-扩增子分析的公共数据库" class="headerlink" title="1.8 扩增子分析的公共数据库"></a>1.8 扩增子分析的公共数据库</h3><p>对于扩增子数据库来说，一般要求两点：第一是数据库内步的序列要完整，非冗余的序列是越多越好；第二是注释信息要准确。目前有多种数据库可供选择，应该根据扩增子种类不同选择相应数据库，数据库介绍如下。</p>
+<h4 id="1-8-1-rRNA基因数据库"><a href="#1-8-1-rRNA基因数据库" class="headerlink" title="1.8.1 rRNA基因数据库"></a>1.8.1 rRNA基因数据库</h4><ul>
+<li><p><strong>RDP</strong> 全称‘ribosomal database project’，隶属于密歇根州立大学，包含数据库和分析工具两个部分。前者提供高质量、已注释的细菌、古菌16s rRNA基因和真菌28s rRNA基因序列。</p>
+</li>
+<li><p><strong>Silva</strong> 一个rRNA基因序列的综合数据库，收录原核和真核微生物的各个亚基rRNA基因序列（SSU，即16和18s rRNA；LSU，23s和28s rRNA），该数据库最大最全，也就意味着假阳性率可能会偏高。该数据库的物种注释采用的是14级，而非常用的7级注释，彼此不能转换比较。</p>
+</li>
+<li><p><strong>NCBI taxdmp</strong> 由于NCBI数据比较乱，假阳性率或错误比较多，需要你仔细甄别。注释时需要将序列blast到ncbi的NR的核酸火蛋白数据库中，得到相似序列后，根据该序列的GI号转成Taxonomy( <a href="http://mp.weixin.qq.com/s/v2ktKQi0C1soQ6_j4xeLWQ" target="_blank" rel="noopener">http://mp.weixin.qq.com/s/v2ktKQi0C1soQ6_j4xeLWQ</a> )</p>
+</li>
+<li><p><strong>GreenGene</strong> 较为有名的16s物种数据库，人工整理，较为准确，分类采用常用的七级（界门纲目科属种）。PICRUSt基于该数据库，QIIME的默认数据库。</p>
+</li>
+<li><p><strong>EzBioCloud</strong> 与Greengenes数据库类似，专门针对细菌、古菌16s rRNA基因的数据库，其特点是以可培养的细菌、古菌为主。</p>
+</li>
+<li><p><strong>PR2</strong> 针对18s 测序分析比较好用的数据库。</p>
+</li>
+<li><p><strong>PhytoREF</strong> 针对质体(plastid)中16s rRNA基因的数据库，包括陆地植物、海洋、淡水的大型和微型藻类等含质体生物。</p>
+</li>
+<li><p><strong>PFR2</strong> 专门针对浮游有孔虫界18SrRNA基因的数据库。</p>
+</li>
+</ul>
+<h4 id="1-8-2-ITS序列数据库"><a href="#1-8-2-ITS序列数据库" class="headerlink" title="1.8.2 ITS序列数据库"></a>1.8.2 ITS序列数据库</h4><ul>
+<li><p><strong>UNITE</strong> 该数据库是专门针对真菌ITS序列（含ITS1和2区）最全最好的数据库。</p>
+</li>
+<li><p><strong>ITS2</strong> ITS2专门真核微生物ITS2序列的数据库。</p>
+</li>
+</ul>
+<h4 id="1-8-3-功能基因数据库"><a href="#1-8-3-功能基因数据库" class="headerlink" title="1.8.3 功能基因数据库"></a>1.8.3 功能基因数据库</h4><ul>
+<li><p><strong>FunGene</strong> 该数据库是RDP延伸的一个针对微生物功能基因序列的数据库。按照功能分为抗生素抗性、植物致病基因、生物地球化学循环、系统进化标志、生物降解、金属循环及其他七个类别。可用于功能marker基因高通量促销后的比对、功能基因引物设计等用途。</p>
+</li>
+<li><p><strong>ARDB</strong> 主要包含细菌、病原菌的多种抗性基因数据，结合GO、KEGG等信息，通过该数据库的注释，可以找到耐药性相关基因的名称，所耐受的抗生素种类等信息。核心功能主要分为：基因信息查询、序列比对注释以及同源序列对比。</p>
+</li>
+<li><p><strong>CARD</strong> 包含了ARDB数据库中所有的抗性信息。CARD以Antibiotic Resistance Ontology（ARO）为分类单位的形式所构建，其中ARO是数据库所构建term，用于关联抗生素模块及其目标、抗性机制、基因变异等信息。同时，数据库还针对ARO的功能，专门开发了一款名为Resistance Gene Identifier（RGI）的软件程序， 用于基因组数据的抗性基因预测。</p>
+</li>
+</ul>
+<h2 id="二、增子的分析类别"><a href="#二、增子的分析类别" class="headerlink" title="二、增子的分析类别"></a>二、增子的分析类别</h2><p>在1972年，Whittaker提出了微生物多样性的三个种类:</p>
+<ul>
+<li>α多样性，某个群落或生境内部的物种的多样性</li>
+<li>β多样性，在一个梯度上，从一个生境到另一个生境所发生的种的多样性变化的速率和范围，研究群落之间的种多度关系</li>
+<li>γ多样性，在一个地理区域内一系列生境中种的多样性，是α和β多样性的综和。γ = α * β。</li>
+</ul>
+<h3 id="2-1-α多样性"><a href="#2-1-α多样性" class="headerlink" title="2.1 α多样性"></a>2.1 α多样性</h3><p>alpha diversity，α多样性指在给定的一个微生物群落中微生物组成的多样性，通常以该群落中微生物种类的数量和各个种类的相对丰度来表示，它反映着群落内物种间通过竞争资源火利用同种生境而共产生的共存结果。alpha多样性是相对于样本本身来说的，一个样本就可以计算alpha多样性。而alpha diversity index，α多样性指数则是用来度量α多样性的一种测量。目前α多样性指数包含三类：</p>
+<ul>
+<li>物种丰富度指数: 物种种的多少（数目），用统计数Margalef、Menhinick丰富度指数、chao1指数进行表征</li>
+<li>物种均匀度指数：各个种的相对密度，用统计数Pielou、Sheldon、hill、heip、Alatalo均匀度指数进行表征</li>
+<li>物种多样性指数；用统计数shannon-wienner、SimpsonHill多样性指数或者种间相遇概率（PIE）进行表征</li>
+</ul>
+<h4 id="2-1-1-chao1指数"><a href="#2-1-1-chao1指数" class="headerlink" title="2.1.1 chao1指数"></a>2.1.1 chao1指数</h4><p>S1=Sobs + (singleton^2) / (doblueton^2)。</p>
+<p>由于测序深度有限，不可能把一个样本的所有物种都测出来，那么就需要通过‘预估’每个样本中的所有物种种类，才能准确比较样品之间的α多样性。chao1则可以用于估算样品物种总量的计算值。Chao1的意义是，在对群落样本进行抽样的时候，如果还有没被发现的新物种，那么抽样中会一直发现Singleton。直到不再观察到Singleton的时候（也就是观察到的某物种的数目至少为2），可以认为此时的物种数目观察值为样本的理论最高值。因此，Chao1是主要利用Singleton和Doubleton来判断群落的物种丰富度，它对单个物种的变化更为敏感。它的数值越大，表示物种种类越多。</p>
+<h4 id="2-1-2-ACE指数"><a href="#2-1-2-ACE指数" class="headerlink" title="2.1.2 ACE指数"></a>2.1.2 ACE指数</h4><p>Sace = Scommon + Srare / Cace + F1 / Cace * γace^2, Scommon是样本中出现超过10次的物种的数目；Srare是出现不多于10次的物种的数目，Cace=1-(F_1/n_race)表示所有低丰度（出现&lt;=10次）的物种中非singleton的比例, γace^2是变异系数。</p>
+<p>ACE指数也是用于估算样本物种丰度的指数。ACE指数是通过Singleton和稀有物种(出现&lt;=10次)来估算还有多少没被发现的物种。为什么会介入稀有物种这么一个概念？其中一个重要原因是，在实际生态学分析中，低丰度的物种（如doubleton）很容易随着测量的误差错误而产生，而稀有物种的测量则相对稳定，因此在计算上更容易排除测序误差等干扰。当测序中singleton的比例越大，ACE值越大，样本的真实物种种类越多。</p>
+<h4 id="2-1-3-Shannon指数"><a href="#2-1-3-Shannon指数" class="headerlink" title="2.1.3 Shannon指数"></a>2.1.3 Shannon指数</h4><p>H = - sum( Percent(i) * log2(Percent(i)) )</p>
+<p>香浓指数常用于盒形图分析，稀释曲线分析等分析条目当中。Shannon指数与Chao1和ACE两个指数不一样，Chao1和ACE主要用于计算物种的丰富度（Richness），更在乎样本是否有这个物种。而Shannon指数不只关心物种丰富度，而且同时关心物种的均匀度（Evenness），所以是对群落结构的更综合性的反应。例如在群落丰富度一致时，群落均匀度更低的群落香浓指数更低，α多样性也就更低。</p>
+<h4 id="2-1-4-Simpson指数"><a href="#2-1-4-Simpson指数" class="headerlink" title="2.1.4 Simpson指数"></a>2.1.4 Simpson指数</h4><p>D = 1 - Sum( Probablity(i) ^ 2 )</p>
+<p>Simpson指数本质也是综合考虑样本中物种的丰富度与均匀度，它是在1949年由Edward H. Simpson提出来。具体理念是，在足够大的样本中，有放回地先后抽取两个样本，这两个样本是同一个种的概率是多少？其实答案很简单，假如我们已知Pi是样品中属于第 i 种的个体的比例，那么抽取到两个都是种 i 的概率是   。基于这个理念，如果我们将所有物种的概率相加，就得到Simpson指数。在应用时，上述公式常有变体，比如没有使用1-，或者使用的是1/。所以具体的Simpson的值的变化如何表征多样性的变化需要看使用的是哪种变体。</p>
+<h4 id="2-1-5-Good’s-Coverage"><a href="#2-1-5-Good’s-Coverage" class="headerlink" title="2.1.5 Good’s Coverage"></a>2.1.5 Good’s Coverage</h4><p>C = 1 - F1 / N, F1表示Singleton的数目，N表示样本中所有OTU的总数</p>
+<p>Good’s Coverage数值的计算与Cace有点类似。只是Cace取用的是出现次数不超过10的物种（或OTU）进行计算，而Good’s Coverage利用的是全部OTU的丰度，它表示所有非singleton在总样本中的比值.理论上，在测序深度不断增加时，随着新Singleton的出现减少，表明已经接近测出所有物种；通过检查Singleton在样品中的比值，就可以知道测序深度是否足够。C的数值越大，在测序数据量一样的情况下，样本的物种丰富度越小。</p>
+<h3 id="2-2-β多样性"><a href="#2-2-β多样性" class="headerlink" title="2.2 β多样性"></a>2.2 β多样性</h3><p>beta多样性是生态系统之间的物种多样性，包含分类单位的比较。即衡量群落之间的差别。beta多样性不仅描述生境内生物物种的数量，同时也考虑到这些种类的相同性及其彼此之间的位置。用于不同样品之间、不同条件之间的比较，单个样品无法进行计算; 它可以指示生境被物种隔离的程度；其测定值可用来比较不同低端的额生境多样性。常见的指数有Whittaker指数、cody、wilson、shmida指数等。β多样分析通常是计算样品间的距离，针对距离来分析不同群落之间的差别，这些分析就包含pca分析、PCoA分析，NMDS分析等。那么如何计算样品间的距离？常用的有Bray-Curtis距离、unifrac距离等。</p>
+<h4 id="2-2-1-Bray-Curtis-distance"><a href="#2-2-1-Bray-Curtis-distance" class="headerlink" title="2.2.1 Bray-Curtis distance"></a>2.2.1 Bray-Curtis distance</h4><p>Bray-Curtis distances又叫做Bray-Curtis dissimilarity。它是基于物种丰度(abundance)或者read count data来计算获得，用于比较两个样品之间的微生物物种丰度的差异，其取值在[0,1]，1表示两个样品的物种丰度完全不同。它将不同的OTU视为没有关联的两个单位。</p>
+<h4 id="2-2-2-Jaccard-distance"><a href="#2-2-2-Jaccard-distance" class="headerlink" title="2.2.2 Jaccard distance"></a>2.2.2 Jaccard distance</h4><p>Jaccard distance基于物种存在与否计算距离，所以没有把物种丰度信息包含在内；它通常比较的是两个样品之间的微生物物种组成的不同。取值在[0,1],1表示样品之间物种组成完全不同。</p>
+<h4 id="2-2-3-Unifrac-distance"><a href="#2-2-3-Unifrac-distance" class="headerlink" title="2.2.3 Unifrac distance"></a>2.2.3 Unifrac distance</h4><p>Unifrac距离是基于OTU之间的进化关系计算获得，即发育树上序列的距离。取值为[0,1],1表示两个样品之间微生物群落在进化上完全独立。根据有没有考虑OTU丰度的区别，unifrac分析可以分为加权（weighted unifrac）和非加权（unweighted unifrac）两种方法。其中， unweighted UniFrac只考虑了物种有无的变化，而weighted UniFrac则同时考虑物种有无和物种丰度的变化。在环境样本的检测中，研究者更关心群落间的变化，因此往往采用非加权方法。如果要研究对照与实验处理组之间的关系，例如研究青霉素处理后，人肠道的菌落变化情况，由于处理后群落的组成不会发生大改变，但群落的丰度可能会发生大变化，因此更适合用加权方法去计算。</p>
+<h3 id="2-3-扩增子的群落功能预测"><a href="#2-3-扩增子的群落功能预测" class="headerlink" title="2.3 扩增子的群落功能预测"></a>2.3 扩增子的群落功能预测</h3><p>有越来越多的研究表明，相比于物种组成，微生物的群落功能组成与环境的关系更为密切(Gibbons S M. Microbial community ecology: Function over phylogeny[J].  NatureEcology &amp; Evolution, 2017, 1: 0032)。由于宏基因组和宏转录组的分析费用较高，学者自然在扩增子测序上下了一番功夫, 现有许多软件可以根据扩增子的测序结果去做微生物群落的功能预测。</p>
+<table>
+<thead>
+<tr>
+<th>软件</th>
+<th>marker gene</th>
+<th>database</th>
+<th>function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PICRUSt</td>
+<td>16s</td>
+<td>greengene</td>
+<td>KEGG功能预测</td>
+</tr>
+<tr>
+<td>Tax4Fun</td>
+<td>16s</td>
+<td>SILVA</td>
+<td>KEGG功能预测</td>
+</tr>
+<tr>
+<td>FUNGuild</td>
+<td>ITS</td>
+<td>UNIT,ITS2</td>
+<td>Guild预测</td>
+</tr>
+<tr>
+<td>FAPROTAX</td>
+<td>16s</td>
+<td>SILVA,greengene</td>
+<td>生态功能预测</td>
+</tr>
+<tr>
+<td>BugBase</td>
+<td>16s</td>
+<td>greengene</td>
+<td>表型分类</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-4-微生物分析方法的比较"><a href="#2-4-微生物分析方法的比较" class="headerlink" title="2.4 微生物分析方法的比较"></a>2.4 微生物分析方法的比较</h3><p>前面我们提到，不同的组学分析有不同的分析目的，那反过来，根据不同的分析目的，我们要选择合适的分析方法。目前微生物的分析方法大体分为3种：扩增子测序(16s/18s/ITS), 宏基因组测序, 宏转录组测序，他们三者的研究深度应该是递进的。具体可以看下表。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>扩增子测序</th>
+<th>宏基因组测序</th>
+<th>宏转录组测序</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主要关注问题</td>
+<td>有什么物种</td>
+<td>各个物种有什么功能</td>
+<td>怎样行使功能</td>
+</tr>
+<tr>
+<td>分析手段</td>
+<td>物种组成,α/β多样性,群落功能预测</td>
+<td>基因功能注释,代谢通路研究</td>
+<td>差异表达基因,代谢通路研究</td>
+</tr>
+<tr>
+<td>成本</td>
+<td>较低</td>
+<td>较高</td>
+<td>较高</td>
+</tr>
+<tr>
+<td>缺点</td>
+<td>PCR偏好性</td>
+<td>无法得到基因表达信息</td>
+<td>RNA不稳定,建库难,基因信息有缺失</td>
+</tr>
+<tr>
+<td>优点</td>
+<td>适合大样本</td>
+<td>DNA信息完整</td>
+<td>研究内容全面</td>
+</tr>
+</tbody>
+</table>
+<p>从上表来看，扩增子测序应该作为研究第一步要考虑的分析方式。它价格便宜，可以帮助我们分析不同样本间微生物的组成和差异，有助于我们发现可能的靶样本。然后根据扩增子测序的结果选择有代表性的样本进行后续的宏基因组测序、宏转录组测序，深入阐明群落的功能，说明生物群落与环境的关系。</p>
+<h3 id="2-5-扩增子分析简要流程"><a href="#2-5-扩增子分析简要流程" class="headerlink" title="2.5 扩增子分析简要流程"></a>2.5 扩增子分析简要流程</h3><p><img src="https://s1.ax1x.com/2018/10/15/iUgnJA.png" alt="扩增子分析"><br><img src="https://s1.ax1x.com/2018/10/15/iUguRI.png" alt="16s rDNA结构及引物"><br><img src="https://s1.ax1x.com/2018/10/15/iUgKzt.png" alt="扩增区域及平台选择"></p>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2018/10/15/扩增子测序-QIIME2使用示例/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/10/15/扩增子分析-mothur使用示例/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+    	 
+	 <div id="comment-thread"></div>
+	 <div id="loading-spin"></div>
+	 <script type="text/javascript">
+	   getComments({
+           type: "github" ? "github" : "github",       
+	       user: "xizhihui",
+	       repo: "",
+		   client_id: "",
+           client_secret: "",
+		   no_comment: "No comments yet. Press the button and go to comment now!",
+		   go_to_comment: "Go to comment",
+		   no_issue: "no_issue",
+		   issue_title: "扩增子测序 理论基础",
+		   issue_id: "",
+		   btn_class: "btn btn-primary",
+		   comments_target: "#comment-thread",
+		   loading_target: "#loading_spin"
+		   });
+	 </script>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-10-15 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/生信基础/">生信基础<span>13</span></a></li> <li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#一、-基础概念"><span class="toc-article-text">一、 基础概念</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-1-微生物群-microbiota"><span class="toc-article-text">1.1 微生物群,  microbiota</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-2-宏基因组-metagenome"><span class="toc-article-text">1.2 宏基因组, metagenome</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-3-微生物组-microbiome"><span class="toc-article-text">1.3 微生物组, microbiome</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-4-分类单元"><span class="toc-article-text">1.4 分类单元</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-5-微生物组研究的科学问题"><span class="toc-article-text">1.5 微生物组研究的科学问题</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-6-扩增子测序"><span class="toc-article-text">1.6 扩增子测序</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-7-OTUs"><span class="toc-article-text">1.7 OTUs</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-8-扩增子分析的公共数据库"><span class="toc-article-text">1.8 扩增子分析的公共数据库</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#1-8-1-rRNA基因数据库"><span class="toc-article-text">1.8.1 rRNA基因数据库</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#1-8-2-ITS序列数据库"><span class="toc-article-text">1.8.2 ITS序列数据库</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#1-8-3-功能基因数据库"><span class="toc-article-text">1.8.3 功能基因数据库</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#二、增子的分析类别"><span class="toc-article-text">二、增子的分析类别</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-1-α多样性"><span class="toc-article-text">2.1 α多样性</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#2-1-1-chao1指数"><span class="toc-article-text">2.1.1 chao1指数</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#2-1-2-ACE指数"><span class="toc-article-text">2.1.2 ACE指数</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#2-1-3-Shannon指数"><span class="toc-article-text">2.1.3 Shannon指数</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#2-1-4-Simpson指数"><span class="toc-article-text">2.1.4 Simpson指数</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#2-1-5-Good’s-Coverage"><span class="toc-article-text">2.1.5 Good’s Coverage</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-2-β多样性"><span class="toc-article-text">2.2 β多样性</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#2-2-1-Bray-Curtis-distance"><span class="toc-article-text">2.2.1 Bray-Curtis distance</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#2-2-2-Jaccard-distance"><span class="toc-article-text">2.2.2 Jaccard distance</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#2-2-3-Unifrac-distance"><span class="toc-article-text">2.2.3 Unifrac distance</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-3-扩增子的群落功能预测"><span class="toc-article-text">2.3 扩增子的群落功能预测</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-4-微生物分析方法的比较"><span class="toc-article-text">2.4 微生物分析方法的比较</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-5-扩增子分析简要流程"><span class="toc-article-text">2.5 扩增子分析简要流程</span></a></li></ol></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+  <script>
+  marked.setOptions({
+    highlight: function (code, lang) {
+        return hljs.highlightAuto(code).value;
+    }
+  });
+  function Highlighting(){
+    var markdowns = document.getElementsByClassName('markdown');
+    for(var i=0;i<markdowns.length;i++){
+        if(markdowns[i].innerHTML) markdowns[i].innerHTML =marked(markdowns[i].innerHTML);
+    }
+  }
+  window.addEventListener('DOMContentLoaded', Highlighting, false);
+  window.addEventListener('load', Highlighting, false);
+  </script>
+
+
+</body>
+   </html>
