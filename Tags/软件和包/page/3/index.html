@@ -120,7 +120,7 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/组装或定量-kallisto_sleuth/">组装或定量 kallisto_sleuth</a></div>						
+			<div class="article-title"><a href="/2018/10/12/比对-Bowtie2/">比对 Bowtie2</a></div>						
 		</h3>
 	
 
@@ -129,11 +129,10 @@
   <div class="row">
 	
 	
-		<h2 id="免比对的定量：kallisto"><a href="#免比对的定量：kallisto" class="headerlink" title="免比对的定量：kallisto"></a>免比对的定量：kallisto</h2><p><a href="https://pachterlab.github.io/kallisto/manual.html" target="_blank" rel="noopener">kallisto</a>是一个align-free的测序结果定量工具。速度快得很.他可以在10min内完成index的构建，然后花3min完成30 million的human reads的定量。它不仅快速而且准确。</p>
-<p>Pseudoalignment保存了用于定量的关键信息。An important feature of kallisto is that it outputs bootstraps along with the estimates of transcript abundances</p>
+		<p>bowtie2是个超快的、内存占用少的序列比对工具，善于比对相对较长的基因组。bowtie2有gapped、pair-end和local比对模式，可以多线程进行。它是许多pipeline的首个步骤，例如变异检测，CHIP-seq，RNA-seq，BS-seq等等。<br>bowtie2不像常规目的的比对工具如MUMmer，Blast等。它在大的参考基因组的比对上表现更好，因为它针对当前各个测序平台的测序reads进行过优化。如果你的目的是比对很大的两个序列，比如基因组之间的比对，你应考虑使用MUMmer。如果你的目的是比对相对较短的序列如大肠杆菌的基因组，用bowtie2可以大大减少你的时间。</p>
 	
 	</div>
-  <a type="button" href="/2018/10/12/组装或定量-kallisto_sleuth/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2018/10/12/比对-Bowtie2/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -215,29 +214,29 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
+			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
+		
+			<li><a href="/tags/富集分析/">富集分析<span>1</span></a></li>
+		
 			<li><a href="/tags/可视化/">可视化<span>1</span></a></li>
 		
-			<li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
-		
-			<li><a href="/tags/组装/">组装<span>1</span></a></li>
-		
-			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
+			<li><a href="/tags/流程/">流程<span>1</span></a></li>
 		
 			<li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
-		
-			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
 		
 			<li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
 		
 			<li><a href="/tags/随想/">随想<span>1</span></a></li>
 		
-			<li><a href="/tags/定量/">定量<span>3</span></a></li>
+			<li><a href="/tags/组装/">组装<span>1</span></a></li>
 		
 			<li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
 		
-			<li><a href="/tags/富集分析/">富集分析<span>1</span></a></li>
+			<li><a href="/tags/定量/">定量<span>3</span></a></li>
 		
-			<li><a href="/tags/流程/">流程<span>1</span></a></li>
+			<li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
+		
+			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
 		
 		 
 		</ul>
