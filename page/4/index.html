@@ -124,7 +124,7 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/GO_KEGG富集分析-clusterProfiler/">GO_KEGG富集分析 clusterProfiler</a></div>						
+			<div class="article-title"><a href="/2018/10/12/差异分析-Ballgown/" title="呦呦呦">差异分析 Ballgown</a></div>						
 		</h3>
 	
 
@@ -133,67 +133,10 @@
   <div class="row">
 	
 	
-		<p>首先呢,要详细了解的话,需要看这篇文献(Ten Years of Pathway Analysis: Current Approaches and Outstanding Challenges),他把基本的信号通路分析方法进行了总结.</p>
+		<p>Ballgown是一款灵活的用于RNA-seq数据差异分析的软件，除了差异分析，他还可以进行转录本的组织、可视化和分析表达程度。</p>
 	
 	</div>
-  <a type="button" href="/2018/10/12/GO_KEGG富集分析-clusterProfiler/#more" class="btn btn-default more">Read More</a>
-</div>
-
-           
-		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/生信基础-链特异性/">生信基础 链特异性</a></div>						
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<h2 id="1-链特异性的基本知识"><a href="#1-链特异性的基本知识" class="headerlink" title="1.链特异性的基本知识"></a>1.链特异性的基本知识</h2><ul>
-<li><a href="http://www.genek.tv/article/27" target="_blank" rel="noopener">http://www.genek.tv/article/27</a></li>
-<li><a href="http://databeauty.com/blog/opinion/2016/09/21/RNA-seq-strand-issues.html" target="_blank" rel="noopener">http://databeauty.com/blog/opinion/2016/09/21/RNA-seq-strand-issues.html</a></li>
-</ul>
-<p>在建库的时候,选择的建库方法可以是链特异性的,链特异性的文库可以清楚地分出reads的方向是否与转录本相同;常用的链特异性文库方法是基于dUTP的方法.</p>
-<table>
-<thead>
-<tr>
-<th>文库类型</th>
-<th>PE</th>
-<th>SE</th>
-<th>建库方法</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>非特异性</td>
-<td>无</td>
-<td>无</td>
-<td>Standard Illumina</td>
-</tr>
-<tr>
-<td>fr-firststrand</td>
-<td>RF</td>
-<td>R</td>
-<td>dUTP,NSR,NNSR</td>
-</tr>
-<tr>
-<td>fr-secondstrand</td>
-<td>FR</td>
-<td>F</td>
-<td>Ligation,Standard SOLiD</td>
-</tr>
-</tbody>
-</table>
-	
-	</div>
-  <a type="button" href="/2018/10/12/生信基础-链特异性/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2018/10/12/差异分析-Ballgown/#more" class="btn btn-default more">Read More</a>
 </div>
 
            
@@ -341,6 +284,33 @@
 
            
 		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/生信基础-unique比对的获取/">生信基础 unique比对的获取</a></div>						
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="1-Sam文件各标签含义（tophat-hisat2"><a href="#1-Sam文件各标签含义（tophat-hisat2" class="headerlink" title="1.Sam文件各标签含义（tophat/hisat2)"></a>1.Sam文件各标签含义（tophat/hisat2)</h2><ul>
+<li>NH:i:<n>: N=1时 为unique。常用于tophat/hisat2产生的sam文件unique read筛选。</n></li>
+<li>CC:Z: 当为‘=’为map到同一条基因上，一般在map基因组时由于内含子存在而容易出现，他只代表两种不同的方式，计数时应记为1。此处一般为其他基因的名字。CP:i 和HI：i标签为map到第i条基因及起始位置。</li>
+<li>YT:Z:S 代表的含义与bowtie产生的sam也不同。具体还未知！其他标签AS，XN,XM,XO,XG,NM,MD等如下图可以看出都相同。</li>
+</ul>
+	
+	</div>
+  <a type="button" href="/2018/10/12/生信基础-unique比对的获取/#more" class="btn btn-default more">Read More</a>
+</div>
+
+           
+		
 
 		</div>
 
@@ -402,29 +372,29 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/随想/">随想<span>1</span></a></li>
-		
-			<li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
-		
-			<li><a href="/tags/富集分析/">富集分析<span>1</span></a></li>
-		
-			<li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
-		
-			<li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
+			<li><a href="/tags/定量/">定量<span>3</span></a></li>
 		
 			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
 		
-			<li><a href="/tags/流程/">流程<span>1</span></a></li>
-		
-			<li><a href="/tags/组装/">组装<span>1</span></a></li>
-		
-			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
+			<li><a href="/tags/富集分析/">富集分析<span>1</span></a></li>
 		
 			<li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
 		
+			<li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
+		
 			<li><a href="/tags/可视化/">可视化<span>1</span></a></li>
 		
-			<li><a href="/tags/定量/">定量<span>3</span></a></li>
+			<li><a href="/tags/组装/">组装<span>1</span></a></li>
+		
+			<li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
+		
+			<li><a href="/tags/随想/">随想<span>1</span></a></li>
+		
+			<li><a href="/tags/流程/">流程<span>1</span></a></li>
+		
+			<li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
+		
+			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
 		
 		 
 		</ul>
