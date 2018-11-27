@@ -1,0 +1,358 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>流程构建 Snakemake使用初步 | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  <meta name="description" content="呦呦呦">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="流程构建 Snakemake使用初步">
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> 流程构建 Snakemake使用初步</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>呦呦呦</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <p>在学习生信的过程中，总是听说流程啊，管道啊，pipeline啊，到底这些意味着什么？你能把测序数据从ncbi下载下来，这不叫流程；你可以继续把数据做完质控，然后搞个比对，再做做什么差异分析啊、富集分析啊、各种类型数据的联合分析啊，这也不叫流程，谁知道你中间因为某个包安装用了多久的时间，谁晓得你这个过程是不是 reproducible 的？要是你中间出了问题怎么办，可控性如何？监控性如何？要是这些问题都能解答，我想就应该可以叫做一个流程了吧，流程化、自动化、可控化、高复用化。作为一个新人，要独自解决这些功能还是有些困难，肯定需要“假于物”的，恰好那天看到有个朋友说到用snakemake来些流程，哈哈，这不就有了，下面就说一说我初步学习使用的理解吧。</p>
+<a id="more"></a>
+<h2 id="snakemake-实现流程化"><a href="#snakemake-实现流程化" class="headerlink" title="snakemake 实现流程化"></a>snakemake 实现流程化</h2><p>在构建所谓的生信分析pipeline的时候，首先要实现pipeline的流程化，那么snakemake是怎么实现的呢？那就要说到snakemake 的rule语法了。如下所示。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># in python</span></span><br><span class="line">rule step_name:</span><br><span class="line">	input:</span><br><span class="line">		<span class="string">"something"</span></span><br><span class="line">	output:</span><br><span class="line">		<span class="string">"something"</span></span><br><span class="line">	shell:</span><br><span class="line">		<span class="string">"some commands do with input, result is output"</span></span><br></pre></td></tr></table></figure>
+<p>写好rule后，保存名字为 Snakefile。我们可以使用这样的方式，来构建每一个分析过程，这样做的好处就是直接明了，这一个rule是干什么的，需要什么输入，会产生什么输出，怎么产生都描述完全。我通常把do what作为rule的step_name，这样一来把分析过程先进行步骤分解，写成rule的形式，这就先完成了分析过程的步骤化，然后，因为流程是一个步骤接一个步骤的，有个次序的问题，如何实现？通过input和output来实现，以rule1的output作为rule2的input，这样就可以把步骤串联起来了。对于这个问题，snakemake提供了一个feature，叫做inheritance rule。我们看下面的示例，step_one对测序reads进行比对，得到bam文件，step_two要对bam文件进行统计。对于整个构建过程，我们完全可以采用inheritance rule的方式来进行，这样对于最终结果是怎么来的，可以按图索骥。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">rule mapping:</span><br><span class="line">	input: <span class="string">"rawdata.fastq"</span></span><br><span class="line">	output: <span class="string">"rawdata.bam"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 做法一</span></span><br><span class="line">rule stats:</span><br><span class="line">	input: <span class="string">"rawdata.bam"</span></span><br><span class="line">	output: <span class="string">"mapping.stats.txt"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 做法二</span></span><br><span class="line">rule stats:</span><br><span class="line">	input: rules.mapping.output</span><br><span class="line">	output: <span class="string">"mapping.stats.txt"</span></span><br></pre></td></tr></table></figure>
+<p>除了上述的 rule 形式，snakemake 还提供了一个 rule all 的语法。它是你这个 pipeline 的最终结果集合，对于你需要的结果，你应该全部显式地列在rule all中，它位于所有rule的最开端。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rule all:</span><br><span class="line">	input:</span><br><span class="line">		<span class="string">"step_1_result"</span>,</span><br><span class="line">		<span class="string">"step_2_result"</span>,</span><br><span class="line">		<span class="keyword">...</span></span><br></pre></td></tr></table></figure>
+<p>有人要问了，为什么这么干？原因我认为有二，第一脚本文件的解析过程是由前至后、由上至下的。那么 rule all 放在前面，相当于你的pipeline有个概览。其二，正如前面所述，step-by-step的input和output是串联的，但是整个流程的 step-by-step 不是单一的，而是有多个step-by-step，它们是并联的。而不论串联并联，都有个结果，那就是 rule all。结合实际运行我们会发现，snakemake 的运行方式就是按图(rule all)索骥，我（rule all)需要什么结果 (input)，就去找生成这个结果的rule，然后运行这个rule；对于这个rule，重复这个依据 input 寻找和执行上游 rule 的过程，对于这个寻找过程，我们可以使用 -rn 参数打印出来。如果你的文件名字是 “Snakefile”, 后面的 <code>-s Snakefile</code> 可以省略。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">snakemake -rn -s Snakefile</span><br></pre></td></tr></table></figure>
+<h2 id="snakemake-实现自动化"><a href="#snakemake-实现自动化" class="headerlink" title="snakemake 实现自动化"></a>snakemake 实现自动化</h2><p>虽然我尚未正式做过任何项目，但是依据文献提供的原始数据，一个正常的测序项目，样品数目大多数在 10 个及以上。我们不可能把这些样品都一个个写成一个个 rule，就比如比对过程，你执行一次比对命令执行完成一个样品的比对，通常的做法是使用for循环来实现。但这里是 snakemake，它会帮你的，那就是使用通配符 (wildcards)。一个 wildcards 就是一个匹配的文件名的简单正则。对于每个匹配的文件，snakemake 都会以文件作为 input 执行一次 rule， 看下面的示例。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># samples =&gt; A1.fastq A2.fastq, A3.fastq</span></span><br><span class="line">rule mapping:</span><br><span class="line">	input:</span><br><span class="line">		<span class="string">"&#123;sample&#125;.fastq"</span></span><br><span class="line">	output:</span><br><span class="line">		<span class="string">"&#123;sample&#125;.bam"</span></span><br><span class="line">	shell:</span><br><span class="line">		<span class="string">"bwa mem .... &#123;input&#125; -o &#123;output&#125;"</span></span><br></pre></td></tr></table></figure>
+<p>这样，对于每个 sample 都会进行一次比对。这样就毋须我们自己写 for 循环了。有时候，我们有很多样品，但是，我们仅仅想使用其中某几个作为输入，该如何？ snakemake 提供了constraint wildcards，来对 wildcards 匹配的样品进行限制。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># samples =&gt; A1.fastq A2.fastq, A3.fastq, A14.fastq, A15.fastq</span></span><br><span class="line">rule mapping:</span><br><span class="line">	input:</span><br><span class="line">		<span class="string">"&#123;sample, \w\d&#125;.fastq"</span></span><br><span class="line">	<span class="keyword">...</span></span><br></pre></td></tr></table></figure>
+<p>在我们加入“\w\d”这个正则之后，sample将不会匹配 A14.fastq 和 A15.fastq，这是因为 snakemake 在解析的时候，默认会把 “{sample}.fastq” 解析成 “*.fastq”；但是如果我们使用 constraint wildcards的话，那 “{smaple, \w\d}.fastq” 就会被解析成 “\w\d.fastq”, 这就自然不会匹配 A14.fastq 这样的样品了。除了在 rule 中使用 constraint wildcards，你还可以进行全局声明，不过你得先声明后使用，放在所有的 rule 前面。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wildcard_constaints:</span><br><span class="line">    sample = <span class="string">"\w\d"</span></span><br></pre></td></tr></table></figure>
+<p>对于上面的那个比对示例，有同学会问了，你这个看起来只是 single end 的测序结果作为输入，那要是 paired end 的测序结果，该怎么输入呢？欸，这里就有两种方式啦，一种是，我再提供一个咯；另一种就是使用 snakemake 提供的 expand 函数。但是，这里问题就来了。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 普通方式：</span></span><br><span class="line">rule mapping:</span><br><span class="line">	input:</span><br><span class="line">		<span class="string">"A1_read1.fastq"</span>,</span><br><span class="line">		<span class="string">"A1_read2.fastq"</span></span><br><span class="line"><span class="comment"># expand</span></span><br><span class="line">rule mapping:</span><br><span class="line">	input:</span><br><span class="line">		expand(<span class="string">"A1_&#123;read&#125;.fastq"</span>, read=[<span class="string">"read1"</span>, <span class="string">"read2"</span>])</span><br></pre></td></tr></table></figure>
+<p>普通的expand是不支持 wildcards 的，看它的使用方式就知道了，与 str.format(read=[]) 形式是一致的。但是，如果要使用 wildcards 怎么办呢？我们需要定义一个 helper，以它作为 input, 这个 helper 你可以正常函数定义，也可以使用匿名函数（如果仅使用一次的话）, 需要注意的是，这个 helper 的参数只能有一个，那就是 wildcards。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rule mapping:</span><br><span class="line">	input:</span><br><span class="line">		lambda wildcards: expand(<span class="string">"&#123;sample&#125;_&#123;read&#125;.fastq"</span>, sample=wildcards.sample, read=[<span class="string">"read1"</span>, <span class="string">"read2"</span>])</span><br></pre></td></tr></table></figure>
+<h2 id="snakemake-实现流程的可控化"><a href="#snakemake-实现流程的可控化" class="headerlink" title="snakemake 实现流程的可控化"></a>snakemake 实现流程的可控化</h2><p>在分析的过程中，分析的步骤辣么多，时间辣么长，如何保证分析过程的正常进行？出现错误如何发现？是不是一步错，步步错，全局失败？是不是只能一水儿的执行下去？问题这么多，snakemake 说看我的。为了实现流程的可控化，snakemake 提供了多个 feature。要控制整个流程，需要控制什么？没错，那就是控制每一个步骤，控制每一个 rule。如何控制？记录运行日志，写配置。尽管 snakemake 自己会生成日志文件，对于每一个 rule，你也可以指定日志生成，这个通过 rule.log 实现。每个 rule 运行命令的控制可以通过 rule.params 来提供命令的参数选项进行控制。下面看示例。</p>
+<ul>
+<li>命令参数的可控</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">rule mapping:</span><br><span class="line">	input:</span><br><span class="line">		lambda wildcards: expand(<span class="string">"&#123;sample&#125;_&#123;read&#125;.fastq"</span>, sample=wildcards.sample, read=[<span class="string">"read1"</span>, <span class="string">"read2"</span>])</span><br><span class="line">	log:</span><br><span class="line">		<span class="string">"mapping/&#123;sample&#125;.log"</span></span><br><span class="line">	threads: <span class="number">8</span></span><br><span class="line">	params:</span><br><span class="line">		extra = <span class="string">""</span></span><br><span class="line">	shell:</span><br><span class="line">		<span class="string">"bwa mem &#123;params.extra&#125; -t &#123;threads&#125; -o &#123;output&#125; &#123;input&#125; &gt; &#123;log&#125;"</span></span><br></pre></td></tr></table></figure>
+<p>这里我们指定了 “bwa mem” 的运行线程数为 8，日志输出到 “mapping/{sample}.log”(还记得 wildcards 吧？) 中，额外的参数你可以写入到 params.extra 中。对于 线程数，虽然可以通过 params 来指定，但是呢，没有在 threads 声明的话，即使指定了，snakemake 仍旧会把它降级为一核的，你还要在运行 snakemake 的时候指定 “–cores 10”之类的参数。到这里你可能会问，可控性仅此吗？当然不是了。我们继续看。</p>
+<ul>
+<li>执行 rule 的可控</li>
+</ul>
+<p>如前所述，运行过程不会那么一帆风顺的，肯定会出错。根据我们的日志文件，我们定位出错的 rule。在 debug 之后，那肯定要测试一下。这时候以下参数就十分有用了，它可以让我们仅仅执行那些发生变动的 rule。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">snakemake -n 									<span class="comment"># 打印出运行流程，检验 input、output </span></span><br><span class="line">snakemake -p 									<span class="comment"># 打印出解析后所有要运行的命令</span></span><br><span class="line">snakemake -f mapping 							<span class="comment"># 仅仅执行 rule mapping及其所有依赖 rule</span></span><br><span class="line">snakemake -f `snakemake --list-code-changes` 	<span class="comment"># 执行所有代码发生变动的 rule</span></span><br><span class="line">snakemake -f `snakemake --list-input-changes` 	<span class="comment"># 执行所有输入发升变动的 rule</span></span><br><span class="line">snakemake -f `snakemake --list-params-changes` 	<span class="comment"># 执行所有参数设定发生变动的 rule</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>执行 rule 环境的可控</li>
+</ul>
+<p>做生信最头疼的东西是什么？配置环境，安装包啊，大批的新手倒在这里，白骨累累。来来来，snakemake 助你披襟斩棘。snakemake 提供的conda 和 wrappers 给你飞一般的感觉。对于前者，我们可以提供一个环境配置文件如 “env.baw.yaml”, 如下所示：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># env.bwa.yaml</span></span><br><span class="line">channels:</span><br><span class="line"> - bioconda</span><br><span class="line"> - conda-forge</span><br><span class="line">dependencies:</span><br><span class="line"> - bwa = <span class="number">2.7</span><span class="number">.1</span></span><br><span class="line"> - samtools = <span class="number">2.5</span><span class="number">.8</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># your rule</span></span><br><span class="line">rule mapping:</span><br><span class="line">	<span class="comment"># input, output, ...</span></span><br><span class="line">	conda:</span><br><span class="line">		<span class="string">"env.bwa.yaml"</span></span><br></pre></td></tr></table></figure>
+<p>然后在启动 snakemake 时候，添加 “–use-conda” 参数，snakemake 将会自动生成 conda 环境，并基于 “env.bwa.yaml” 的配置安装依赖。你以为这就完了吗？NO NO NO，你还有wrappers。对于一些常用的软件，snakemake 把它整合成wrapper，按照 wrapper 的使用指南配置参数之后，snakemake 会为他自动配置运行环境，你什么都不用管, 不足之处就是支持的软件有点少。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">rule mapping:</span><br><span class="line">	<span class="comment"># input, output, ...</span></span><br><span class="line">	params:</span><br><span class="line">		index = <span class="string">"genome"</span>,</span><br><span class="line">		extra = r<span class="string">"-R '@RG\tID:&#123;sample&#125;\tSM:&#123;sample&#125;'"</span>,</span><br><span class="line">		sort = <span class="string">"samtools"</span>, <span class="comment"># can be 'none', 'picard'</span></span><br><span class="line">		sort_order = <span class="string">"coordinate"</span>, <span class="comment"># can be 'queryname'</span></span><br><span class="line">		sort_extra = <span class="string">""</span> <span class="comment"># extra args for samtools/picard</span></span><br><span class="line">	threads: <span class="number">8</span></span><br><span class="line">	log:</span><br><span class="line">		<span class="string">"logs/mapping/&#123;sample&#125;_bwa_mem.log"</span></span><br><span class="line">	wrapper:</span><br><span class="line">		<span class="string">"0.27.1/bio/bwa/mem"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>执行 rule 脚本的可控性</li>
+</ul>
+<p>在不使用 wrapper 的时候，我们需要使用 rule.shell 来指定运行的命令，但是分析过程中，我们不仅会用到 bash，还会用到 python，甚至 R，snakemake 也统统让你使用。因为 snakemake 是基于 python 开发的，你的 Snakefile 其中的 python 代码会被 正常解析。这是其一，其二，如果你要在 rule 中使用 python，可以通过 rule.run 来实现。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">rule mapping:</span><br><span class="line">	<span class="comment"># input, output,...</span></span><br><span class="line">	run:</span><br><span class="line">		print(input)</span><br><span class="line">		print(output)</span><br><span class="line">		print(params)</span><br><span class="line">		<span class="keyword">...</span></span><br><span class="line">		shell(<span class="string">"some commands"</span>)</span><br></pre></td></tr></table></figure>
+<p>rule.run 可以直接引导 rule 中的其他参数，如 output，input等等，shell是 snakemake引入的 (自己引入：from snakemake.shell import shell)。除此之外，如果你要使用 R 呢？怎么办？snakemake 提供了 rule.script 来满足你。它可以助你引入外部脚本，并执行它，对于 python 脚本，你可以通过 <code>snakemake.input</code> 的方式引用 rule 的各个选项，对于 R 脚本，你可以使用 <code>snakemake@input</code>，如下所示。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Snakemake</span></span><br><span class="line">rule mapping:</span><br><span class="line">	<span class="comment"># input, output</span></span><br><span class="line">	script:</span><br><span class="line">		<span class="string">"mapping.R"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># mapping.R</span></span><br><span class="line">in_file = snakemake@input <span class="comment"># as a list</span></span><br><span class="line">out_file = snakemake@output <span class="comment"># as a list</span></span><br><span class="line">dosomething()</span><br></pre></td></tr></table></figure>
+<h2 id="summary"><a href="#summary" class="headerlink" title="summary"></a>summary</h2><p>在写好这些 rule 之后，你一运行 <code>snakemake -n</code>，应该会出现一些 error （哈哈）。MissingInputError 表明你的 rule.all.input 中有些结果你没有生成哦，需要看看是那个输出结果你写了，但是没有 rule 生成它。Wildcards Error，表明你的通配符有问题，最直观的就是通配符要匹配的值你没有给。这个值得说一下。看下方的示例。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">rule all:</span><br><span class="line">	input:</span><br><span class="line">		<span class="string">"&#123;sample&#125;.bam"</span></span><br><span class="line"></span><br><span class="line">rule mapping:</span><br><span class="line">	input:</span><br><span class="line">		<span class="string">"&#123;sample&#125;.fastq"</span></span><br><span class="line">	output:</span><br><span class="line">		<span class="string">"&#123;sample&#125;.bam"</span></span><br></pre></td></tr></table></figure>
+<p>初看之下，rule.all 中我们需要 “{sample}.bam” 文件，所以需要运行 rule.mapping。然而，snakemake 会给你报错的，说是无法指定确定的 input。为什么呢？通配符不能无中生有，它通配的是什么？通配的是 pipeline 最后结果，这个最后结果是我们指定的。所以 rule.all.input 不能含有不确定的东西，即必须确定。所以首先，rule.all.input应该改成：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rule all:</span><br><span class="line">	input: expand(<span class="string">"&#123;sample&#125;.bam"</span>, sample=[<span class="string">"A1"</span>, <span class="string">"A2"</span>, <span class="string">"A3"</span>, <span class="string">"A4"</span>])</span><br></pre></td></tr></table></figure>
+<p>如此一来，就可以了。但是 wildcards 的使用还有个问题，那就是 rule.input, rule.output, rule.log 这三个的通配符要一致。就是说，当 input 有通配符时，表明该 rule 会执行多次，那么 output 也应该是有多个，log 也应该有多个，不能覆盖，所以都需要一致的通配符 wildcards。但是，有时候，我们不想把 “{sample}.bam” 作为 rule.all 的 input （即最终结果），但仍旧想使用 wildcards，上面的修改方式就还会出现问题。例如：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">rule all:</span><br><span class="line">	input: <span class="string">"mapping.stats.txt"</span></span><br><span class="line"></span><br><span class="line">rule mapping:</span><br><span class="line">	input:</span><br><span class="line">		<span class="string">"&#123;sample&#125;.fastq"</span></span><br><span class="line">	output:</span><br><span class="line">		<span class="string">"&#123;sample&#125;.bam"</span></span><br><span class="line"></span><br><span class="line">rule stats:</span><br><span class="line">	input: <span class="string">"&#123;sample&#125;.bam"</span></span><br><span class="line">	output: <span class="string">"mapping.stats.txt"</span></span><br></pre></td></tr></table></figure>
+<p>这里还是一样，无法确定通配符要通配的对象。这时候，就要像 rule.all.input 一样，在某一处，确定通配符通配对象，结合前面所说，input/output/log 三种的通配情况应该一致，我们如果要在 rule.mapping 中使用通配，那它就不能发生变化，所以应该改为：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ... </span></span><br><span class="line">rule stats:</span><br><span class="line">	input: expand(<span class="string">"&#123;sample&#125;.bam"</span>, sample=[<span class="string">"A1"</span>, <span class="string">"A2"</span>, <span class="string">"A3"</span>, <span class="string">"A4"</span>])</span><br><span class="line">	<span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<p>如果 rule.mapping 中不使用 wildcards 的话，就可以把 rule.mapping.input/output/log 全部改成 expand 的形式。但是请注意，上述代码仅仅是作为解决通配符问题的例子，如果是比对的话，最好使用通配符，因为比对软件的输入输出是一对一的，不像 fastqc，一个命令输入多个样品，生成多个样品的结果。</p>
+<p>最后，snakemake 还有许多 features，比如 temp/protected, cluster, derectory, touch等特性，值得再了解了解。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://snakemake.readthedocs.io/en/stable/" target="_blank" rel="noopener">Snakemake</a></p>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2018/11/02/数据处理-dplyr/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/10/28/可变剪切-rMATS和rmats2sashimiplot/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-10-28 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/流程/">流程<span>1</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#snakemake-实现流程化"><span class="toc-article-text">snakemake 实现流程化</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#snakemake-实现自动化"><span class="toc-article-text">snakemake 实现自动化</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#snakemake-实现流程的可控化"><span class="toc-article-text">snakemake 实现流程的可控化</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#summary"><span class="toc-article-text">summary</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#参考"><span class="toc-article-text">参考</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

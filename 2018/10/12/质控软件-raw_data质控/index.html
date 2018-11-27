@@ -1,0 +1,397 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>质控软件 raw_data质控 | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  <meta name="description" content="测序数据的质控是必须的，也是主要的。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="质控软件 raw_data质控">
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> 质控软件 raw_data质控</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <p>测序数据的质控是必须的，也是主要的。</p>
+<a id="more"></a>
+<h2 id="1-fastqc"><a href="#1-fastqc" class="headerlink" title="1. fastqc"></a>1. fastqc</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastqc input_path/*.fastq(.gz) -o output_path -p 10</span><br></pre></td></tr></table></figure>
+<h2 id="2-cutadapt"><a href="#2-cutadapt" class="headerlink" title="2. cutadapt"></a>2. cutadapt</h2><p><a href="https://cutadapt.readthedocs.io/en/stable/guide.html#basic-usage" target="_blank" rel="noopener">https://cutadapt.readthedocs.io/en/stable/guide.html#basic-usage</a></p>
+<p>基本的用法如下，你需要将序列改成对应的3‘端adapter。支持压缩文件作为输入和输出。如果你的输出是fasta的话，cutadapt不会进行去除adapter，而是进行转化。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 对于pair-end</span></span><br><span class="line">cutadapt -a ADAPTER_FWD -A ADAPTER_REV -o out.1.fastq -p out.2.fastq reads.1.fastq reads.2.fastq</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对于single-end</span></span><br><span class="line">cutadapt -a AACCGGTT -o output.fastq input.fastq</span><br><span class="line"></span><br><span class="line">cutadapt -a AACCGGTT input.fastq &gt; output.fastq 2&gt;&lt;report class=<span class="string">"txt"</span>&gt;&lt;/report&gt;</span><br><span class="line"><span class="comment"># 使用管道的话，输入文件位置以-代替</span></span><br><span class="line">tail -n 4 input.fastq | cutadapt -a AACCGGTT - &gt; output.fastq</span><br><span class="line"></span><br><span class="line"><span class="comment"># 双端时，-u指前一个，-U指后一个。指定切除特定长度的碱基, -5 表示切除3‘端（反向切除5个碱基），5表示切除5’端（正向切除5个碱基）</span></span><br><span class="line">cutadapt -u 5 -o trimmed.fastq input.fastq</span><br><span class="line"></span><br><span class="line"><span class="comment"># 单双端都可用. 切除碱基质量低于10的碱基（3‘端），使用的是phred quality+33.如果要使用+64版本，--quality-base=64指定</span></span><br><span class="line">cutadapt -q 10 -o output.fastq input.fastq</span><br><span class="line"><span class="comment"># 切除5‘端低于15的，3’端低于10的碱基</span></span><br><span class="line">cutadapt -q 15,10 -o output.fastq input.fastq</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把read切成指定长度，注意是从3‘端切掉.如果要从两端切掉，使用-u参数</span></span><br><span class="line">cutadapt -l 120 -o output.fastq input.fastq</span><br><span class="line"></span><br><span class="line"><span class="comment"># 给read name添加内容，下方指令把read1 改成read1 we found adapter1如果ACGT在该read1找到的话</span></span><br><span class="line">cutadapt -a adapter1=ACGT -y <span class="string">' we found &#123;names&#125;'</span> input.fastq</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果要添加上length字符的话. output.fastq =&gt; "&gt;read1 length=120"</span></span><br><span class="line">cutadapt -l 120 -o output.fastq --length-tag <span class="string">'length='</span> input.fastq</span><br><span class="line"></span><br><span class="line"><span class="comment"># -m length: 只输出长度大于length的reads</span></span><br><span class="line"><span class="comment"># --too-short-output FILE: 把-m删除的reads输入到FILE</span></span><br><span class="line"><span class="comment"># -M length：只输出短于length的reads</span></span><br><span class="line"><span class="comment"># --too-long-output FILE: 把-M删除的reads出入到FILE</span></span><br><span class="line"><span class="comment"># --untrimmed-output FILE</span></span><br><span class="line"><span class="comment"># --discard-trimmed:去掉含有接头的reads</span></span><br><span class="line"><span class="comment"># --discard-untrimmed：去掉不含接头的reads</span></span><br></pre></td></tr></table></figure>
+<p>除了去除adapter，cutadapt可以做的事情有很多，比如3‘端低质量碱基的切除，reads过滤等等。下表是指定adapter类型的对应指令。</p>
+<table>
+<thead>
+<tr>
+<th>接头类型</th>
+<th>命令</th>
+<th>接头类型</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3’adapter</td>
+<td>-a ADAPTER</td>
+<td>5’adapter</td>
+<td>-g ADAPTER</td>
+</tr>
+<tr>
+<td>Anchored 3’adapter</td>
+<td>-a ADAPTER$</td>
+<td>Anchored 5’adapter</td>
+<td>-g ^ADAPTER</td>
+</tr>
+<tr>
+<td>5’or3’(both possible)</td>
+<td>-b ADAPTER</td>
+<td>Linked adapter</td>
+<td>-a ADAPTER1…ADAPTER2</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#	1. Unconditional base removal with --cut</span></span><br><span class="line"><span class="comment">#	2. Quality trimming (-q)</span></span><br><span class="line"><span class="comment">#	3. Adapter trimming (-a, -b, -g and uppercase versions)</span></span><br><span class="line"><span class="comment">#	4. Read shortening (--length)</span></span><br><span class="line"><span class="comment">#	5. N-end trimming (--trim-n)</span></span><br><span class="line"><span class="comment">#	6. Length tag modification (--length-tag)</span></span><br><span class="line"><span class="comment">#	7. Read name suffix removal (--strip-suffix)</span></span><br><span class="line"><span class="comment">#	8. Addition of prefix and suffix to read name (-x/--prefix and -y/--suffix)</span></span><br><span class="line"><span class="comment">#	9. Double-encode the sequence (only colorspace)</span></span><br><span class="line"><span class="comment">#	10.Replace negative quality values with zero (zero capping, only colorspace)</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-Fastx-toolkit"><a href="#3-Fastx-toolkit" class="headerlink" title="3. Fastx-toolkit"></a>3. Fastx-toolkit</h2><table>
+<thead>
+<tr>
+<th>用途</th>
+<th>用途</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>01.去除接头</td>
+<td>02.去除低质量碱基</td>
+<td>03.转换成fasta  </td>
+</tr>
+<tr>
+<td>04.碱基质量统计</td>
+<td>05.生成碱基质量箱图</td>
+<td>06.生成碱基质量分布图</td>
+</tr>
+<tr>
+<td>07.重命名read</td>
+<td>08.输出指定长度read(前后切除)</td>
+<td>09.去重reads</td>
+</tr>
+<tr>
+<td>10.去除人工reads(artifact)</td>
+<td>11.生成反向互补序列</td>
+<td>12.对fasta文件进行格式化</td>
+</tr>
+<tr>
+<td>13.DNA序列与RNA互换</td>
+<td>14.生成reads长度分布图</td>
+<td>15.依据barcode进行reads分类成不同文件</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-1-去除接头"><a href="#3-1-去除接头" class="headerlink" title="3.1.去除接头"></a>3.1.去除接头</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">fastx_clipper -a AGATCGGAAGAGCACACG -l 25 -d 0 -Q 33 -i SRR306394_1.fastq -o </span><br><span class="line"></span><br><span class="line"> <span class="comment"># [-a ADAPTER] =接头序列（默认为CCTTAAGG）</span></span><br><span class="line"> <span class="comment"># [-l N]       = 忽略那些碱基数目少于N的reads，默认为5</span></span><br><span class="line"> <span class="comment"># [-d N]       = 保留接头序列后的N个碱基默认  -d 0</span></span><br><span class="line"> <span class="comment"># [-c]         = 放弃那些没有接头的序列.</span></span><br><span class="line"> <span class="comment"># [-C]         = 只保留没有接头的序列.</span></span><br><span class="line"> <span class="comment"># [-k]         = 报告只有接头的序列.</span></span><br><span class="line"> <span class="comment"># [-n]         = 保留有N多序列，默认不保留</span></span><br><span class="line"> <span class="comment"># [-v]         =详细-报告序列编号</span></span><br><span class="line"> <span class="comment"># [-z]         =压缩输出.</span></span><br><span class="line"> <span class="comment"># [-D]       = 输出调试结果.</span></span><br><span class="line"> <span class="comment"># [-M N]   =要求最小能匹配到接头的长度N，如果和接头匹配的长度小于N不修剪</span></span><br><span class="line"> <span class="comment"># [-i INFILE]  = 输入文件</span></span><br><span class="line"> <span class="comment"># [-o OUTFILE] = 输出文件</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-2-去除低质量碱基"><a href="#3-2-去除低质量碱基" class="headerlink" title="3.2. 去除低质量碱基"></a>3.2. 去除低质量碱基</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"> fastq_quality_filter -q 20 -p 80 -Q 33 -i input.fastq -o output.fastq</span><br><span class="line"></span><br><span class="line"><span class="comment"># [-q N]       = 最小的需要留下的质量值</span></span><br><span class="line"><span class="comment"># [-p N]       = 每个reads中最少有百分之多少的碱基需要有-q的质量值</span></span><br><span class="line"><span class="comment"># [-z]         =压缩输出</span></span><br><span class="line"><span class="comment"># [-v]         =详细-报告序列编号，如果使用了-o则报告会直接在STDOUT，如果没有则输入到STDERR</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-3-转换成fasta"><a href="#3-3-转换成fasta" class="headerlink" title="3.3. 转换成fasta"></a>3.3. 转换成fasta</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fastq_to_fasta [-h] [-r] [-n] [-v] [-z] [-i INFILE] [-o OUTFILE]</span><br><span class="line">[-h]         显示帮助信息</span><br><span class="line">[-r]         使用连续的数字来重命名序列</span><br><span class="line">[-n]         保持序列中的未知碱基N, 默认为丢弃这样的序列</span><br><span class="line">[-v]         打印出转换的reads数</span><br><span class="line">[-z]         用GZIP压缩输出</span><br><span class="line">[-i INFILE]  指定输入fastq</span><br><span class="line">[-o OUTFILE] 指定输出fasta</span><br></pre></td></tr></table></figure>
+<h3 id="3-4-碱基质量统计"><a href="#3-4-碱基质量统计" class="headerlink" title="3.4. 碱基质量统计"></a>3.4. 碱基质量统计</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fastx_quality_stats [-h] [-i INFILE] [-o OUTFILE]</span><br><span class="line">[-h]            显示帮助信息</span><br><span class="line">[-i INFILE]     指定输入文件, 如果输入为fasta, 只统计碱基分布</span><br><span class="line">[-o OUTFILE]    指定输出文件</span><br></pre></td></tr></table></figure>
+<h3 id="3-5-生成碱基质量箱图"><a href="#3-5-生成碱基质量箱图" class="headerlink" title="3.5. 生成碱基质量箱图"></a>3.5. 生成碱基质量箱图</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fastq_quality_boxplot_graph.sh [-i INPUT.TXT] [-t TITLE] [-p] [-o OUTPUT]</span><br><span class="line">[-p]            生成图片格式为Generate PostScript (.PS), 默认PNG图片</span><br><span class="line">[-i INPUT.TXT]  输入文件名, 应为fastx_quality_stats的结果</span><br><span class="line">[-o OUTPUT]     输出文件名</span><br><span class="line">[-t TITLE]      箱线图的标题</span><br></pre></td></tr></table></figure>
+<h3 id="3-6-生成碱基质量分布图"><a href="#3-6-生成碱基质量分布图" class="headerlink" title="3.6. 生成碱基质量分布图"></a>3.6. 生成碱基质量分布图</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fastx_nucleotide_distribution_graph.sh [-i INPUT.TXT] [-t TITLE] [-p] [-o OUTPUT]</span><br><span class="line">[-p]            生成图片格式为Generate PostScript (.PS), 默认PNG图片</span><br><span class="line">[-i INPUT.TXT]  输入文件名, 应为fastx_quality_stats的结果</span><br><span class="line">[-o OUTPUT]     输出文件名</span><br><span class="line">[-t TITLE]      柱状图的标题</span><br></pre></td></tr></table></figure>
+<h3 id="3-7-重命名read"><a href="#3-7-重命名read" class="headerlink" title="3.7.重命名read"></a>3.7.重命名read</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fastx_renamer [-n TYPE] [-h] [-z] [-v] [-i INFILE] [-o OUTFILE]</span><br><span class="line">[-n TYPE]    重命名类型:</span><br><span class="line">             SEQ - 使用核苷酸序列作为名称</span><br><span class="line">             COUNT - 使用简单的计数重命名</span><br><span class="line">[-h]         显示帮助信息</span><br><span class="line">[-z]         用GZIP压缩输出</span><br><span class="line">[-i INFILE]  指定输入文件, 默认为标准输入</span><br><span class="line">[-o OUTFILE] 指定输出文件, 默认为标准输出</span><br></pre></td></tr></table></figure>
+<h3 id="3-8-输出指定长度read（前后切除）"><a href="#3-8-输出指定长度read（前后切除）" class="headerlink" title="3.8. 输出指定长度read（前后切除）"></a>3.8. 输出指定长度read（前后切除）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fastx_trimmer [-h] [-f N] [-l N] [-z] [-v] [-i INFILE] [-o OUTFILE]</span><br><span class="line">[-h]            显示帮助信息</span><br><span class="line">[-f N]          从前面第几个碱基开始保留, 默认值为1</span><br><span class="line">[-l N]          保留几个碱基, 默认值为全部保留</span><br><span class="line">[-z]            用GZIP压缩输出</span><br><span class="line">[-i INFILE]     指定输入文件, 默认为标准输入</span><br><span class="line">[-o OUTFILE]    指定输出文件, 默认为标准输出</span><br></pre></td></tr></table></figure>
+<h3 id="3-9-去重reads"><a href="#3-9-去重reads" class="headerlink" title="3.9.去重reads"></a>3.9.去重reads</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fastx_collapser [-h] [-v] [-i INFILE] [-o OUTFILE]</span><br><span class="line">[-h]         显示帮助信息</span><br><span class="line">[-v]         打印出输入/输出的统计摘要</span><br><span class="line">[-i INFILE]  指定输入文件, 默认为标准输入</span><br><span class="line">[-o OUTFILE] 指定输出文件, 默认为标准输出</span><br></pre></td></tr></table></figure>
+<h3 id="3-10-去除人工reads（artifact）"><a href="#3-10-去除人工reads（artifact）" class="headerlink" title="3.10.去除人工reads（artifact）"></a>3.10.去除人工reads（artifact）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fastx_artifacts_filter [-h] [-v] [-z] [-i INFILE] [-o OUTFILE]</span><br><span class="line">[-h]         显示帮助信息</span><br><span class="line">[-v]         报告处理的序列数目</span><br><span class="line">                 如果有<span class="string">'-o'</span>, 在屏幕上标准输出</span><br><span class="line">                 如果无<span class="string">'-o'</span>, 信息在屏幕上输出, 则报告在标准错误上输出</span><br><span class="line">[-z]         用GZIP压缩输出</span><br><span class="line">[-i INFILE]  指定输入文件, 默认为标准输入</span><br><span class="line">[-o OUTFILE] 指定输出文件, 默认为标准输出</span><br></pre></td></tr></table></figure>
+<h3 id="3-11-生成反向互补序列"><a href="#3-11-生成反向互补序列" class="headerlink" title="3.11. 生成反向互补序列"></a>3.11. 生成反向互补序列</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fastx_reverse_complement -i input.fastq -o output.fastq</span><br></pre></td></tr></table></figure>
+<h3 id="3-12-对fasta文件进行格式化"><a href="#3-12-对fasta文件进行格式化" class="headerlink" title="3.12.对fasta文件进行格式化"></a>3.12.对fasta文件进行格式化</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fasta_formatter [-h] [-i INFILE] [-o OUTFILE] [-w N] [-t] [-e]</span><br><span class="line">[-w N]          输出fasta每行最大的碱基数, 默认值为0, 也就是每条fasta占据一行序列, 容易脚本操作</span><br><span class="line">[-t]            输出为制表符格式, 而不是fasta, 第一列为序列ID, 第二列为序列的单行显示</span><br><span class="line">[-e]            输出空白序列, 默认值为丢弃, 具有序列ID但并没有任何碱基的为空序列</span><br></pre></td></tr></table></figure>
+<h3 id="3-13-DNA序列与RNA互换"><a href="#3-13-DNA序列与RNA互换" class="headerlink" title="3.13.DNA序列与RNA互换"></a>3.13.DNA序列与RNA互换</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fasta_nucleotide_changer [-h] [-z] [-v] [-i INFILE] [-o OUTFILE] [-r] [-d]</span><br><span class="line">[-r]         DNA to RNA, T to U</span><br><span class="line">[-d]         RNA to DNA, U to T</span><br><span class="line">[-v]         报告序列的数目</span><br><span class="line">             如果有<span class="string">'-o'</span>, 在屏幕上标准输出</span><br><span class="line">             如果无<span class="string">'-o'</span>, 则在标准错误输出</span><br><span class="line">[-z]         用GZIP压缩输出</span><br></pre></td></tr></table></figure>
+<h3 id="3-14-生成reads长度分布图"><a href="#3-14-生成reads长度分布图" class="headerlink" title="3.14.生成reads长度分布图"></a>3.14.生成reads长度分布图</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fasta_clipping_histogram.pl INPUT_FILE.FA OUTPUT_FILE.PNG</span><br><span class="line">INPUT_FILE.FA   指定输入fasta文件, 可以为GZIP格式</span><br><span class="line">OUTPUT_FILE.PNG 生成的柱状图</span><br></pre></td></tr></table></figure>
+<h3 id="3-15-依据barcode进行reads分类成不同文件"><a href="#3-15-依据barcode进行reads分类成不同文件" class="headerlink" title="3.15. 依据barcode进行reads分类成不同文件"></a>3.15. 依据barcode进行reads分类成不同文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">fastx_barcode_splitter.pl --bcfile FILE --prefix PREFIX [--suffix SUFFIX] [--bol|--eol] [--mismatches N] [--exact] [--partial N] [--quiet] [--debug]</span><br><span class="line">--bcfile FILE       Barcodes文件名, 解释如下</span><br><span class="line">--prefix PREFIX     文件前缀, 会添加到输出文件, 可以用来辨别输出目录</span><br><span class="line">--suffix            文件后缀, 可选, 可以用来辨别文件扩展名</span><br><span class="line">--bol               尝试在序列的开始匹配barcodes, 也就是5‘端, 程序从0开始</span><br><span class="line">--eol               尝试在序列的末尾匹配barcodes, 也就是3‘端, 程序从最后开始</span><br><span class="line">                    --bol 与 --eo l必须有其一</span><br><span class="line">--mismatches N      允许的最大错配数, 默认为1</span><br><span class="line">--exact             等同于<span class="string">'--mismatches 0'</span>, 如果与<span class="string">'--mismatches'</span>同时存在, 那么<span class="string">'--exact'</span>具有优先级</span><br><span class="line">--partial N         允许部分barcodes匹配, 默认不允许, 解释如下</span><br><span class="line">--quiet             运行结束不打印统计信息, 默认为打印</span><br><span class="line">--debug             在标准错误上打印大量有用的debug信息</span><br></pre></td></tr></table></figure>
+<h2 id="4-Trimmomatic"><a href="#4-Trimmomatic" class="headerlink" title="4.Trimmomatic"></a>4.Trimmomatic</h2><blockquote>
+<p>你需要指定adapter的path,线程数,SRR的共有部分,及循环体.还要各种path</p>
+</blockquote>
+<ul>
+<li>Paired end</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">adapter=</span><br><span class="line">threads=</span><br><span class="line">SRR_base=</span><br><span class="line"><span class="keyword">for</span> ((id=4;id&lt;=8;id++));</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">time trimmomatic PE ../00rawdata/<span class="variable">$&#123;SRR_base&#125;</span><span class="variable">$&#123;id&#125;</span>_1.fastq.gz  ../00rawdata/<span class="variable">$&#123;SRR_base&#125;</span><span class="variable">$&#123;id&#125;</span>_2.fq.gz \</span><br><span class="line">    ./trim/<span class="variable">$&#123;SRR_base&#125;</span><span class="variable">$&#123;id&#125;</span>_F.fastq.gz ./trim/<span class="variable">$&#123;SRR_base&#125;</span><span class="variable">$&#123;id&#125;</span>_UF.fastq.gz \</span><br><span class="line">    ./trim/<span class="variable">$&#123;SRR_base&#125;</span><span class="variable">$&#123;id&#125;</span>_R.fastq.gz ./trim/<span class="variable">$&#123;SRR_base&#125;</span><span class="variable">$&#123;id&#125;</span>_UR.fastq.gz \</span><br><span class="line">    ILLUMINACLIP:<span class="variable">$&#123;adapter&#125;</span>:2:30:10 \</span><br><span class="line">    -threads <span class="variable">$&#123;threads&#125;</span> \</span><br><span class="line">    LEADING:4 TRAILING:5 SLIDINGWINDOW:4:5 MINLEN:25</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Single end</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">adapter=</span><br><span class="line">threads=</span><br><span class="line">SRR_base=</span><br><span class="line"><span class="keyword">for</span> ((id=4;id&lt;=8;id++));</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">time trimmomatic SE ../00rawdata/<span class="variable">$&#123;SRR_base&#125;</span><span class="variable">$&#123;id&#125;</span>.fastq.gz \</span><br><span class="line">    ./trim/<span class="variable">$&#123;SRR_base&#125;</span><span class="variable">$&#123;id&#125;</span>_F.fastq.gz \</span><br><span class="line">    ILLUMINACLIP:<span class="variable">$&#123;adapter&#125;</span>:2:30:10 \</span><br><span class="line">    -threads <span class="variable">$&#123;threads&#125;</span> \</span><br><span class="line">    LEADING:4 TRAILING:5 SLIDINGWINDOW:4:5 MINLEN:25</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2018/10/12/组装或定量-stringTie/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/10/12/比对-STAR/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-10-12 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-fastqc"><span class="toc-article-text">1. fastqc</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-cutadapt"><span class="toc-article-text">2. cutadapt</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-Fastx-toolkit"><span class="toc-article-text">3. Fastx-toolkit</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-1-去除接头"><span class="toc-article-text">3.1.去除接头</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-2-去除低质量碱基"><span class="toc-article-text">3.2. 去除低质量碱基</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-3-转换成fasta"><span class="toc-article-text">3.3. 转换成fasta</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-4-碱基质量统计"><span class="toc-article-text">3.4. 碱基质量统计</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-5-生成碱基质量箱图"><span class="toc-article-text">3.5. 生成碱基质量箱图</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-6-生成碱基质量分布图"><span class="toc-article-text">3.6. 生成碱基质量分布图</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-7-重命名read"><span class="toc-article-text">3.7.重命名read</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-8-输出指定长度read（前后切除）"><span class="toc-article-text">3.8. 输出指定长度read（前后切除）</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-9-去重reads"><span class="toc-article-text">3.9.去重reads</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-10-去除人工reads（artifact）"><span class="toc-article-text">3.10.去除人工reads（artifact）</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-11-生成反向互补序列"><span class="toc-article-text">3.11. 生成反向互补序列</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-12-对fasta文件进行格式化"><span class="toc-article-text">3.12.对fasta文件进行格式化</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-13-DNA序列与RNA互换"><span class="toc-article-text">3.13.DNA序列与RNA互换</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-14-生成reads长度分布图"><span class="toc-article-text">3.14.生成reads长度分布图</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-15-依据barcode进行reads分类成不同文件"><span class="toc-article-text">3.15. 依据barcode进行reads分类成不同文件</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#4-Trimmomatic"><span class="toc-article-text">4.Trimmomatic</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

@@ -1,0 +1,374 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>差异分析 DESeq2 | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  <meta name="description" content="与DESeq类似的包有：edgeR、limma、DSS、EBSeq、baySeq
+
+一、核心逻辑代码12345678910111213141516# countData: 以样品为列名,基因为行名的表达矩阵# colData的形式: 以样品作为行名,列是样品对应的分组类型# 生成count matrixdds &amp;lt;- DESeqDataSetFromMatrix(countData = cts,                              colData = coldata,                              design = ~ batch + condition)# 生成DESeq数据集dds &amp;lt;- DESeq(dds)# 进行比较，获得结果res &amp;lt;- results(dds, contrast=c(&#39;condition&#39;, &#39;treat&#39;, &#39;ctrl&#39;))resultsNames(dds)res &amp;lt;- lfcShrink(dds, coef=2)#  DESeqDataSetFromTximport:   由Salmon, Saifish, kallisto生成#  DESeqDataSetFromHTSeq:      由htseq-counts生成#  DESeqDataSet:               由RangedSummarizedExpriment生成">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="差异分析 DESeq2">
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> 差异分析 DESeq2</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <blockquote>
+<p>与DESeq类似的包有：edgeR、limma、DSS、EBSeq、baySeq</p>
+</blockquote>
+<h2 id="一、核心逻辑代码"><a href="#一、核心逻辑代码" class="headerlink" title="一、核心逻辑代码"></a>一、核心逻辑代码</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># countData: 以样品为列名,基因为行名的表达矩阵</span></span><br><span class="line"><span class="comment"># colData的形式: 以样品作为行名,列是样品对应的分组类型</span></span><br><span class="line"><span class="comment"># 生成count matrix</span></span><br><span class="line">dds &lt;- DESeqDataSetFromMatrix(countData = cts,</span><br><span class="line">                              colData = coldata,</span><br><span class="line">                              design = ~ batch + condition)</span><br><span class="line"><span class="comment"># 生成DESeq数据集</span></span><br><span class="line">dds &lt;- DESeq(dds)</span><br><span class="line"><span class="comment"># 进行比较，获得结果</span></span><br><span class="line">res &lt;- results(dds, contrast=c(<span class="string">'condition'</span>, <span class="string">'treat'</span>, <span class="string">'ctrl'</span>))</span><br><span class="line">resultsNames(dds)</span><br><span class="line">res &lt;- lfcShrink(dds, coef=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#  DESeqDataSetFromTximport:   由Salmon, Saifish, kallisto生成</span></span><br><span class="line"><span class="comment">#  DESeqDataSetFromHTSeq:      由htseq-counts生成</span></span><br><span class="line"><span class="comment">#  DESeqDataSet:               由RangedSummarizedExpriment生成</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>DESeq2为count数据提供两类变换方法，使不同均值的方差趋于稳定，rlog和vst，这两个函数可以用于处理含有色散平均趋势的负二项数据（类如RNA-seq）。由于rlog计算量很大，与vst的效果相近，那么，在数据集小于30的时候，使用rlog；大数据集使用vst可以加快速度。但做这样的变换不是用于差异分析，而是用于pca，WGCNA，clustering等与聚类相关的分析才用得到。</p>
+<h2 id="二、标准流程-standard-workflow"><a href="#二、标准流程-standard-workflow" class="headerlink" title="二、标准流程 standard workflow"></a>二、标准流程 standard workflow</h2><h3 id="2-1-input-data"><a href="#2-1-input-data" class="headerlink" title="2.1 input data"></a>2.1 input data</h3><ul>
+<li>DESeq的input data是不需要预先进行标准化的，因为软件包内部会自己根据文库大小等进行标准化。  </li>
+<li>input data有四类，分别对应四个读取函数，见核心逻辑代码部分。</li>
+<li>DESeqDataSet是包中存取read counts和统计中间值的对象，通常简写为dds。其参数必需要有一个design formula，以被后续估计dispersion和log2 fold changes使用。</li>
+</ul>
+<h3 id="2-2-DESeqDataSetFromTximport：-txi文件"><a href="#2-2-DESeqDataSetFromTximport：-txi文件" class="headerlink" title="2.2 DESeqDataSetFromTximport：.txi文件"></a>2.2 DESeqDataSetFromTximport：.txi文件</h3><blockquote>
+<p>这类数据是由Salmon、Saifish、kallisto、RSEM等软件产生，数据应该是estimated gene counts。<br>    使用这些软件的好处在于：  </p>
+<pre><code>1. 它们会修正样品间gene length的可能改变。  
+2. 它们使用的速度更快、占用CPU内存更少（相比于基于比对的软件来讲）。  
+3. 它们可以避免丢弃多匹配片段（基因同源序列），提高灵敏度。
+</code></pre></blockquote>
+<h3 id="2-3-使用DESeqDataSetFromMatrix-count-matrix文件"><a href="#2-3-使用DESeqDataSetFromMatrix-count-matrix文件" class="headerlink" title="2.3 使用DESeqDataSetFromMatrix: count matrix文件"></a>2.3 使用DESeqDataSetFromMatrix: count matrix文件</h3><blockquote>
+<p>这类数据来源于Rsubread包的featureCounts函数。使用DESeqDataSetFromMatrix，需要提供counts matrix、数据框格式的样品信息、design formula。</p>
+</blockquote>
+<h3 id="2-4-input-htseq-count"><a href="#2-4-input-htseq-count" class="headerlink" title="2.4 input: htseq-count"></a>2.4 input: htseq-count</h3><blockquote>
+<p>具体的使用可见前面，以pasilla来源数据为例</p>
+</blockquote>
+<h3 id="2-5-input-SummarizedExperiment"><a href="#2-5-input-SummarizedExperiment" class="headerlink" title="2.5 input: SummarizedExperiment"></a>2.5 input: SummarizedExperiment</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用airway包来源的数据进行示例</span></span><br><span class="line"><span class="keyword">library</span>(<span class="string">'airway'</span>)</span><br><span class="line">data(<span class="string">'airway'</span>)</span><br><span class="line">se &lt;- airway</span><br><span class="line"></span><br><span class="line"><span class="keyword">library</span>(<span class="string">'DESeq2'</span>)</span><br><span class="line">ddsSE &lt;- DESeqDataSet(se, design = ~cell + dex)</span><br></pre></td></tr></table></figure>
+<h3 id="2-6-预过滤"><a href="#2-6-预过滤" class="headerlink" title="2.6 预过滤"></a>2.6 预过滤</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 为了减少内存占用，先把count数很低的数据剔除</span></span><br><span class="line">keep &lt;- rowSums(counts(dds)) &gt;= <span class="number">10</span></span><br><span class="line">dds &lt;- dds[keep,]</span><br></pre></td></tr></table></figure>
+<h3 id="2-7-指定factor-levels"><a href="#2-7-指定factor-levels" class="headerlink" title="2.7 指定factor levels"></a>2.7 指定factor levels</h3><blockquote>
+<p>R 将基于字母顺序默认参考水平，但实际通常是根据对照组作为参考水平。因此有必要时要设置</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dds$condition &lt;- factor(dds$condition, levels=c(<span class="string">'untreated'</span>, <span class="string">'treated'</span>))</span><br><span class="line"><span class="comment"># 也可以直接指定</span></span><br><span class="line">dds$condition &lt;- relevel(dds$condition, ref=<span class="string">'untreated'</span>)</span><br><span class="line"><span class="comment"># 如果有时对dds取子集时，导致某些水平不含数据，那么这个水平就可以丢弃</span></span><br><span class="line">dds$condition &lt;- droplevels(dds$condition)</span><br></pre></td></tr></table></figure>
+<h3 id="2-8-合并技术性重复：collapseReplicates函数"><a href="#2-8-合并技术性重复：collapseReplicates函数" class="headerlink" title="2.8 合并技术性重复：collapseReplicates函数"></a>2.8 合并技术性重复：collapseReplicates函数</h3><h2 id="三、差异表达分析"><a href="#三、差异表达分析" class="headerlink" title="三、差异表达分析"></a>三、差异表达分析</h2><blockquote>
+<p>函数DESeq用来进行差异表达分析，所有计算都整合在该函数里面；生成一个结果对象。你需要使用results函数对该结果对象取值，才能获取到包含了log2FoldChange、p-value、p-adj-value等的结果。</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dds &lt;- DESeq(dds)</span><br><span class="line">res &lt;- results(dds)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果你想修改coeffficient的数量的话，可以这样设置：</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">res &lt;- results(dds, contrast=<span class="string">'2'</span>)</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">resFC &lt;- lfcShrink(dds, coef=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果有太多样本参与比较，可以并行计算</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">library</span>(<span class="string">'BiocParallel'</span>)</span><br><span class="line">register(MulticoreParam(<span class="number">4</span>))</span><br><span class="line">dds &lt;- DESeq(dds)</span><br><span class="line">res &lt;- results(dds)</span><br><span class="line">resFc &lt;- lfcShrink(dds, coef=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>按照p-value排序结果、取摘要值、统计个数、调整p-value值</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">resOrdered &lt;- res[order(res$pvalue),]</span><br><span class="line">summary(res)</span><br><span class="line">sum(res$padj &lt; <span class="number">0.1</span>, na.rm=<span class="literal">TRUE</span>)</span><br><span class="line">res0.05 &lt;- results(dds, alpha=<span class="number">0.05</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="四、探索和导出结果"><a href="#四、探索和导出结果" class="headerlink" title="四、探索和导出结果"></a>四、探索和导出结果</h2><h3 id="MA-plot"><a href="#MA-plot" class="headerlink" title="MA-plot"></a>MA-plot</h3><p>收缩估计(shrinkage estimates)通过在回归时缩小对结果影响较小的系数值来达到改善结果的目的.有多种收缩方法可供选择,如apeglm, ashr, normal.前二者需要安装同名bioconductor包,后者是DESeq2自带的.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">plotMA(res, ylim=c(-<span class="number">2</span>,<span class="number">2</span>))</span><br><span class="line"><span class="comment"># 使用lfcShrink来改变shrinkage estimators</span></span><br><span class="line">resApe &lt;- lfcShrink(dds, coef=<span class="number">2</span>, type=<span class="string">'apeglm'</span>)</span><br><span class="line">resAsh &lt;- lfcShrink(dds, coef=<span class="number">2</span>, type=<span class="string">'ashr'</span>)</span><br><span class="line">par(mfrow=c(<span class="number">1</span>,<span class="number">3</span>), mar=c(<span class="number">4</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>))</span><br><span class="line">xlim &lt;- c(<span class="number">1</span>,<span class="number">1e5</span>); ylim &lt;- c(-<span class="number">3</span>,<span class="number">3</span>)   <span class="comment">#改变yx轴的值范围</span></span><br><span class="line">plotMA(resLFC, xlim=xlim, ylim=ylim, main=<span class="string">"normal"</span>)</span><br><span class="line">plotMA(resApe, xlim=xlim, ylim=ylim, main=<span class="string">"apeglm"</span>)</span><br><span class="line">plotMA(resAsh, xlim=xlim, ylim=ylim, main=<span class="string">"ashr"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="plot-counts"><a href="#plot-counts" class="headerlink" title="plot counts"></a>plot counts</h3><blockquote>
+<p>计算一个基因的reads counts在各个处理组的情况</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">plotCounts(dds, gene=which.min(res$padj), intgroup=<span class="string">'condition'</span>)</span><br><span class="line"><span class="comment"># 输出数据框以供ggplot使用</span></span><br><span class="line">d &lt;- plotCounts(dds, gene=which.min(res$padj),intgroup=<span class="string">'condition'</span>, returnData=<span class="literal">TRUE</span>)</span><br><span class="line"><span class="keyword">library</span>(<span class="string">'ggplot2'</span>)</span><br><span class="line">ggplot(d, aes(x=condition,y=count)) +</span><br><span class="line">    geom_point(position=position_jitter(w=<span class="number">0.1</span>,h=<span class="number">0</span>)) +</span><br><span class="line">    scale_y_log10(breaks=c(<span class="number">25</span>,<span class="number">100</span>,<span class="number">400</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="更多有关结果的信息"><a href="#更多有关结果的信息" class="headerlink" title="更多有关结果的信息"></a>更多有关结果的信息</h3><blockquote>
+<p>p-value是NA？原因有三：某行(row)所有样品都是0 counts；某行的样品值极端大或者小；自动独立过滤引起的低矫正后counts，p-adj会被设为NA。</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mcols(res)$description</span><br></pre></td></tr></table></figure>
+<h3 id="富可视化、生成报告"><a href="#富可视化、生成报告" class="headerlink" title="富可视化、生成报告"></a>富可视化、生成报告</h3><blockquote>
+<p>可以使用Reporting Tools、regionReport、Glimma、pcaExplore输出结果</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">write.csv(as.data.frame(resOrdered), file=<span class="string">'results.csv'</span>)</span><br><span class="line">resSig &lt;- subset(resOrdered, padj &lt; <span class="number">0.1</span>)</span><br><span class="line">write.csv(as.data.frame(resSig), file=<span class="string">'sig_results.csv'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="多因子设计"><a href="#多因子设计" class="headerlink" title="多因子设计"></a>多因子设计</h3><blockquote>
+<p>重点在于colData的生成和类似formula(~type+condition)的生成</p>
+</blockquote>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## DataFrame with 7 rows and 3 columns</span></span><br><span class="line"><span class="comment">##            condition        type sizeFactor</span></span><br><span class="line"><span class="comment">##             &lt;factor&gt;    &lt;factor&gt;  &lt;numeric&gt;</span></span><br><span class="line"><span class="comment">## treated1     treated single-read  1.6355014</span></span><br><span class="line"><span class="comment">## treated2     treated  paired-end  0.7612159</span></span><br><span class="line"><span class="comment">## treated3     treated  paired-end  0.8326603</span></span><br><span class="line"><span class="comment">## untreated1 untreated single-read  1.1383376</span></span><br><span class="line"><span class="comment">## untreated2 untreated single-read  1.7935406</span></span><br><span class="line"><span class="comment">## untreated3 untreated  paired-end  0.6494828</span></span><br><span class="line"><span class="comment">## untreated4 untreated  paired-end  0.7516005</span></span><br><span class="line">colData(dds) <span class="comment"># 存起备用 </span></span><br><span class="line">ddsMF &lt;- dds </span><br><span class="line">levels(ddsMF$type)  <span class="comment"># 生成新的level </span></span><br><span class="line"><span class="comment"># re-run DESeq</span></span><br><span class="line">design(ddsMF) &lt;- formula(~ type + condition) </span><br><span class="line">ddsMF &lt;- DESeq(ddsMF)</span><br><span class="line">resMF &lt;- results(ddsMF)</span><br><span class="line"><span class="comment"># 还可以这样干</span></span><br><span class="line">resMFType &lt;- results(ddsMF, contrast=c(<span class="string">'type'</span>, <span class="string">'single'</span>, <span class="string">'paired'</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="五、通过聚类可视化表征数据质量"><a href="#五、通过聚类可视化表征数据质量" class="headerlink" title="五、通过聚类可视化表征数据质量"></a>五、通过聚类可视化表征数据质量</h2><h3 id="表达矩阵的热图"><a href="#表达矩阵的热图" class="headerlink" title="表达矩阵的热图"></a>表达矩阵的热图</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ntd,vsd,rld分别是norm,vst,rlog变换后的数据</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">library</span>(<span class="string">'pheatmap'</span>)</span><br><span class="line">select &lt;- order(rowMeans(counts(dds,normalized=<span class="literal">TRUE</span>)), decreasing=<span class="literal">TRUE</span>)[<span class="number">1</span>:<span class="number">20</span>]</span><br><span class="line">df &lt;- as.data.frame(colData(dds)[,c(<span class="string">'condition'</span>, <span class="string">'type'</span>)])</span><br><span class="line">pheatmap(assay(ntd)[select,], cluster_rows=<span class="literal">FALSE</span>, show_rownames=<span class="literal">FALSE</span>, cluster_cols=<span class="literal">FALSE</span>, annotation_col=df)</span><br><span class="line">pheatmap(assay(vsd)[select,], cluster_rows=<span class="literal">FALSE</span>, show_rownames=<span class="literal">FALSE</span>, cluster_cols=<span class="literal">FALSE</span>, annotation_col=df)</span><br><span class="line">pheatmap(assay(rld)[select,], cluster_rows=<span class="literal">FALSE</span>, show_rownames=<span class="literal">FALSE</span>, cluster_cols=<span class="literal">FALSE</span>, annotation_col=df)</span><br></pre></td></tr></table></figure>
+<h3 id="样品距离热图"><a href="#样品距离热图" class="headerlink" title="样品距离热图"></a>样品距离热图</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这类图直观地显示了样品间的相似度和差异性</span></span><br><span class="line">sampleDists &lt;- dist(t(assay(vsd)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">library</span>(<span class="string">'RColorBrewer'</span>)</span><br><span class="line">sampleDistMatrix &lt;- as.matrix(sampleDists)</span><br><span class="line">rownames(sampleDistMatrix) &lt;- paste(vsd$condition, vsd$type, sep=<span class="string">'-'</span>)</span><br><span class="line">colnames(sampleDistMatrix) &lt;- <span class="literal">NULL</span></span><br><span class="line">colors &lt;- colorRampPalette( rev(brewer.pal(<span class="number">9</span>, <span class="string">'Blues'</span>)) )(<span class="number">255</span>)</span><br><span class="line">pheatmap(sampleDistMatrix,</span><br><span class="line">        clustering_distance_rows=sampleDists,</span><br><span class="line">        clustering_distance_cols=sampleDists,</span><br><span class="line">        col=colors)</span><br></pre></td></tr></table></figure>
+<h3 id="样品的主成分分析"><a href="#样品的主成分分析" class="headerlink" title="样品的主成分分析"></a>样品的主成分分析</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">vsd = vst(dds)</span><br><span class="line">plotPCA(vsd, intgroup=c(<span class="string">'condition'</span>, <span class="string">'type'</span>))   <span class="comment"># 这里condition,type都是分组信息</span></span><br><span class="line"><span class="comment"># returnData可以返回主成分分析数据,进而使用其他方法画图</span></span><br><span class="line">pcaData &lt;- plotPCA(vsd, intgroup=c(<span class="string">"condition"</span>, <span class="string">"type"</span>), returnData=<span class="literal">TRUE</span>)</span><br><span class="line">percentVar &lt;- round(<span class="number">100</span> * attr(pcaData, <span class="string">"percentVar"</span>))</span><br><span class="line">ggplot(pcaData, aes(PC1, PC2, color=condition, shape=type)) +</span><br><span class="line">  geom_point(size=<span class="number">3</span>) +</span><br><span class="line">  xlab(paste0(<span class="string">"PC1: "</span>,percentVar[<span class="number">1</span>],<span class="string">"% variance"</span>)) +</span><br><span class="line">  ylab(paste0(<span class="string">"PC2: "</span>,percentVar[<span class="number">2</span>],<span class="string">"% variance"</span>)) + </span><br><span class="line">  coord_fixed()</span><br></pre></td></tr></table></figure>
+<h2 id="FAQs"><a href="#FAQs" class="headerlink" title="FAQs"></a>FAQs</h2><h3 id="分析成对的样品"><a href="#分析成对的样品" class="headerlink" title="分析成对的样品"></a>分析成对的样品</h3><blockquote>
+<p>使用多因子设计即可。</p>
+</blockquote>
+<h3 id="含有多个组，共同分析还是分开分析？"><a href="#含有多个组，共同分析还是分开分析？" class="headerlink" title="含有多个组，共同分析还是分开分析？"></a>含有多个组，共同分析还是分开分析？</h3><blockquote>
+<p>共同分析，两两比较时，使用result函数的contrast指定要比较的两个</p>
+</blockquote>
+<h3 id="可以分析无重复（without-replicate）的数据吗？"><a href="#可以分析无重复（without-replicate）的数据吗？" class="headerlink" title="可以分析无重复（without replicate）的数据吗？"></a>可以分析无重复（without replicate）的数据吗？</h3><blockquote>
+<p>可以，但是只推荐用于探索性的分析，不适用于比较分析。</p>
+</blockquote>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2018/10/12/差异分析-Ballgown/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/10/12/差异分析-RSEM/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-10-12 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#一、核心逻辑代码"><span class="toc-article-text">一、核心逻辑代码</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#二、标准流程-standard-workflow"><span class="toc-article-text">二、标准流程 standard workflow</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-1-input-data"><span class="toc-article-text">2.1 input data</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-2-DESeqDataSetFromTximport：-txi文件"><span class="toc-article-text">2.2 DESeqDataSetFromTximport：.txi文件</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-3-使用DESeqDataSetFromMatrix-count-matrix文件"><span class="toc-article-text">2.3 使用DESeqDataSetFromMatrix: count matrix文件</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-4-input-htseq-count"><span class="toc-article-text">2.4 input: htseq-count</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-5-input-SummarizedExperiment"><span class="toc-article-text">2.5 input: SummarizedExperiment</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-6-预过滤"><span class="toc-article-text">2.6 预过滤</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-7-指定factor-levels"><span class="toc-article-text">2.7 指定factor levels</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-8-合并技术性重复：collapseReplicates函数"><span class="toc-article-text">2.8 合并技术性重复：collapseReplicates函数</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#三、差异表达分析"><span class="toc-article-text">三、差异表达分析</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#四、探索和导出结果"><span class="toc-article-text">四、探索和导出结果</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#MA-plot"><span class="toc-article-text">MA-plot</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#plot-counts"><span class="toc-article-text">plot counts</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#更多有关结果的信息"><span class="toc-article-text">更多有关结果的信息</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#富可视化、生成报告"><span class="toc-article-text">富可视化、生成报告</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#多因子设计"><span class="toc-article-text">多因子设计</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#五、通过聚类可视化表征数据质量"><span class="toc-article-text">五、通过聚类可视化表征数据质量</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#表达矩阵的热图"><span class="toc-article-text">表达矩阵的热图</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#样品距离热图"><span class="toc-article-text">样品距离热图</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#样品的主成分分析"><span class="toc-article-text">样品的主成分分析</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#FAQs"><span class="toc-article-text">FAQs</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#分析成对的样品"><span class="toc-article-text">分析成对的样品</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#含有多个组，共同分析还是分开分析？"><span class="toc-article-text">含有多个组，共同分析还是分开分析？</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#可以分析无重复（without-replicate）的数据吗？"><span class="toc-article-text">可以分析无重复（without replicate）的数据吗？</span></a></li></ol></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

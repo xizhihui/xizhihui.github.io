@@ -1,0 +1,312 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>差异分析 RSEM | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  <meta name="description" content="呦呦呦">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="差异分析 RSEM">
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> 差异分析 RSEM</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>呦呦呦</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <p>RSEM利用的是transcripts而非genome。我们有两种方式来构建RSEM转录参考，其一是利用参考基因组来构建；另外一种方式是从许多转录本中构建。</p>
+<a id="more"></a>
+<h2 id="1-下载对应的基因组和注释文件"><a href="#1-下载对应的基因组和注释文件" class="headerlink" title="1. 下载对应的基因组和注释文件"></a>1. 下载对应的基因组和注释文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ftp://ftp.ensembl.org/pub/release-82/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.toplevel.fa.gz</span><br><span class="line">ftp://ftp.ensembl.org/pub/release-82/gtf/mus_musculus/Mus_musculus.GRCm38.82.chr.gtf.gz</span><br></pre></td></tr></table></figure>
+<h2 id="2-构建索引"><a href="#2-构建索引" class="headerlink" title="2. 构建索引"></a>2. 构建索引</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用bowtie2索引</span></span><br><span class="line">gunzip Mus_musculus.GRCm38.dna.toplevel.fa.gz</span><br><span class="line">gunzip ref/Mus_musculus.GRCm38.82.chr.gtf.gz</span><br><span class="line"><span class="comment"># 从基因组构建</span></span><br><span class="line">rsem-prepare-reference --gtf Mus_musculus.GRCm38.82.chr.gtf \</span><br><span class="line">					   --bowtie2 --bowtie2-path bowtie2 \</span><br><span class="line">					   Mus_musculus.GRCm38.dna.toplevel.fa mouse_ref</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从转录本构建</span></span><br><span class="line">rsem-prepare-reference --transcript-to-gene-map mouse_ref_mapping.txt \</span><br><span class="line">					   --bowtie2 --bowtie2-path bowtie2 \</span><br><span class="line">					   ref/mouse_ref.fa ref/mouse_ref</span><br></pre></td></tr></table></figure>
+<h2 id="3-表达定量"><a href="#3-表达定量" class="headerlink" title="3. 表达定量"></a>3. 表达定量</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">rsem-calculate-expression -p 8 --paired-end \</span><br><span class="line">						--bowtie2 --bowtie2-path bowtie2 \</span><br><span class="line">						--estimate-rspd \</span><br><span class="line">						--append-names \</span><br><span class="line">						--output-genome-bam \</span><br><span class="line">						read1.fastq read2.fastq \</span><br><span class="line">						ref/mouse_ref path/to/output/prefix</span><br><span class="line"><span class="comment"># output =&gt; prefix.genes.results, prefix.genome.bam, prefix.genome.sorted.bam,</span></span><br><span class="line"><span class="comment">#			prefix.genome.sorted.bam.bai, prefix.isoforms.results, prefix.stat,</span></span><br><span class="line"><span class="comment">#			prefix.transcript.bam, prefix.transcript.sorted.bam, prefix.transcript.sorted.bam.bai</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># --output-genome-bam	只在由基因组构建索引时有效</span></span><br><span class="line"><span class="comment"># --bam 				当输入不是fastq文件而是bam文件时,指定该参数</span></span><br><span class="line"><span class="comment"># --calc-ci 			指定了会计算CQV值, coefficient of quartile variation，这将回答该基因的测序深度是否足够用于差异检测</span></span><br><span class="line"><span class="comment"># --no-bam-output 		不输出bam文件</span></span><br><span class="line"><span class="comment"># --single-cell-prior 	使用针对单细胞的预设条件运行</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-结果输出"><a href="#4-结果输出" class="headerlink" title="4. 结果输出"></a>4. 结果输出</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># in R</span></span><br><span class="line">data = read.table(<span class="string">'prefix.gene.results'</span>, header=<span class="literal">T</span>, stringsAsFactors=<span class="literal">F</span>)</span><br><span class="line">idx = order(data[,<span class="string">'TPM'</span>], decreasing=<span class="literal">T</span>)</span><br><span class="line">data[idx[<span class="number">1</span>:<span class="number">10</span>], c(<span class="string">'gene_id'</span>, <span class="string">'expected_count'</span>, <span class="string">'TPM'</span>)]</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># in bash</span></span><br><span class="line">rsem-plot-model /path/to/output/prefix prefix.diagnostic.pdf</span><br><span class="line">rsem-plot-transcript-wiggles --gene-list --show-unique \</span><br><span class="line">							prefix gene_ids.txt aim_gene_transcript_wiggle.pdf</span><br><span class="line"><span class="comment"># gene_ids.txt: 含有gene identifier of aim_gene</span></span><br><span class="line"></span><br><span class="line">rsem-bam2wig prefix.genome.sorted.bam prefix.wig prefix</span><br></pre></td></tr></table></figure>
+<h2 id="5-生成表达矩阵"><a href="#5-生成表达矩阵" class="headerlink" title="5. 生成表达矩阵"></a>5. 生成表达矩阵</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rsem-generate-data-matrix sample1.genes.results sample2.genes.results \</span><br><span class="line">						  sample3.genes.results ... \</span><br><span class="line">						  sampleN.genes.results &gt; gene_matrix.txt</span><br><span class="line">rsem-run-ebseq gene_matrix.txt NumberOfgroup1,numberofgroup2 gene_matrix.ebseq.results</span><br><span class="line">rsem-control-fdr gene_matrix.ebseq.result 0.05 gene_matrix.de.txt</span><br></pre></td></tr></table></figure>
+<h2 id="6-检测转录表达差异-differentially-expressed-isoforms"><a href="#6-检测转录表达差异-differentially-expressed-isoforms" class="headerlink" title="6. 检测转录表达差异(differentially expressed isoforms)"></a>6. 检测转录表达差异(differentially expressed isoforms)</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">rsem-generate-ngvector mouse_ref.transcripts.fa mouse_ref</span><br><span class="line"><span class="comment"># mouse_ref.transcripts.fa是mouse的转录组参考序列</span></span><br><span class="line"><span class="comment"># output=&gt; mouse_ref.ngvec</span></span><br><span class="line">rsem-generate-data-matrix sample1.isoforms.results \</span><br><span class="line">						  sample2.isoforms.results sample3.isoforms.results \</span><br><span class="line">						  ...</span><br><span class="line">						  sampleN.isoforms.results &gt; isoform_matrix.txt</span><br><span class="line">rsem-run-ebseq --ngvector mouse_ref.ngvec isoform_matrix.txt control_sample_num,treate_sample_num \</span><br><span class="line">						  isoform_ebseq.results</span><br><span class="line">rsem-control-fdr isoform_ebseq.results 0.05 isoform.de.txt</span><br></pre></td></tr></table></figure>
+<h2 id="7-检测测序深度是否足够"><a href="#7-检测测序深度是否足够" class="headerlink" title="7. 检测测序深度是否足够"></a>7. 检测测序深度是否足够</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 在rsem-calculate-expression中指定--calc-ci</span></span><br><span class="line"><span class="comment"># 2. 如果基因的cov值高于0.05表明测序深度不够,需要多少？</span></span><br><span class="line">rsem-simulate-reads ../ref/mouse_ref prefix.stat/prefix.model \</span><br><span class="line">					prefix.isoforms.results 0.36 20000000 prefix_sim_2M \</span><br><span class="line">					--seed 0</span><br><span class="line"><span class="comment"># ../ref/mouse_ref指定参考文件的位置</span></span><br><span class="line"><span class="comment"># 0.36是预设的背景噪音比率</span></span><br><span class="line"><span class="comment"># output =&gt; prefix_sim_2M_1.fastq, prefix_sim_2M_2.fastq</span></span><br><span class="line"></span><br><span class="line">rsem-calculate-expression -p 8 --paired-end \</span><br><span class="line">						  --bowtie2 --bowtie2-path bowtie2 \</span><br><span class="line">						  --estimate-rspd \</span><br><span class="line">						  --append-names \</span><br><span class="line">						  --no-bam-output \</span><br><span class="line">						  --calc-ci \</span><br><span class="line">						  prefix_sim_2M_1.fastq prefix_sim_2M_2.fastq \</span><br><span class="line">						  ../ref/mouse_ref prefix_sim_2M</span><br><span class="line"><span class="comment"># 查看output的六个文件中prefix_sim_2m.genes.results,如果基因的cov低于0.05,表明20000000的测序深度足够.</span></span><br></pre></td></tr></table></figure>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2018/10/12/差异分析-DESeq2/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/10/12/差异分析-limma/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-10-12 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/软件和包/">软件和包<span>22</span></a></li> <li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-下载对应的基因组和注释文件"><span class="toc-article-text">1. 下载对应的基因组和注释文件</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-构建索引"><span class="toc-article-text">2. 构建索引</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-表达定量"><span class="toc-article-text">3. 表达定量</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#4-结果输出"><span class="toc-article-text">4. 结果输出</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#5-生成表达矩阵"><span class="toc-article-text">5. 生成表达矩阵</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#6-检测转录表达差异-differentially-expressed-isoforms"><span class="toc-article-text">6. 检测转录表达差异(differentially expressed isoforms)</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#7-检测测序深度是否足够"><span class="toc-article-text">7. 检测测序深度是否足够</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

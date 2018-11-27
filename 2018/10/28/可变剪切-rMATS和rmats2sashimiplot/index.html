@@ -1,0 +1,366 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>可变剪切 rMATS和rmats2sashimiplot | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  <meta name="description" content="安装environment: py2.7.x
+
+rMATs
+
+12345678910# in linuxwget http://rnaseq-mats.sourceforge.net/rMATS.4.0.2.tgz# check version to use, in pythonimport sysprint sys.maxunicode# 1114111: rMATS-turbo-xxx-UCS4# 65535: rMATS-turbo-xxx-UCS2&amp;quot;path/to/rMATs-turbo-xxx-UCS&amp;#123;x&amp;#125;/rMATS.py&amp;quot;">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="可变剪切 rMATS和rmats2sashimiplot">
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> 可变剪切 rMATS和rmats2sashimiplot</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><code>environment: py2.7.x</code></p>
+<ul>
+<li>rMATs</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># in linux</span><br><span class="line">wget http://rnaseq-mats.sourceforge.net/rMATS.4.0.2.tgz</span><br><span class="line"></span><br><span class="line"># check version to use, in python</span><br><span class="line">import sys</span><br><span class="line">print sys.maxunicode</span><br><span class="line"># 1114111: rMATS-turbo-xxx-UCS4</span><br><span class="line"># 65535: rMATS-turbo-xxx-UCS2</span><br><span class="line"></span><br><span class="line">&quot;path/to/rMATs-turbo-xxx-UCS&#123;x&#125;/rMATS.py&quot;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<ul>
+<li>rmats2sashimiplot</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://files.pythonhosted.org/packages/f7/15/cd6fa8dc70de55be94f4a55edd388e5ba99c77eca8fd73e556e66e9d8110/rmats2sashimiplot-2.0.2.tar.gz</span><br><span class="line">tar -zxvf rmats2sashimiplot-2.0.2.tar.gz &amp; cd rmats2sashimiplot-2.0.2</span><br><span class="line">python setup.py install</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ul>
+<li>rMATs</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># input as fastq, samples in each group list in s1.txt/s2.txt separated with comma</span><br><span class="line">python rmats.py --s1 s1.txt --s2 s2.txt --gtf gtfFile --bi STARindexFolder -od outDir -t readType -readLength readLength [options]*</span><br><span class="line"># input as sorted.bam, samples in each group list in s1.txt/s2.txt separated with comma</span><br><span class="line">python rmats.py --b1 b1.txt --b2 b2.txt --gtf gtfFile --od outDir -t readType --nthread nthread --readLength readLength --tstat tstat [options]*</span><br></pre></td></tr></table></figure>
+<ul>
+<li>rmats2sashimiplot</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># input as sam</span><br><span class="line">$rmats2sashimiplot --s1 s1_rep1.sam[,s1_rep2.sam]* --s2 s2.rep1.sam[,s2.rep2.sam]* -t eventType -e eventsFile --l1 SampleLabel1 --l2 SampleLabel2 --exon_s exonScale --intron_s intronScale -o outDir</span><br><span class="line"></span><br><span class="line"># input as bam</span><br><span class="line">$rmats2sashimiplot --b1 s1_rep1.bam[,s1_rep2.bam]* --b2 s2.rep1.bam[,s2.rep2.bam]* -c coordinate:annotaionFile --l1 SampleLabel1 --l2 SampleLabel2 --exon_s exonScale --intron_s intronScale -o outDir</span><br><span class="line"></span><br><span class="line"># a group file provided</span><br><span class="line">$rmats2sashimiplot --b1 s1_rep1.bam[,s1_rep2.bam]* --b2 s2.rep1.bam[,s2.rep2.bam]* -c coordinate:annotaionFile --l1 SampleLabel1 --l2 SampleLabel2 --exon_s exonScale --intron_s intronScale -o outDir --group-info gf.gf</span><br></pre></td></tr></table></figure>
+<h2 id="rMATS-结果"><a href="#rMATS-结果" class="headerlink" title="rMATS 结果"></a>rMATS 结果</h2><h3 id="识别的剪切事件类型"><a href="#识别的剪切事件类型" class="headerlink" title="识别的剪切事件类型"></a>识别的剪切事件类型</h3><p>rMATS analyzes skipped exon (SE), alternative 5’ splice site (A5SS), alternative 3’ splice site (A3SS), mutually exclusive exons (MXE), and retained intron (RI) events. </p>
+<p><img src="https://s1.ax1x.com/2018/10/28/ic5Jp9.jpg" alt="5种ASE"><br><img src="https://s1.ax1x.com/2018/10/28/ic5BkD.png" alt="5种ASE"></p>
+<h3 id="结果文件释义"><a href="#结果文件释义" class="headerlink" title="结果文件释义"></a>结果文件释义</h3><ul>
+<li>AS_Event.MATS.JC.txt, 只使用 Junction counts (counts of reads that span splicing junctions) 检测到的 AS_Event 结果</li>
+<li>JS.raw.input.AS_Event.txt, 进行 AS_Event.MATS.JC 分析的源数据</li>
+<li>AS_Event.MATS.JCEC.txt, 同时使用 junction counts 和 reads on target 检测到的 AS_Event 结果</li>
+<li>JCEC.raw.input.AS_Event.txt，进行 AS_Event.MATS.JCEC.txt 分析的源数据</li>
+<li>fromGTF.AS_Event.txt, 来源于 GTF 和 RNA 的所有可能可变剪切事件</li>
+</ul>
+<h3 id="结果文件各列释义"><a href="#结果文件各列释义" class="headerlink" title="结果文件各列释义"></a>结果文件各列释义</h3><ul>
+<li>IJC_SAMPLE_*: inclusion junction counts</li>
+<li>SJC_SAMPLE_*: skipping junction counts</li>
+<li>IC_SAMPLE_*: inclusion counts</li>
+<li>SC_SAMPLE_*: skipping counts</li>
+<li>IncFormLen: length of inclusion form, used for normalization</li>
+<li>SkipFormLen: length of skipping form, used for normalization</li>
+<li>IncLevel1: inclusion level for SAMPLE_1 replicates (comma separated) calculated from normalized counts</li>
+<li>IncLevel2: inclusion level for SAMPLE_2 replicates (comma separated) calculated from normalized counts</li>
+<li>IncLevelDifference: average(IncLevel1) - average(IncLevel2)</li>
+<li>P-Value: Significance of splicing difference between two sample groups. (Only available if statistical model is on)</li>
+<li>FDR: False Discovery Rate calculated from p-value. (Only available if statistical model is on)</li>
+<li>upstreamES/upstreamEE: upstreamExonStart, upstreamExonEnd</li>
+<li>downstreamES/downstreamEE: like above</li>
+</ul>
+<p><img src="https://s1.ax1x.com/2018/10/28/ic5am6.png" alt="IC and SC"><br><img src="https://s1.ax1x.com/2018/10/28/ic5t61.png" alt="upstreamES/EE"></p>
+<h3 id="相关计算"><a href="#相关计算" class="headerlink" title="相关计算"></a>相关计算</h3><p><code>IncLevel1 = (IC_SAMPLE_1 / IncFormLen) / (IC_SAMPLE_1 / IncFormLen + SC_SAMPLE_1 / SkipFormLen)</code></p>
+<p><code>IncFormLen = 2 * (Junction_length - read_length + 1)</code></p>
+<p><code>SkipFormLen = Junction_length - read_length + 1</code></p>
+<p><code>Junction_length = 2 * (read_length - anchor), anchor = 8 bp(default)</code></p>
+<h3 id="结果解读："><a href="#结果解读：" class="headerlink" title="结果解读："></a>结果解读：</h3><ol>
+<li>JunctionCountOnly</li>
+</ol>
+<p>在对剪切事件发生的差异分析过程中，rMATs 采用了 2 种定量方式，即 JunctionCountOnly 和 ReadOnTargetAndJunctionCounts. 对于前者，它把那些会全部比对到 alternatively spliced exon(ASE) 的 reads 进行剔除，而后者不会。也就是说，Junction counts 是 reads 覆盖 (span) 到 splicing site 的 reads count，read on target 就是被 JunctionCountOnly 剔除的 reads，也就是 这些 reads 整体只比对到 ASE 区域的某个部分。</p>
+<ol start="2">
+<li>PSI</li>
+</ol>
+<p>PSI, 全称为 Percent-splice-in，可以针对 isoform，exon，ASE 进行计算。对于 ASE 来说，PSI = splice_in / (splice_in + splice_out), 在 rMATS 里，splice_in 和 splice_out 是支持 splice_in 和 splice_out 发生的 reads 数目，可以同基因表达的 reads count 作类比。</p>
+<h2 id="rmats2sashimiplot"><a href="#rmats2sashimiplot" class="headerlink" title="rmats2sashimiplot"></a>rmats2sashimiplot</h2><h3 id="结果展示"><a href="#结果展示" class="headerlink" title="结果展示"></a>结果展示</h3><p><img src="https://raw.githubusercontent.com/Xinglab/rmats2sashimiplot/master/img/plotwitheventgf.png" alt="可视化结果"></p>
+<h3 id="结果解读"><a href="#结果解读" class="headerlink" title="结果解读"></a>结果解读</h3><ul>
+<li>Y-轴释义</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Xinglab/rmats2sashimiplot/master/img/RPKM.png" alt="Y-轴释义"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://rnaseq-mats.sourceforge.net/user_guide.htm" target="_blank" rel="noopener">rMATS</a></li>
+<li><a href="https://github.com/Xinglab/rmats2sashimiplot" target="_blank" rel="noopener">rmats2sashimiplot</a></li>
+<li><a href="https://www.biostars.org/p/256949/" target="_blank" rel="noopener">biostars</a></li>
+</ul>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2018/10/28/流程构建-Snakemake使用初步/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/10/15/扩增子测序-QIIME1/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-10-28 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安装"><span class="toc-article-text">安装</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用"><span class="toc-article-text">使用</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#rMATS-结果"><span class="toc-article-text">rMATS 结果</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#识别的剪切事件类型"><span class="toc-article-text">识别的剪切事件类型</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#结果文件释义"><span class="toc-article-text">结果文件释义</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#结果文件各列释义"><span class="toc-article-text">结果文件各列释义</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#相关计算"><span class="toc-article-text">相关计算</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#结果解读："><span class="toc-article-text">结果解读：</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#rmats2sashimiplot"><span class="toc-article-text">rmats2sashimiplot</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#结果展示"><span class="toc-article-text">结果展示</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#结果解读"><span class="toc-article-text">结果解读</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#参考"><span class="toc-article-text">参考</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

@@ -1,0 +1,404 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>芯片专题 AffyMetrix | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  <meta name="description" content="一、芯片基础1.1 芯片平台和包
+
+
+平台
+包
+
+
+
+
+illumina
+beadarray, lumi
+
+
+affymatrix
+affy,simpleaffy, oligo
+
+
+agilent
+没有找到">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="芯片专题 AffyMetrix">
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> 芯片专题 AffyMetrix</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="一、芯片基础"><a href="#一、芯片基础" class="headerlink" title="一、芯片基础"></a>一、芯片基础</h2><h3 id="1-1-芯片平台和包"><a href="#1-1-芯片平台和包" class="headerlink" title="1.1 芯片平台和包"></a>1.1 芯片平台和包</h3><table>
+<thead>
+<tr>
+<th>平台</th>
+<th>包</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>illumina</td>
+<td>beadarray, lumi</td>
+</tr>
+<tr>
+<td>affymatrix</td>
+<td>affy,simpleaffy, oligo</td>
+</tr>
+<tr>
+<td>agilent</td>
+<td>没有找到</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<h3 id="1-2-bioconductor包内置芯片数据"><a href="#1-2-bioconductor包内置芯片数据" class="headerlink" title="1.2 bioconductor包内置芯片数据"></a>1.2 bioconductor包内置芯片数据</h3><blockquote>
+<p><a href="http://www.bio-info-trainee.com/1399.html" target="_blank" rel="noopener">http://www.bio-info-trainee.com/1399.html</a></p>
+</blockquote>
+<h3 id="1-3-GEO数据库"><a href="#1-3-GEO数据库" class="headerlink" title="1.3 GEO数据库"></a>1.3 GEO数据库</h3><ul>
+<li>GEO platform: GPL</li>
+<li>GEO sample:    GSM</li>
+<li>GEO series:    GSE</li>
+<li>GEO dataset:    GDS</li>
+</ul>
+<p>处理GEO数据有两条思路,第一条速录是利用GEOquery来下载。另一条则是自己下载原始的芯片数据，然后转换成表达矩阵.当然，有些比较常用的芯片则是有对应的包,我们只需要把对应包进行安装就有相应的芯片数据了。</p>
+<h4 id="1-3-1-GEOquery"><a href="#1-3-1-GEOquery" class="headerlink" title="1.3.1 GEOquery"></a>1.3.1 GEOquery</h4><p>getGEO(GEOID, destdir):</p>
+<ul>
+<li>GDS858:     下载数据集</li>
+<li>GPL96：    下载芯片设计信息,probe-geneID对应表(soft文件)</li>
+<li>GSE1009:    下载表达矩阵,在下载该数据时GPL96.soft也会自动下载,但无法读取.得用GPL96作为ID使用getGEO函数.这时候的getGPL干脆设为False</li>
+</ul>
+<p>getGEOfile:         下载GEO soft文件<br>getGEOSuppFiles: 下载原始数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># 使用GDS858的ID下载</span><br><span class="line">GDS = getGEO(&apos;GDS858&apos;, destdir=&apos;.&apos;)</span><br><span class="line">expr_matrix = Table(GDS)	#得到表达矩阵</span><br><span class="line">Des_info = Meta(GDS)		#得到描述信息(metadata)</span><br><span class="line">eSet = GDS2eSet(GDS, do.log2=T)	#得到expressionSet,做log2变换</span><br><span class="line"></span><br><span class="line"># 使用GSE1009的ID下载</span><br><span class="line"># 返回的是含expressionSet对象的list</span><br><span class="line">genes = geneNames(GSE[[1]])		# 得到gene名, geneNames是biobase包里面的</span><br><span class="line">samples = sampleNames(GSE[[1]])	# 得到样品名</span><br><span class="line">pdata = pData(GSE[[1]])			# 得到描述信息(metadata)</span><br><span class="line">expr_matrix = exprs(GSE[[1]])	# 得到表达矩阵</span><br><span class="line"></span><br><span class="line"># GPL16699的ID下载</span><br><span class="line">Des_info = Meta(GPL)		# 得到描述信息</span><br><span class="line">Annotation = Table(GPL)		# 得到芯片注释信息(geneID-probeID)</span><br><span class="line"></span><br><span class="line"># 下载原始数据信息</span><br><span class="line">rawdata = getGEOSuppFiles(GSE1009)</span><br></pre></td></tr></table></figure>
+<h4 id="1-3-2-GEO页面"><a href="#1-3-2-GEO页面" class="headerlink" title="1.3.2 GEO页面"></a>1.3.2 GEO页面</h4><p><img src="https://s1.ax1x.com/2018/07/19/P3GY5j.png" alt="P3GY5j.png"></p>
+<h3 id="1-4-原始数据的预处理"><a href="#1-4-原始数据的预处理" class="headerlink" title="1.4 原始数据的预处理"></a>1.4 原始数据的预处理</h3><ol>
+<li><p>背景信号处理<br>由于图像处理软件对芯片划格后,取杂交点周围区域内每个像素的吸光度均值作为背景信号,但是芯片的不同区域像素不同则均值不同,各个区域扣除的背景则多少不一.所以要进行背景信号处理. 可以利用芯片最低信号轻度的点作为背景信号,或者把芯片非杂交点的背景吸光度均值作为整个芯片的背景信号.</p>
+</li>
+<li><p>芯片数据清理<br>经背景校正后的芯片数据会出现异常值,通常的处理方法就是去除这些异常值,去除的方法有:标准值法, 奇异值法, 变异系数法, 前景值法(front value &lt;200), 中位数法等等.Affymetrix的芯片则时直接将负值修正为一个固定值.</p>
+</li>
+</ol>
+<p>紧接着,对于缺失值的处理,方法有多种.一个时删除, 如果某行或某列的缺失值多于某个阈值,则删除该行/列. 另一种是补全.补全值的选择有使用0值补全,使用均值或中值补全,还可以时K邻近法进行补全.</p>
+<ol start="3">
+<li><p>归一化<br>由于芯片数据值变化很大, 呈偏态,标准差大.但是后续的差异分析基本都是假定数据的正态分布,所以可以使用对数转换使数据趋于正态分布, 减少标准差.然后是消除技术误差/偏差.这时候使用的方法有平均数标准化, 中位数标准化等方法.此时就得到了表达矩阵.</p>
+</li>
+<li><p>差异分析<br>芯片数据的差异分析有三种方法：</p>
+</li>
+</ol>
+<ul>
+<li>倍数分析法(fold change)</li>
+<li>参数检验(t-test)</li>
+<li>非参数检验(经验贝叶斯,SAM法)</li>
+</ul>
+<p>常用的软件有:limma、DESeq2、edgeR、GFOLD等。</p>
+<h2 id="二、使用Affy包分析芯片质量"><a href="#二、使用Affy包分析芯片质量" class="headerlink" title="二、使用Affy包分析芯片质量"></a>二、使用Affy包分析芯片质量</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">source</span>(<span class="string">'http://biconductor.org/biocLite.R'</span>)</span><br><span class="line">biocLite(c(<span class="string">'affy'</span>, <span class="string">'simpleaffy'</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="2-1-读取CEL文件-查看基本信息"><a href="#2-1-读取CEL文件-查看基本信息" class="headerlink" title="2.1 读取CEL文件,查看基本信息"></a>2.1 读取CEL文件,查看基本信息</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">suppressPackageStartupMessages(&#123;</span><br><span class="line">    <span class="keyword">library</span>(affy))</span><br><span class="line">    <span class="keyword">library</span>(simpleaffy))</span><br><span class="line"></span><br><span class="line"><span class="comment">###################读取文件####################</span></span><br><span class="line">filenames = list.files(<span class="string">'./GSE30668'</span>, pattern=<span class="string">'*.CEL'</span>)</span><br><span class="line">the.data = ReadAffy(filenames=paste0(<span class="string">'./GSE30668/'</span>, filenames, sep=<span class="string">''</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">##############芯片基本信息####################</span></span><br><span class="line">old.names = sampleNames(the.data) <span class="comment"># 芯片名</span></span><br><span class="line">sampleNames(the.data) = gsub(<span class="string">'.CEL'</span>, <span class="string">''</span>, filenames)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 完美匹配探针,错配探针; perfect match probes / mismatch probes</span></span><br><span class="line">pm.data = pm(the.data)</span><br><span class="line">mm.data = mm(the.data)</span><br><span class="line">head(pm.data)</span><br><span class="line">head(mm.data)</span><br><span class="line"></span><br><span class="line">pdata = pData(the.data)</span><br><span class="line">probes = geneNames(the.data)</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-查看芯片质量"><a href="#2-2-查看芯片质量" class="headerlink" title="2.2 查看芯片质量"></a>2.2 查看芯片质量</h3><ul>
+<li>灰度图、灰度值</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">nmatrix = length(filenames)</span><br><span class="line"></span><br><span class="line"><span class="comment">#################### 画灰度图,并统计灰度值 ######################</span></span><br><span class="line">par(mfrow=c(ceiling(nmatrix/<span class="number">2</span>), <span class="number">2</span>))</span><br><span class="line">par(mar=c(<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.2</span>,<span class="number">0.2</span>))</span><br><span class="line"><span class="comment"># 设置调色板为灰度</span></span><br><span class="line">pallette.gray = c(grep(gray(<span class="number">0</span>:<span class="number">10</span>/<span class="number">10</span>), times=seq(<span class="number">1</span>, <span class="number">41</span>,by=<span class="number">4</span>)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1</span>:nmatrix) &#123;</span><br><span class="line">	image(the.data[, i], col=pallette.gray)</span><br><span class="line">	<span class="comment"># 如果芯片图像有版斑块就有可能时坏片</span></span><br><span class="line">&#125;</span><br><span class="line">par(mfrow=c(<span class="number">1</span>,<span class="number">1</span>))</span><br><span class="line">par(mar=c(<span class="number">4</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">0.5</span>))</span><br><span class="line">par(cex=<span class="number">0.7</span>)</span><br><span class="line"><span class="keyword">if</span> (nmatrix &gt; <span class="number">40</span>) par(cex=<span class="number">0.5</span>)</span><br><span class="line">colors = rainbow(nmatrix*<span class="number">1.2</span>)</span><br><span class="line">boxplot(the.data, col=colors, xlab=<span class="string">'Sample'</span>, ylab=<span class="string">'Log intensity'</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>曲线图，MA-plot，RNA降解分析</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">##################### 画曲线图 ######################</span></span><br><span class="line">par(mar=c(<span class="number">4</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">0.5</span>))</span><br><span class="line">hist(the.data, lty=<span class="number">1</span>:<span class="number">3</span>, col=colors)</span><br><span class="line">legend(<span class="string">'topright'</span>, legend=sampleNames(the.data),</span><br><span class="line">		lty=<span class="number">1</span>:<span class="number">3</span>, col=colors, </span><br><span class="line">		box.col=<span class="string">'white'</span>, xpd=<span class="literal">T</span>,</span><br><span class="line">		cex=<span class="number">1.5</span>)</span><br><span class="line">box()</span><br><span class="line"></span><br><span class="line"><span class="comment">####################### MA-plot #####################</span></span><br><span class="line"><span class="comment"># 作图得到IQR,如果IQR较大的话芯片可能有问题</span></span><br><span class="line">par(mfrow=c(ceiling(nmatrix/<span class="number">2</span>), <span class="number">2</span>))</span><br><span class="line">par(mar=c(<span class="number">3</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">0.5</span>))</span><br><span class="line">par(tcl=<span class="number">0.2</span>)</span><br><span class="line">par(mgp=c(<span class="number">2</span>,<span class="number">0.5</span>,<span class="number">0</span>))</span><br><span class="line">MAplot(the.data, cex=<span class="number">0.8</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">####################### RNA降解分析 #################</span></span><br><span class="line"><span class="comment"># 理想情况下每个样品的线(分段)是平行的</span></span><br><span class="line">par(mfrow=c(<span class="number">1</span>,<span class="number">1</span>))</span><br><span class="line">par(mar=c(<span class="number">4</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">0.5</span>))</span><br><span class="line">RNAdeg = AffyRNAdeg(the.data)</span><br><span class="line">summaryAffyRNAdeg(RNAdeg)</span><br><span class="line">plotAffyRNAdeg(RNAdeg, cols=colors)</span><br><span class="line">legend(<span class="string">'topleft'</span>, legend=sampleNames(the.data),</span><br><span class="line">		lty=<span class="number">1</span>, col=colors,</span><br><span class="line">		box.col=<span class="string">'white'</span>, xpd=<span class="literal">T</span>)</span><br><span class="line">box()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>背景信号值、样品缩放因子、阳性信号值（表达基因占比，内参占比）</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">suppressPackageStartupMessages(<span class="keyword">library</span>(simpleaffy))</span><br><span class="line"></span><br><span class="line"><span class="comment">################# 查看背景信号值 ####################</span></span><br><span class="line"><span class="comment"># 如果背景信号值太大,说明芯片结果并不好(太大是多大?)</span></span><br><span class="line">qc.data = qc(the.data)</span><br><span class="line">avbg.data = as.data.frame(sort(avbg(qc.data)))</span><br><span class="line">max(avbg.data)</span><br><span class="line"></span><br><span class="line"><span class="comment">################# 样品scale factor###################</span></span><br><span class="line"><span class="comment"># 如果scale factor的最大值与最小值的比值超过3倍的话</span></span><br><span class="line"><span class="comment"># 芯片结果也不好</span></span><br><span class="line">sfs.data = sort(sfs(qc.data))</span><br><span class="line">ratio = max(sfs.data) / min(sfs.data)</span><br><span class="line">ratio</span><br><span class="line"></span><br><span class="line"><span class="comment">################# 有表达的基因占比多少 ###############</span></span><br><span class="line"><span class="comment"># 表达基因占比太小表明芯片结果有问题</span></span><br><span class="line">per.data = as.data.frame(percent.present(qc.data))</span><br><span class="line">min(per.data)</span><br><span class="line"></span><br><span class="line"><span class="comment">################# 内参基因的表达占比 #################</span></span><br><span class="line">rat.data = ratios(qc.data)</span><br><span class="line">head(rat.data)</span><br></pre></td></tr></table></figure>
+<h2 id="三、使用Affy包处理原始芯片数据"><a href="#三、使用Affy包处理原始芯片数据" class="headerlink" title="三、使用Affy包处理原始芯片数据"></a>三、使用Affy包处理原始芯片数据</h2><p>从原始芯片数据开始处理需要经过四个步骤：背景校正、归一化(标准化)、计算表达量、得到表达矩阵。你也可以通过使用mas5或rma或gcrma函数直接从读入的原始芯片数据(见2.1, the.data)计算表达量(见3.3),最后得到表达矩阵.</p>
+<h3 id="3-1-背景校正"><a href="#3-1-背景校正" class="headerlink" title="3.1.背景校正"></a>3.1.背景校正</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">suppressPackageStartupMessages(<span class="keyword">library</span>(affy))</span><br><span class="line">suppressPackageStartupMessages(<span class="keyword">library</span>(simpleaffy))</span><br><span class="line">load(<span class="string">'GSE30668_eSet.RData'</span>)</span><br><span class="line"><span class="comment">################ rma, mas 两种校正方法###########################</span></span><br><span class="line"><span class="comment"># mas校正后pm和mm的值都被重新计算了</span></span><br><span class="line"><span class="comment"># rma校正仅针对pm,mm的值不会变化</span></span><br><span class="line">rma.data = bg.correct(the.data, method=<span class="string">'rma'</span>)</span><br><span class="line">mas.data = bg.correct(the.data, method=<span class="string">'mas'</span>)</span><br><span class="line">crt.data = list(rma.data, mas.data)</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-归一化处理"><a href="#3-2-归一化处理" class="headerlink" title="3.2.归一化处理"></a>3.2.归一化处理</h3><p>芯片的归一化方法有线性缩放法、非线性缩放法、分位数法、Cyclic loess法、Contrasts法。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#这里取rma背景校正的结果进行后续的归一化.</span></span><br><span class="line">data = crt.data[[<span class="number">1</span>]]</span><br><span class="line"><span class="comment">############## 线性缩放 ############################</span></span><br><span class="line"><span class="comment"># 选择某个芯片作为参考,其他芯片与其分别做线性回归</span></span><br><span class="line"><span class="comment"># 得到的回归线对剩余其他芯片做缩放(同一缩放倍数)</span></span><br><span class="line"></span><br><span class="line">ln.data = normalize(data, method=<span class="string">'constant'</span>)</span><br><span class="line">head(pm(ln.data)/pm(data))</span><br><span class="line">head(mm(ln.data)/mm(data))</span><br><span class="line"><span class="comment">############# 非线性缩放 ###########################</span></span><br><span class="line"><span class="comment"># 仅使用部分芯片结果做非线性拟合,然后进行缩放(不同缩放倍数)</span></span><br><span class="line">invar.data = normalize(data, method=<span class="string">'invariantest'</span>)</span><br><span class="line">head(pm(invar.data)/pm(data))</span><br><span class="line">head(mm(invar.data)/mm(data))</span><br><span class="line"><span class="comment">############# 分位数(quantile) #####################</span></span><br><span class="line"><span class="comment"># 前提是假设每个芯片信号的经验分布函数一样</span></span><br><span class="line"><span class="comment"># 任两个芯片的QQ-plot会形成45度对角线</span></span><br><span class="line">qt.data = normalize(data, method=<span class="string">'quantiles'</span>)</span><br><span class="line">head(pm(qt.data)/pm(data))</span><br><span class="line">head(mm(qt.data)/mm(data))</span><br><span class="line"><span class="comment">############# Cyclic loess #########################</span></span><br><span class="line">loe.data = normalize(data, method=<span class="string">'loess'</span>)</span><br><span class="line"><span class="comment">############# contrasts ############################</span></span><br><span class="line">cont.data = normalize(data, method=<span class="string">'contrasts'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="3-3-计算表达量"><a href="#3-3-计算表达量" class="headerlink" title="3.3 计算表达量"></a>3.3 计算表达量</h3><ul>
+<li><p>使用affy::computeExprSet计算表达矩阵,它需要指定统计方法和PM校正方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">################# 显示PM校正方式种类 #######################</span><br><span class="line">pmcorrect.methods()</span><br><span class="line">################# 显示统计方法种类 ##########################</span><br><span class="line">generateExprSet.methods()</span><br><span class="line">################# 计算表达矩阵 ######################</span><br><span class="line">eSet.pmo.liw = computeExprSet(ln.data, pmcorrect.method=&apos;pmonly&apos;, summary.method=&apos;liwong&apos;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用mas5或rma或gcrma函数一步到位</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">eSet.mas5 = mas5(the.data)</span><br><span class="line">eSet.rma = rma(the.data)</span><br><span class="line">suppressPackageStartupMessages(library(gcrma))</span><br><span class="line">eset.gcrma = gcrma(the.data)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="3-4-得到表达矩阵"><a href="#3-4-得到表达矩阵" class="headerlink" title="3.4 得到表达矩阵"></a>3.4 得到表达矩阵</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">############### 进行rma或mas5处理 ###############</span></span><br><span class="line"><span class="comment">#eSet.mas5 = mas5(the.data)</span></span><br><span class="line"><span class="comment">#eSet.rma = rma(the.data)</span></span><br><span class="line"><span class="comment">############### 获取表达矩阵 ################</span></span><br><span class="line"><span class="comment"># 注意，rma法计算表达量</span></span><br><span class="line">expr.rma.lg2 = exprs(eSet.rma)</span><br><span class="line">expr.rma.nlg = <span class="number">2</span>^expr.rma.lg2</span><br><span class="line">expr.mas5.nlg = exprs(eSet.mas5)</span><br><span class="line">expr.mas5.lg2 = log2(expr.mas5.nlg)</span><br><span class="line"></span><br><span class="line"><span class="comment">############### 筛选有表达的基因 ################</span></span><br><span class="line"><span class="comment"># mas5calls: P为present, A为absent, M为marginal</span></span><br><span class="line">eSet.calls = mas5calls(the.data)</span><br><span class="line">expr.calls = exprs(eSet.calls)</span><br><span class="line">probes = apply(expr.calls, <span class="number">1</span>, <span class="keyword">function</span>(x) any(x==<span class="string">'P'</span>))</span><br><span class="line"><span class="comment"># 以rma为例</span></span><br><span class="line">expr.chose = expr.rma.lg2[probes, ]</span><br><span class="line">save(expr.chose, file=<span class="string">'GEO30668_expr_rma_chose.RData'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="3-5-差异分析和注释"><a href="#3-5-差异分析和注释" class="headerlink" title="3.5 差异分析和注释"></a>3.5 差异分析和注释</h3><p>差异分析可以使用limma直接对表达矩阵进行。注释的话，需要通过GEOquery得到的GPL文件中获取探针ID对应的基因ID。然后可以进行其他分析如富集分析、基因关联分析。</p>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2018/10/14/ChIP-seq专题-MACS2_ChIPSeeker_deeptools/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/10/12/差异分析-Ballgown/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-10-12 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#一、芯片基础"><span class="toc-article-text">一、芯片基础</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-1-芯片平台和包"><span class="toc-article-text">1.1 芯片平台和包</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-2-bioconductor包内置芯片数据"><span class="toc-article-text">1.2 bioconductor包内置芯片数据</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-3-GEO数据库"><span class="toc-article-text">1.3 GEO数据库</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#1-3-1-GEOquery"><span class="toc-article-text">1.3.1 GEOquery</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#1-3-2-GEO页面"><span class="toc-article-text">1.3.2 GEO页面</span></a></li></ol></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-4-原始数据的预处理"><span class="toc-article-text">1.4 原始数据的预处理</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#二、使用Affy包分析芯片质量"><span class="toc-article-text">二、使用Affy包分析芯片质量</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-1-读取CEL文件-查看基本信息"><span class="toc-article-text">2.1 读取CEL文件,查看基本信息</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-2-查看芯片质量"><span class="toc-article-text">2.2 查看芯片质量</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#三、使用Affy包处理原始芯片数据"><span class="toc-article-text">三、使用Affy包处理原始芯片数据</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-1-背景校正"><span class="toc-article-text">3.1.背景校正</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-2-归一化处理"><span class="toc-article-text">3.2.归一化处理</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-3-计算表达量"><span class="toc-article-text">3.3 计算表达量</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-4-得到表达矩阵"><span class="toc-article-text">3.4 得到表达矩阵</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-5-差异分析和注释"><span class="toc-article-text">3.5 差异分析和注释</span></a></li></ol></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

@@ -1,0 +1,360 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>差异分析 Ballgown | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  <meta name="description" content="呦呦呦">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="差异分析 Ballgown">
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> 差异分析 Ballgown</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>呦呦呦</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <p>Ballgown是一款灵活的用于RNA-seq数据差异分析的软件，除了差异分析，他还可以进行转录本的组织、可视化和分析表达程度。</p>
+<a id="more"></a>
+<h2 id="preprocessing"><a href="#preprocessing" class="headerlink" title="preprocessing"></a>preprocessing</h2><p>在正式使用之前,你应该做完以下几步：</p>
+<ul>
+<li>RNA-seq的reads应该比对到参考基因组上了</li>
+<li>转录本也组装完成，或者你有一个参考转录本</li>
+<li>用于分析的表达矩阵应该是ballgown的可读格式</li>
+</ul>
+<p>推荐的两个pipeline：</p>
+<ul>
+<li>pipeline1: TopHat2 -&gt; stringtie -&gt; ballgown</li>
+<li>pipeline2: TopHat2 -&gt; Cufflinks -&gt; Tablemaker -&gt; ballgown</li>
+</ul>
+<p>Tablemaker:     <a href="https://github.com/leekgroup/tablemaker" target="_blank" rel="noopener">https://github.com/leekgroup/tablemaker</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pipeline1</span></span><br><span class="line">tophat2 -G ref.gff -o output_path -p 6 ref_index reads.fastq</span><br><span class="line">stringtie -B -G ref.gff -p 6 accepted_hist.bam -o stringtie.gff</span><br><span class="line"></span><br><span class="line"><span class="comment"># pipeline2</span></span><br><span class="line">tophat2 -G ref.gff -o output_path -p 6 ref_index reads.fastq</span><br><span class="line">cufflinks -g ref.gff -o output_path accepted_hits.bam</span><br><span class="line"><span class="comment"># tablemaker调用cufflinks</span></span><br></pre></td></tr></table></figure>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">source</span>(<span class="string">'http://bioconductor.org/biocLite.R'</span>)</span><br><span class="line">biocLite(<span class="string">'ballgown'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="Ballgown需求的格式"><a href="#Ballgown需求的格式" class="headerlink" title="Ballgown需求的格式"></a>Ballgown需求的格式</h2><p><a href="https://github.com/alyssafrazee/ballgown#ballgown-readable-expression-output" target="_blank" rel="noopener">https://github.com/alyssafrazee/ballgown#ballgown-readable-expression-output</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 文件目录</span></span><br><span class="line">extdata/</span><br><span class="line">	sample01/</span><br><span class="line">		e2t.ctab</span><br><span class="line">		e_data.ctab</span><br><span class="line">		i2t.ctab</span><br><span class="line">		i_data.ctab</span><br><span class="line">		t_data.ctab</span><br><span class="line"></span><br><span class="line"><span class="comment"># e_data.ctab: exon-level expression measurements, one row per exon</span></span><br><span class="line"><span class="comment"># e_id 	chr strand	start	end rcount	ucount	mrcount	cov	cov_sd	mcov	mcov_sd</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># i_data.ctab: intro-(ie. junction-)level expression measurements, one row per intron</span></span><br><span class="line"><span class="comment"># e_id 	chr	strand	start	end	rcount	ucount	mrcount</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># t_data.ctab: transcript-level expression measurements, one row per transcript</span></span><br><span class="line"><span class="comment"># t_id	chr	strand	start	end	t_name	num_exons	length	gene_id	gene_name	cov 	FPKM</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># e2t.ctab:	which exons belong to which transcripts</span></span><br><span class="line"><span class="comment"># e_id t_id</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># i2t.ctab: which introns belong to which transcripts</span></span><br><span class="line"><span class="comment"># i_data	t_data</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="1-加载数据"><a href="#1-加载数据" class="headerlink" title="1. 加载数据"></a>1. 加载数据</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">library</span>(ballgown)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.寻找数据目录</span></span><br><span class="line">data_directory = system.file(<span class="string">'extdata'</span>, package=<span class="string">'ballgown'</span>)		<span class="comment"># 找到Ballgown所在的目录下extdata目录</span></span><br><span class="line">data_directory</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.1 番外：自己构造目录文件</span></span><br><span class="line">samples_path = data.frame(c(<span class="string">'sample01_path'</span>, <span class="string">'sample02_path'</span>, <span class="keyword">...</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 构造Ballgown对象</span></span><br><span class="line">bg = ballgown(dataDir=data_directory, samplePattern=<span class="string">'sample'</span>, meas=<span class="string">'all'</span>)</span><br><span class="line"><span class="comment"># meas的参数是那些.ctab文件不重复列的列名</span></span><br><span class="line"><span class="comment"># bg = ballgown(samples=samples_path, samplePattern='sample', meas='all')</span></span><br><span class="line">bg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果数据量太大</span></span><br><span class="line"><span class="comment"># in load.R</span></span><br><span class="line"><span class="keyword">library</span>(ballgown)</span><br><span class="line">data_directory = system.file(<span class="string">'extdata'</span>, package=<span class="string">'ballgown'</span>)</span><br><span class="line">bg = ballgown(dataDir=data_directory, samplePattern=<span class="string">'sample'</span>, meas=<span class="string">'all'</span>)</span><br><span class="line">save(bg, file=<span class="string">'bg.rda'</span>)</span><br><span class="line"><span class="comment"># 然后在每次使用时,运行以下命令,然后通过load()加载bg.rda</span></span><br><span class="line">R CMD BATCH load.R</span><br></pre></td></tr></table></figure>
+<h3 id="2-处理组装数据"><a href="#2-处理组装数据" class="headerlink" title="2. 处理组装数据"></a>2. 处理组装数据</h3><p>一个Ballgown对象有6个分支, structure, expr, indexes, dirs, mergeDate, meas.</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># structure十分依赖GenomicRanges包。它指定了组装的转录本的基因位置，外显子内含子转录本的关系。</span></span><br><span class="line">structure(bg)$exon</span><br><span class="line">structure(bg)$intron</span><br><span class="line">structure(bg)$trans</span><br><span class="line"></span><br><span class="line"><span class="comment"># expr包含了表达数据</span></span><br><span class="line"><span class="comment"># *expr(bg, meas_name)</span></span><br><span class="line">transcript_fpkm = texpr(bg, <span class="string">'FPKM'</span>)</span><br><span class="line">transcript_cov = texpr(bg, <span class="string">'cov'</span>)</span><br><span class="line">whole_tx_table = texpr(bg, <span class="string">'all'</span>)</span><br><span class="line">exon_mcov = eexpr(bg, <span class="string">'mcov'</span>)</span><br><span class="line">junction_rcount = iexpr(bg)</span><br><span class="line">whole_intron_table = iexpr(bg, <span class="string">'all'</span>)</span><br><span class="line">gene_expression = gexpr(bg)</span><br><span class="line"></span><br><span class="line"><span class="comment"># indexes</span></span><br><span class="line">indexes(bg)</span><br><span class="line">pData(bg) = data.frame(id=sampleNames(bg), group=rep(c(<span class="number">1</span>,<span class="number">0</span>), each=<span class="number">10</span>))</span><br><span class="line">exon_transcript_table = indexes(bg)$e2t</span><br><span class="line">transcript_gene_table = indexes(bg)$t2g</span><br><span class="line">phenotype_table = pData(bg)</span><br><span class="line">head(transcript_gene_table)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 其他</span></span><br><span class="line">head(bg@dirs)</span><br><span class="line">bg@mergeDate</span><br><span class="line">bg@meas</span><br></pre></td></tr></table></figure>
+<h3 id="3-数据特征可视化"><a href="#3-数据特征可视化" class="headerlink" title="3.数据特征可视化"></a>3.数据特征可视化</h3><ul>
+<li>可视化组装的转录本结构</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">plotTranscripts(gene=<span class="string">'XLOC_000454'</span>,</span><br><span class="line">				gown=bg, samples=<span class="string">'sample12'</span>,</span><br><span class="line">				meas=<span class="string">'FPKM'</span>,</span><br><span class="line">				colorby=<span class="string">'transcript'</span>,</span><br><span class="line">				main=<span class="string">'transcripts from gene XLOC_000454: sample12, FPKM'</span>)</span><br><span class="line"><span class="comment"># 多个样本同时画图</span></span><br><span class="line">plotTranscripts(<span class="string">'XLOC_00054'</span>, bg,</span><br><span class="line">				samples=c(<span class="string">'sample01'</span>, <span class="string">'sample02'</span>),</span><br><span class="line">				meas=<span class="string">'FPKM'</span>,</span><br><span class="line">				colorby=<span class="string">'transcript'</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>进行分组比较表达量</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">plotMeans(<span class="string">'XLOC_00054'</span>, bg,</span><br><span class="line">		   groupvar=<span class="string">'group'</span>,</span><br><span class="line">		   meas=<span class="string">'FPKM'</span>,</span><br><span class="line">		   colorby=<span class="string">'transcript'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="4-差异分析"><a href="#4-差异分析" class="headerlink" title="4. 差异分析"></a>4. 差异分析</h3><p>ballgown默认使用parametric F-test comparing nested linear model进行统计.它同时使用两个模型,一个模型是包含感兴趣协变量,如case/control status, 如time;另一个不包含协变量.显著性的p-value表明包含协变量的模型得到的结果要比不包含的模型结果更为显著，也就说明具有差异。而q-value&lt;0.05表明FDR被控制在5%。stattest函数可自动处理两组比较和多组比较和时间系列比较。</p>
+<ul>
+<li>组组比较，group分组</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stat_results = stattest(bg, feature=<span class="string">'transcript'</span>, meas=<span class="string">'FPKM'</span>, covariate=<span class="string">'group'</span>)</span><br><span class="line">head(stat_resuts)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>时间系列比较</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果你的时间点较少，比如低于5，建议将其作为分组变量进行组组比较</span></span><br><span class="line">pData(bg) = data.frame(pData(bg), time=rep(<span class="number">1</span>:<span class="number">10</span>,<span class="number">2</span>))		<span class="comment"># dummy time corvariate</span></span><br><span class="line">timecourse_results = stattest(bg, feature=<span class="string">'transcript'</span>, meas=<span class="string">'FPKM'</span>, covariate=<span class="string">'time'</span>, timecourse=<span class="literal">T</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>调整混杂因素</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 你可以通过pData调整任何混杂因素,也可以像下面一样添加</span></span><br><span class="line">group_adj_timecourse_results = stattest(bg, feature=<span class="string">'transcript'</span>,</span><br><span class="line">										meas=<span class="string">'FPKM'</span>, covariate=<span class="string">'time'</span>, </span><br><span class="line">										timecourse=<span class="literal">T</span>, adjustvars=<span class="string">'group'</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>自定义比较模型 </li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sex,age,group,time vs. group,time</span></span><br><span class="line">	<span class="comment"># 模拟数据</span></span><br><span class="line">set.seed(<span class="number">43</span>)</span><br><span class="line">sex = sample(c(<span class="string">'M'</span>, <span class="string">'F'</span>), size=nrow(pData(bg)), replace=<span class="literal">T</span>)</span><br><span class="line">age = sample(<span class="number">21</span>:<span class="number">52</span>, size=nrow(pData(bg)), replace=<span class="literal">T</span>)</span><br><span class="line">	<span class="comment"># 创建design matrices</span></span><br><span class="line">mod = model.matrix(~ sex + age + pData(bg)$group + pData(bg)$time)</span><br><span class="line">mod0 = model.matrix(~ pData(bg)$group + pData(bg)$time)</span><br><span class="line">	<span class="comment"># 进行差异分析</span></span><br><span class="line">adjusted_results = stattest(bg, feature=<span class="string">'transcript'</span>, meas=<span class="string">'FPKM'</span>, mod0=mod0, mod=mod)</span><br><span class="line">head(adjusted_results)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出到其他差异统计软件如limma,limma voom, DESeq, DEXSeq, EdgeR, etc.</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 见2.处理组装数据</span></span><br><span class="line">*expr(bg, meas_name)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>简单地转录聚类<br>如此做是为了避免一个基因有多个相似的转录用作组装，会导致表达差异检测不准确。可以进行一下聚类看看。聚类使用的聚类是Jaccard distance;你也可以使用k-means clustering或者hierarchical clustering。</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">clusterTranscripts(gene=<span class="string">'XLOC_000454'</span>, gown=bg, k=<span class="number">2</span>, method=<span class="string">'kmeans'</span>)</span><br><span class="line"><span class="comment"># 也可以可视化</span></span><br><span class="line">plotLatentTranscripts(gene=<span class="string">'XLOC_00054'</span>, gown=bg, k=<span class="number">2</span>, method=<span class="string">'kmeans'</span>, returncluster=<span class="literal">F</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>针对基因进行聚合表达量</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">agg = collapseTranscripts(gene=<span class="string">'XLOC_00054'</span>, gown=bg, k=<span class="number">2</span>, method=<span class="string">'kmeans'</span>)</span><br><span class="line">stattest(gowntable=agg$tab, pData=pData(bg), feature=<span class="string">'transcript_cluster'</span>,</span><br><span class="line">		covariate=<span class="string">'group'</span>, libadjust=<span class="literal">F</span>)</span><br></pre></td></tr></table></figure>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2018/10/12/芯片专题-AffyMetrix/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/10/12/差异分析-DESeq2/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-10-12 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/软件和包/">软件和包<span>22</span></a></li> <li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#preprocessing"><span class="toc-article-text">preprocessing</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#安装"><span class="toc-article-text">安装</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Ballgown需求的格式"><span class="toc-article-text">Ballgown需求的格式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#使用"><span class="toc-article-text">使用</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-加载数据"><span class="toc-article-text">1. 加载数据</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-处理组装数据"><span class="toc-article-text">2. 处理组装数据</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3-数据特征可视化"><span class="toc-article-text">3.数据特征可视化</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#4-差异分析"><span class="toc-article-text">4. 差异分析</span></a></li></ol></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

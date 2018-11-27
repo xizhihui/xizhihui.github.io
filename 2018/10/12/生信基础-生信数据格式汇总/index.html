@@ -1,0 +1,407 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>生信基础 生信数据格式汇总 | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  <meta name="description" content="Fastq和Fasta格式FASTAFasta格式是存储序列相关信息的一种格式，包含两个部分。Fasta第一个部分是以“&amp;gt;”开头的一行。以序列来源、序列ID为值对，用竖线“|”进行分隔。在最后竖线处，以空格分开，添加序列相关描述。第二部分是序列的详细信息，多数为序列组成。其基本形式如下：
+12&amp;gt;ENSEMBL|geneID|source2|geneID description序列ATCG">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="生信基础 生信数据格式汇总">
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> 生信基础 生信数据格式汇总</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="Fastq和Fasta格式"><a href="#Fastq和Fasta格式" class="headerlink" title="Fastq和Fasta格式"></a>Fastq和Fasta格式</h2><h3 id="FASTA"><a href="#FASTA" class="headerlink" title="FASTA"></a>FASTA</h3><p>Fasta格式是存储序列相关信息的一种格式，包含两个部分。Fasta第一个部分是以“&gt;”开头的一行。以序列来源、序列ID为值对，用竖线“|”进行分隔。在最后竖线处，以空格分开，添加序列相关描述。第二部分是序列的详细信息，多数为序列组成。其基本形式如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;ENSEMBL|geneID|source2|geneID description</span><br><span class="line">序列ATCG</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;gi|<span class="number">13650073</span>|gb|AF349571.1| Homo sapiens hemoglobin alpha-<span class="number">1</span> globin chain (HBA1) mRNA, complete cds</span><br><span class="line">ATCGATCGATCGATCG...</span><br><span class="line"></span><br><span class="line"><span class="comment"># gi|13650073 基因ID</span></span><br><span class="line"><span class="comment"># gb|AF349571.1 genebank编号</span></span><br><span class="line"><span class="comment"># Homo sapiens hemoglobin alpha-1 globin chain (HBA1) 基因名称</span></span><br><span class="line"><span class="comment"># mRNA, complete cds 序列类型</span></span><br></pre></td></tr></table></figure>
+<h3 id="FASTQ"><a href="#FASTQ" class="headerlink" title="FASTQ"></a>FASTQ</h3><p>Fastq格式是Fasta的一种补充集合格式。由于Fasta格式文件一般不包含序列中碱基质量信息，往往需要额外的一个质量文件。而Fastq格式文件则将这二者综合起来；一个Fastq文件格式亚单位由四行构成。第一行是基本序列信息，由“@”符号开头提示。第二行是序列碱基组成字符。第三行是额外补充信息，由“+”开头提示。第四行是测序碱基的质量值，与第二行的每个字符一一相对应。其基本形式如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">line1:  @sequence-ID description</span><br><span class="line">line2:  ATCGATCG...</span><br><span class="line">line3:  +description</span><br><span class="line">line4:  Qualityvalue</span><br></pre></td></tr></table></figure>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@ST-E00126:<span class="number">128</span>:HJFLHCCXX:<span class="number">2</span>:<span class="number">1101</span>:<span class="number">7405</span>:<span class="number">1133</span></span><br><span class="line">ATCGATCG…..</span><br><span class="line">+</span><br><span class="line">Aliclisjlgij922jida</span><br><span class="line"></span><br><span class="line"><span class="comment"># @，开始的标记符号;</span></span><br><span class="line"><span class="comment"># ST-E00126:128:HJFLHCCXX，测序仪唯一的设备名称;  </span></span><br><span class="line"><span class="comment"># 2，lane的编号;           </span></span><br><span class="line"><span class="comment"># 1101，tail的坐标;</span></span><br><span class="line"><span class="comment"># 7405，在tail中的X坐标;</span></span><br><span class="line"><span class="comment"># 1133，在tail中的Y坐标</span></span><br></pre></td></tr></table></figure>
+<h3 id="phred质量值"><a href="#phred质量值" class="headerlink" title="phred质量值"></a>phred质量值</h3><p>由于在测序过程中，信号有强弱，这就导致测序所得碱基与真实碱基之间有偏差的可能；为了衡量这种与实际之间的差异，就出现了phred质量值。Phred质量值指代在某个位点的碱基测序出现错误的可能性（机率）。例如某个碱基测序的错误机率为0.001，那么对该值取log对数值的十倍负值，则可得到phred质量值，如此，质量值越大，代表者测序出错的几率越小。计算公式如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Qphred，<span class="number">0.001</span>=-<span class="number">10</span>*log10(<span class="number">0.001</span>)=<span class="number">30</span></span><br></pre></td></tr></table></figure>
+<p>但是，每次测序存储数据的内存占用很大，又要额外的内存存储诸如30一类的2位数数字；因此为了简化存储，便将这类质量值与ASCLⅡ对应的字符一一对应起来，实现单个字符显示质量值。在现有版本中，由于fastq格式文件单位首行以\@符号开头，其ASCII值为33；当有碱基的质量值为33时，其质量值字符就与首行提示符\@相冲突。为了避免这种冲突，便将实际质量值加上33作为ASCII码对应字符，这就是Phred33。如果实际质量值加上64则是Phred64。<br>通过测序所得的原始下机数据因为要包含测序质量信息，这类数据使用fastaq文件格式就更为方便；而经过拼接组装、翻译后的碱基序列、蛋白序列，并没有质量信息，使用fasta格式则较合适。</p>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th>质量值</th>
+<th>具体值</th>
+<th>ASCII</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sanger</td>
+<td>phred + 33</td>
+<td>0-93</td>
+<td>33-126</td>
+</tr>
+<tr>
+<td>solexa</td>
+<td>solexa + 64</td>
+<td>-5-62</td>
+<td>59-126</td>
+</tr>
+<tr>
+<td>illumina~1.8</td>
+<td>phred + 64</td>
+<td>0-62</td>
+<td>64-126</td>
+</tr>
+<tr>
+<td>illumina1.8+</td>
+<td>phred + 33</td>
+<td>0-94</td>
+<td>32-126</td>
+</tr>
+</tbody>
+</table>
+<h2 id="SAM和BAM格式"><a href="#SAM和BAM格式" class="headerlink" title="SAM和BAM格式"></a>SAM和BAM格式</h2><p><a href="https://wikis.utexas.edu/display/bioiteam/Variant+calling+using+SAMtools" target="_blank" rel="noopener">利用samtools进行variant calling</a></p>
+<p>SAM是sequence alignment/map format的简称，用于存储序列比对的信息；而BAM是SAM文件的二进制格式，取自binary of SAM。该文件由两部分组成，一部分是以@开头的注释行，另一部分是比对结果部分。查看 FLAG 的具体对应信息，可以在 <a href="https://broadinstitute.github.io/picard/explain-flags.html" target="_blank" rel="noopener">https://broadinstitute.github.io/picard/explain-flags.html</a> 中进行。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">注释行部分：以@开头进行注释。如：</span><br><span class="line">@HD 说明符合标准的版本、对比序列的排列顺序</span><br><span class="line">@SQ 参考序列的说明</span><br><span class="line">@PG 使用的比对程序</span><br><span class="line">@LN 参考序列的长度</span><br><span class="line"></span><br><span class="line">比对结果部分</span><br><span class="line">column <span class="number">1</span>: query name, 比对片段的编号</span><br><span class="line">column <span class="number">2</span>: FLAG，表明比对的情况</span><br><span class="line">column <span class="number">3</span>：比对上的染色体号</span><br><span class="line">column <span class="number">4</span>：POS，比对上的位置</span><br><span class="line">column <span class="number">5</span>：MAPQ，比对的质量</span><br><span class="line">column <span class="number">6</span>：CIGAR，Concise IdiosyncraRc Gapped Alignment Report. 记录插入，删除，错配以及splice junctions（后剪切拼接的接头）</span><br><span class="line">column <span class="number">7</span>：MRNM，chr，下一个片段比对上的参考序列的编号</span><br><span class="line">column <span class="number">8</span>：mate pos，下一个片段比对上的位置</span><br><span class="line">column <span class="number">9</span>：ISIZE，模版的长度</span><br><span class="line">column <span class="number">10</span>：序列片段的序列信息，read序列</span><br><span class="line">column <span class="number">11</span>：read质量</span><br><span class="line">column <span class="number">12</span>：程序用的标记，可选区域</span><br><span class="line"></span><br><span class="line"><span class="comment"># sam to bam</span></span><br><span class="line">samtools view -bS input.sam &gt; output.bam</span><br></pre></td></tr></table></figure>
+<p><img src="https://s1.ax1x.com/2018/07/04/PEHkNV.png" alt="SAM records"></p>
+<h2 id="GTF-GFF格式"><a href="#GTF-GFF格式" class="headerlink" title="GTF/GFF格式"></a>GTF/GFF格式</h2><p>GTF和GFF是用来存储基因和基因组注释信息的文件格式，共有9列信息。<br>其中，GFF的type必需注明，attribute的名称和值要以空格分开。<br>GTF的attribute则是以‘=’分开。<br>我们可以使用cufflinks、gffread、gff2gtf对二者进行转换。  </p>
+<p><a href="https://zhuanlan.zhihu.com/p/36065699" target="_blank" rel="noopener">该格式文件的下载方法</a></p>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>列1</th>
+<th>列2</th>
+<th>列3</th>
+<th>列4</th>
+<th>列5</th>
+<th>列6</th>
+<th>列7</th>
+<th>列8</th>
+<th>列9</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GFF</td>
+<td>seqID</td>
+<td>source</td>
+<td>type</td>
+<td>start</td>
+<td>end</td>
+<td>score</td>
+<td>strand</td>
+<td>phase</td>
+<td>attributes</td>
+</tr>
+<tr>
+<td>GTF</td>
+<td>seqName</td>
+<td>souce</td>
+<td>start</td>
+<td>end</td>
+<td>feature</td>
+<td>score</td>
+<td>strand</td>
+<td>frame</td>
+<td>attrbuites</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Bigwig-wiggle"><a href="#Bigwig-wiggle" class="headerlink" title="Bigwig/wiggle"></a>Bigwig/wiggle</h2><ul>
+<li>wiggle track format(wig): <a href="http://genome.ucsc.edu/goldenPath/help/wiggle.html" target="_blank" rel="noopener">http://genome.ucsc.edu/goldenPath/help/wiggle.html</a></li>
+<li>bigwig track format(bigwig): <a href="http://genome.ucsc.edu/goldenPath/help/bigWig.html" target="_blank" rel="noopener">http://genome.ucsc.edu/goldenPath/help/bigWig.html</a></li>
+<li>bedgraph track format(bdg): <a href="http://genome.ucsc.edu/goldenPath/help/bedgraph.html" target="_blank" rel="noopener">http://genome.ucsc.edu/goldenPath/help/bedgraph.html</a></li>
+</ul>
+<p>wig,bigwig,bedgraph 格式文件的作用是追踪参考基因组的各个区域的覆盖度,测序深度, 可以上传到UCSC的genome browser进行可视化.bigwig是wig的二进制版本. 下方是一个wig文件的示例,它只会在前面标明当前染色体一次(chrom=chr1), 测序深度统计的区间间隔是10.<br>bedgraph是对bed文件的拓展, 是只有4列的BED格式,不过有额外的属性关键字.值得注意的是, bedgraph文件里面的染色体坐标是从0开始的, 坐标终点是个开区间.  </p>
+<p>对于wig,bw,bdg,gtf,gff等各种文件的转换,可以使用<a href="http://barcwiki.wi.mit.edu/wiki/SOPs/coordinates" target="_blank" rel="noopener">这个网站</a>的脚本.如果是SE的比对文件,可以直接使用下面的命令. 在UCSC的ftp站点中也可以直接下载这类格式的文件.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># sample.wig</span></span><br><span class="line">track <span class="built_in">type</span>=<span class="built_in">print</span> wiggle_0 name=hek  description=hek</span><br><span class="line">variableStep chrom=chr1 span=10</span><br><span class="line">10008    7</span><br><span class="line">10018    14</span><br><span class="line">10028    27</span><br><span class="line"></span><br><span class="line"><span class="comment"># sample.bedgraph</span></span><br><span class="line">track <span class="built_in">type</span>=bedGraph name=<span class="string">"hek_treat_all"</span> description=<span class="string">"Extended tag pileup from MACS version 1.4.2 20120305"</span></span><br><span class="line">chr1    9997    9999    1</span><br><span class="line">chr1    9999    10000   2</span><br><span class="line">chr1    10000   10001   4</span><br></pre></td></tr></table></figure>
+<h3 id="wig-bigwig-bdg的常见转换工具"><a href="#wig-bigwig-bdg的常见转换工具" class="headerlink" title="wig,bigwig,bdg的常见转换工具"></a>wig,bigwig,bdg的常见转换工具</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SE.bam to bdg</span></span><br><span class="line">macs2 pileup --extsize 200 -i sample.bam -o sample.bdg</span><br><span class="line"></span><br><span class="line">bigwigToBedGraph</span><br><span class="line">bigWigToWig</span><br><span class="line">bigWigSummary</span><br><span class="line">bigWigAverageOverBed</span><br><span class="line">bigWigInfo</span><br></pre></td></tr></table></figure>
+<h2 id="VCF格式"><a href="#VCF格式" class="headerlink" title="VCF格式"></a>VCF格式</h2><p>vcf(variant calling format)格式文件用来存储与突变相关的信息。它由两部分组成。<br>第一部分：头行（vcf header）,以##开头，有文件格式，使用软件信息，参考序列信息，重叠群（contig）的相关信息（拼接时reads之间的overlap区域）等等。<br>第二部分：具体的突变信息，共有<strong>八列</strong>。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> CHROM		染色体名称（chromosome）,哪一个参考序列上发现了突变，如MAL1 </span><br><span class="line"><span class="number">2</span> POS		参考基因组上发生突变的位置，以<span class="number">1</span>开始计算，如<span class="number">265854</span> </span><br><span class="line"><span class="number">3</span> ID		突变的ID,如果在dbSNP中有该SNP的id,则给出;否则为<span class="string">'.'</span>,表示是新的variant</span><br><span class="line"><span class="number">4</span> REF		参考序列上的碱基, 必需是ATCGN之一,N表示不确定.</span><br><span class="line"><span class="number">5</span> ALT		与参考碱基相比,发生突变的碱基.如REF是G, 而这里是C</span><br><span class="line"><span class="number">6</span> QUAL		发生突变的碱基质量, 质量越高则是真实variant的可能性越大.如<span class="number">6.2</span>.</span><br><span class="line"><span class="number">7</span> FILTER	过滤后的状态,如果variant通过GATK的过滤,值为pass.</span><br><span class="line"><span class="number">8</span> INFO		variant的详细信息</span><br><span class="line"></span><br><span class="line">详细信息含：</span><br><span class="line">DP 			该位置的read覆盖度(reads有经过过滤)</span><br><span class="line">MQ			比对到该位置reads质量值的均方值(RMS Mapping Quality)</span><br><span class="line">FQ 			质量值,表征所有样本相似的可能性</span><br><span class="line">AF1 		AF1/<span class="number">2</span>表示等位基因发生频率的可能性评估,<span class="number">1</span>为第一个等位基因的频率</span><br><span class="line">AC1 		AC1/<span class="number">2</span>表示等位基因出现数目的可能性评估</span><br><span class="line">AN 			等位基因的总数目</span><br><span class="line">IS 			插入缺失或部分插入缺失的reads所允许的最大数目</span><br><span class="line">INDEL		表明这个variant是插入缺失</span><br><span class="line">QBD			测序深度对碱基质量的影响</span><br><span class="line">其他(http://www.bio-info-trainee.com/<span class="number">863.</span>html)</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://asia.ensembl.org/info/website/glossary.html" target="_blank" rel="noopener">Ensembl</a></li>
+<li><a href="http://genome.ucsc.edu/FAQ/FAQformat.html" target="_blank" rel="noopener">UCSC</a></li>
+</ul>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2018/10/12/生信基础-测序原理/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/10/12/生信基础-质控的那些事/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-10-12 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Fastq和Fasta格式"><span class="toc-article-text">Fastq和Fasta格式</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#FASTA"><span class="toc-article-text">FASTA</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#FASTQ"><span class="toc-article-text">FASTQ</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#phred质量值"><span class="toc-article-text">phred质量值</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#SAM和BAM格式"><span class="toc-article-text">SAM和BAM格式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#GTF-GFF格式"><span class="toc-article-text">GTF/GFF格式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#Bigwig-wiggle"><span class="toc-article-text">Bigwig/wiggle</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#wig-bigwig-bdg的常见转换工具"><span class="toc-article-text">wig,bigwig,bdg的常见转换工具</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#VCF格式"><span class="toc-article-text">VCF格式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#参考"><span class="toc-article-text">参考</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

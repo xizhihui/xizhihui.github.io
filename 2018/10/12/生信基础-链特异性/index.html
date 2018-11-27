@@ -1,0 +1,385 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>生信基础 链特异性 | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  <meta name="description" content="1.链特异性的基本知识
+http://www.genek.tv/article/27
+http://databeauty.com/blog/opinion/2016/09/21/RNA-seq-strand-issues.html
+
+在建库的时候,选择的建库方法可以是链特异性的,链特异性的文库可以清楚地分出reads的方向是否与转录本相同;常用的链特异性文库方法是基于dUTP的方法.
+
+
+
+文库类型
+PE
+SE
+建库方法
+
+
+
+
+非特异性
+无
+无
+Standard Illumina
+
+
+fr-firststrand
+RF
+R
+dUTP,NSR,NNSR
+
+
+fr-secondstrand
+FR
+F
+Ligation,Standard SOLiD">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="生信基础 链特异性">
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> 生信基础 链特异性</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h2 id="1-链特异性的基本知识"><a href="#1-链特异性的基本知识" class="headerlink" title="1.链特异性的基本知识"></a>1.链特异性的基本知识</h2><ul>
+<li><a href="http://www.genek.tv/article/27" target="_blank" rel="noopener">http://www.genek.tv/article/27</a></li>
+<li><a href="http://databeauty.com/blog/opinion/2016/09/21/RNA-seq-strand-issues.html" target="_blank" rel="noopener">http://databeauty.com/blog/opinion/2016/09/21/RNA-seq-strand-issues.html</a></li>
+</ul>
+<p>在建库的时候,选择的建库方法可以是链特异性的,链特异性的文库可以清楚地分出reads的方向是否与转录本相同;常用的链特异性文库方法是基于dUTP的方法.</p>
+<table>
+<thead>
+<tr>
+<th>文库类型</th>
+<th>PE</th>
+<th>SE</th>
+<th>建库方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>非特异性</td>
+<td>无</td>
+<td>无</td>
+<td>Standard Illumina</td>
+</tr>
+<tr>
+<td>fr-firststrand</td>
+<td>RF</td>
+<td>R</td>
+<td>dUTP,NSR,NNSR</td>
+</tr>
+<tr>
+<td>fr-secondstrand</td>
+<td>FR</td>
+<td>F</td>
+<td>Ligation,Standard SOLiD</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<h2 id="2-链特异性与软件"><a href="#2-链特异性与软件" class="headerlink" title="2.链特异性与软件"></a>2.链特异性与软件</h2><p>在许多软件中,需要设置链特异性的参数,设置错了会导致结果与预期大相径庭.常用软件的参数设置如下。</p>
+<ul>
+<li>Trinity:  链特异性的文库需要设置–SS_lib_type, dUTP法值为RF</li>
+<li>cufflinks: 链特异性的文库需要设置–library-type=fr-firststrand(RF时)</li>
+<li>tophat: dUTP, –library-type fr-firststrand</li>
+<li>hisat2: dUTP, –rna-strandnes RF</li>
+<li>eXpress: dUTP, –rf-stranded</li>
+<li>RSEM: dUTP, –strandness reverse</li>
+</ul>
+<h2 id="3-如何判断测序数据是否是链特异性"><a href="#3-如何判断测序数据是否是链特异性" class="headerlink" title="3.如何判断测序数据是否是链特异性"></a>3.如何判断测序数据是否是链特异性</h2><ol>
+<li>samtools建立索引</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># aim.bam, 生成aim.bai</span></span><br><span class="line">samtools index aim.bam</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><p>判断链特异性<br>进入IGV软件<br>右键选择color alignments by first-of-pair strand, 红蓝分布就是链特异性的</p>
+</li>
+<li><p>判断链特异性的种类<br>在链特异性的样本上右键选color alignments by read strand, 或者鼠标放在read上, 如果信息显示first of pair的那个read的箭头方向与基因的方向相反,就是dUTIP的建库</p>
+</li>
+<li><p>用途<br>在STAR运行结束后的ReadsPerGene.out.tab文件中, 非特异性链的reads数是在第二列;链特异性的reads数要选第四列.</p>
+</li>
+</ol>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2018/10/12/生信基础-质控的那些事/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/10/12/加权共表达基因网络分析-WGCNA/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-10-12 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#1-链特异性的基本知识"><span class="toc-article-text">1.链特异性的基本知识</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#2-链特异性与软件"><span class="toc-article-text">2.链特异性与软件</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#3-如何判断测序数据是否是链特异性"><span class="toc-article-text">3.如何判断测序数据是否是链特异性</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>
