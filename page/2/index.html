@@ -128,7 +128,7 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-15 </div>
-			<div class="article-title"><a href="/2018/10/15/扩增子测序-理论基础/">扩增子测序 理论基础</a></div>						
+			<div class="article-title"><a href="/2018/10/15/扩增子测序-QIIME1/">扩增子测序 QIIME1</a></div>						
 		</h3>
 	
 
@@ -137,10 +137,49 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<h2 id="一、-基础概念"><a href="#一、-基础概念" class="headerlink" title="一、 基础概念"></a>一、 基础概念</h2><p><img src="https://media.nature.com/full/nature-assets/nrurol/journal/v12/n2/images/nrurol.2014.361-f1.jpg" alt="microbiota, microbiome, metagenome"></p>
+		<h2 id="1-构建mapping-file-并验证是否有误"><a href="#1-构建mapping-file-并验证是否有误" class="headerlink" title="1 构建mapping file,并验证是否有误"></a>1 构建mapping file,并验证是否有误</h2><p>mapping file记录着样品对应的barcode、primer、treatment group等信息，以tab作为列分割符。各列名如下：</p>
+<table>
+<thead>
+<tr>
+<th>column name</th>
+<th>Description </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SampleID</td>
+<td>样品名，数字、字母、点号</td>
+</tr>
+<tr>
+<td>BarcodeSequence</td>
+<td>barcode序列，区分样本</td>
+</tr>
+<tr>
+<td>LinkerPrimerSequence</td>
+<td>5’端引物</td>
+</tr>
+<tr>
+<td>ReversePrimerSequence</td>
+<td>3’端反向引物,如果有的话</td>
+</tr>
+<tr>
+<td>Treatment</td>
+<td>分组信息</td>
+</tr>
+<tr>
+<td>Description</td>
+<td>样品详细注释</td>
+</tr>
+<tr>
+<td>DOB</td>
+<td>日期或其他信息</td>
+</tr>
+</tbody>
+</table>
+<p>下机reads组成：AdapterA - BarcodeSequence - LinkerPrimerSequence - Target - ReversePrimer - AdapterB</p>
 	
 	</div>
-  <a type="button" href="/2018/10/15/扩增子测序-理论基础/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2018/10/15/扩增子测序-QIIME1/#more" class="btn btn-default more">Read More</a>
 </div>
 
            
@@ -165,6 +204,29 @@ var _hmt = _hmt || [];
 	
 	</div>
   <a type="button" href="/2018/10/15/扩增子测序-QIIME2/#more" class="btn btn-default more">Read More</a>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-15 </div>
+			<div class="article-title"><a href="/2018/10/15/扩增子测序-QIIME2使用示例/">扩增子测序 QIIME2使用示例</a></div>						
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<p><strong>如果数据来源是分批次的话，需要分别导入，在去噪和生成特征表之后，把这些表进行合并，再进行后续分析。也就是说 1-3 对于分批次数据要分批次跑。</strong></p>
+	
+	</div>
+  <a type="button" href="/2018/10/15/扩增子测序-QIIME2使用示例/#more" class="btn btn-default more">Read More</a>
 </div>
 
            
@@ -226,113 +288,6 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/差异分析-Ballgown/" title="呦呦呦">差异分析 Ballgown</a></div>						
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<p>Ballgown是一款灵活的用于RNA-seq数据差异分析的软件，除了差异分析，他还可以进行转录本的组织、可视化和分析表达程度。</p>
-	
-	</div>
-  <a type="button" href="/2018/10/12/差异分析-Ballgown/#more" class="btn btn-default more">Read More</a>
-</div>
-
-           
-		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/差异分析-DESeq2/">差异分析 DESeq2</a></div>						
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<blockquote>
-<p>与DESeq类似的包有：edgeR、limma、DSS、EBSeq、baySeq</p>
-</blockquote>
-<h2 id="一、核心逻辑代码"><a href="#一、核心逻辑代码" class="headerlink" title="一、核心逻辑代码"></a>一、核心逻辑代码</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># countData: 以样品为列名,基因为行名的表达矩阵</span></span><br><span class="line"><span class="comment"># colData的形式: 以样品作为行名,列是样品对应的分组类型</span></span><br><span class="line"><span class="comment"># 生成count matrix</span></span><br><span class="line">dds &lt;- DESeqDataSetFromMatrix(countData = cts,</span><br><span class="line">                              colData = coldata,</span><br><span class="line">                              design = ~ batch + condition)</span><br><span class="line"><span class="comment"># 生成DESeq数据集</span></span><br><span class="line">dds &lt;- DESeq(dds)</span><br><span class="line"><span class="comment"># 进行比较，获得结果</span></span><br><span class="line">res &lt;- results(dds, contrast=c(<span class="string">'condition'</span>, <span class="string">'treat'</span>, <span class="string">'ctrl'</span>))</span><br><span class="line">resultsNames(dds)</span><br><span class="line">res &lt;- lfcShrink(dds, coef=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#  DESeqDataSetFromTximport:   由Salmon, Saifish, kallisto生成</span></span><br><span class="line"><span class="comment">#  DESeqDataSetFromHTSeq:      由htseq-counts生成</span></span><br><span class="line"><span class="comment">#  DESeqDataSet:               由RangedSummarizedExpriment生成</span></span><br></pre></td></tr></table></figure>
-	
-	</div>
-  <a type="button" href="/2018/10/12/差异分析-DESeq2/#more" class="btn btn-default more">Read More</a>
-</div>
-
-           
-		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/差异分析-RSEM/" title="呦呦呦">差异分析 RSEM</a></div>						
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<p>RSEM利用的是transcripts而非genome。我们有两种方式来构建RSEM转录参考，其一是利用参考基因组来构建；另外一种方式是从许多转录本中构建。</p>
-	
-	</div>
-  <a type="button" href="/2018/10/12/差异分析-RSEM/#more" class="btn btn-default more">Read More</a>
-</div>
-
-           
-		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/差异分析-edgeR/">差异分析 edgeR</a></div>						
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<p>下方的代码把edgeR的三种差异分析整合成一个函数, 调用时直接指定参数即可.</p>
-<ul>
-<li>classcial</li>
-<li>glm: likelihood ratio test/ quasi-likelihood F-test</li>
-<li><ul>
-<li>quasi-likelihood(qlf): 推荐用于差异分析，因为他对错误率限制较好。</li>
-</ul>
-</li>
-<li><ul>
-<li>likelihood(lrt)：对与单细胞RNA-测序和没有重复的数据较好</li>
-</ul>
-</li>
-</ul>
-	
-	</div>
-  <a type="button" href="/2018/10/12/差异分析-edgeR/#more" class="btn btn-default more">Read More</a>
-</div>
-
-           
-		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-12 </div>
 			<div class="article-title"><a href="/2018/10/12/差异分析-limma/">差异分析 limma</a></div>						
 		</h3>
 	
@@ -369,6 +324,78 @@ var _hmt = _hmt || [];
 	
 	</div>
   <a type="button" href="/2018/10/12/GO_KEGG富集分析-clusterProfiler/#more" class="btn btn-default more">Read More</a>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/差异分析-DESeq2/">差异分析 DESeq2</a></div>						
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<blockquote>
+<p>与DESeq类似的包有：edgeR、limma、DSS、EBSeq、baySeq</p>
+</blockquote>
+<h2 id="一、核心逻辑代码"><a href="#一、核心逻辑代码" class="headerlink" title="一、核心逻辑代码"></a>一、核心逻辑代码</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># countData: 以样品为列名,基因为行名的表达矩阵</span></span><br><span class="line"><span class="comment"># colData的形式: 以样品作为行名,列是样品对应的分组类型</span></span><br><span class="line"><span class="comment"># 生成count matrix</span></span><br><span class="line">dds &lt;- DESeqDataSetFromMatrix(countData = cts,</span><br><span class="line">                              colData = coldata,</span><br><span class="line">                              design = ~ batch + condition)</span><br><span class="line"><span class="comment"># 生成DESeq数据集</span></span><br><span class="line">dds &lt;- DESeq(dds)</span><br><span class="line"><span class="comment"># 进行比较，获得结果</span></span><br><span class="line">res &lt;- results(dds, contrast=c(<span class="string">'condition'</span>, <span class="string">'treat'</span>, <span class="string">'ctrl'</span>))</span><br><span class="line">resultsNames(dds)</span><br><span class="line">res &lt;- lfcShrink(dds, coef=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#  DESeqDataSetFromTximport:   由Salmon, Saifish, kallisto生成</span></span><br><span class="line"><span class="comment">#  DESeqDataSetFromHTSeq:      由htseq-counts生成</span></span><br><span class="line"><span class="comment">#  DESeqDataSet:               由RangedSummarizedExpriment生成</span></span><br></pre></td></tr></table></figure>
+	
+	</div>
+  <a type="button" href="/2018/10/12/差异分析-DESeq2/#more" class="btn btn-default more">Read More</a>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/比对-STAR/">比对 STAR</a></div>						
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<p>STAR 的比对速率要比 bowtie 快那么一丢丢。</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/比对-STAR/#more" class="btn btn-default more">Read More</a>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/差异分析-RSEM/" title="呦呦呦">差异分析 RSEM</a></div>						
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<p>RSEM利用的是transcripts而非genome。我们有两种方式来构建RSEM转录参考，其一是利用参考基因组来构建；另外一种方式是从许多转录本中构建。</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/差异分析-RSEM/#more" class="btn btn-default more">Read More</a>
 </div>
 
            
@@ -423,6 +450,8 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
 		
+			<li><a href="/categories/Python/">Python<span>1</span></a></li>
+		
 			<li><a href="/categories/R/">R<span>1</span></a></li>
 		
 			<li><a href="/categories/杂货铺/">杂货铺<span>1</span></a></li>
@@ -438,33 +467,35 @@ var _hmt = _hmt || [];
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/可视化/">可视化<span>1</span></a></li>
+			<li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
+		
+			<li><a href="/tags/bug/">bug<span>1</span></a></li>
 		
 			<li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
 		
-			<li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
+			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
 		
 			<li><a href="/tags/富集分析/">富集分析<span>1</span></a></li>
-		
-			<li><a href="/tags/流程/">流程<span>1</span></a></li>
 		
 			<li><a href="/tags/随想/">随想<span>1</span></a></li>
 		
 			<li><a href="/tags/定量/">定量<span>3</span></a></li>
 		
-			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
-		
 			<li><a href="/tags/R基础/">R基础<span>1</span></a></li>
+		
+			<li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
 		
 			<li><a href="/tags/组装/">组装<span>1</span></a></li>
 		
-			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
+			<li><a href="/tags/流程/">流程<span>1</span></a></li>
 		
-			<li><a href="/tags/bug/">bug<span>1</span></a></li>
+			<li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
 		
-			<li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
+			<li><a href="/tags/算法/">算法<span>1</span></a></li>
 		
-			<li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
+			<li><a href="/tags/可视化/">可视化<span>1</span></a></li>
+		
+			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -476,6 +507,10 @@ var _hmt = _hmt || [];
 <div class="widget">
   <h4>Recent Posts</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2018/12/06/动态编程/" title="算法的力量真强大。"><i class="fa fa-file-o"></i>动态编程</a>
+      </li>
     
       <li>
         <a href="/2018/11/27/R-中的函数式/" title="函数式编程，纯碎的函数。"><i class="fa fa-file-o"></i>R 中的函数式</a>
@@ -491,10 +526,6 @@ var _hmt = _hmt || [];
     
       <li>
         <a href="/2018/11/02/可视化-ggplot2入门/" title="听说你要画图？试试 ggplot2 吧，可以搭积木的。"><i class="fa fa-file-o"></i>可视化 ggplot2入门</a>
-      </li>
-    
-      <li>
-        <a href="/2018/11/02/数据处理-dplyr/"><i class="fa fa-file-o"></i>数据处理 dplyr</a>
       </li>
     
   </ul>

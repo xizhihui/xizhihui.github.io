@@ -1,0 +1,361 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>动态编程 | Xizhihui&#39;s Notes</title>
+  <meta name="author" content="Xizhihui">
+  
+  <meta name="description" content="算法的力量真强大。">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="动态编程">
+  <meta property="og:site_name" content="Xizhihui&#39;s Notes">
+
+  
+    <meta property="og:image" content="">
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/themes/cosmo.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  <![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+</head>
+</html>
+ <body>  
+  <nav id="main-nav" class="navbar  navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Xizhihui&#39;s Notes</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header ">		
+			<h1 class="title "> 动态编程</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  
+		 <div class="alert alert-success description">
+			<i class="fa fa-info-circle"></i> <p>算法的力量真强大。</p>
+			
+		 </div> <!-- alert -->
+	  		
+
+	  <p>这几天在耍一耍 rosalind 上面的题目，遇到了几道所谓“斐波那契兔子”的问题，还有一道求最长公共子串的问题。根据题目给的提示，这类“斐波那契”问题都可以归属于动态编程的范畴。那么动态编程具体指的是什么呢？</p>
+<blockquote>
+<p>动态规划(dynamic programming)是运筹学的一个分支，是求解决策过程(decision process)最优化的数学方法。20世纪50年代初美国数学家R.E.Bellman等人在研究多阶段决策过程(multistep decision process)的优化问题时，提出了著名的最优化原理(principle of optimality)，把多阶段过程转化为一系列单阶段问题，利用各阶段之间的关系，逐个求解，创立了解决这类过程优化问题的新方法——动态规划。</p>
+</blockquote>
+<p>以上是百度百科上的定义，看不懂啊看不懂。不过没关系，经过下面的问题就应该会好懂一点。</p>
+<a id="more"></a>
+<blockquote>
+<p>以下问题的相关解思路参考于 <a href="https://www.ibm.com/developerworks/cn/java/j-seqalign/index.html" target="_blank" rel="noopener">IBM - developerworks</a>，含示例图片。有关原始实现，可看原文。</p>
+</blockquote>
+<h2 id="典型的斐波那契数列"><a href="#典型的斐波那契数列" class="headerlink" title="典型的斐波那契数列"></a>典型的斐波那契数列</h2><p>众所周知，典型的斐波那契数列问题的通解是 <code>F(n) = F(n-1) + F(n-2)</code>，这样一个式子，明显就是可以用递归来进行计算的。比如下面的例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fibonacci_ord</span><span class="params">(n)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">calc</span><span class="params">(n)</span>:</span></span><br><span class="line">		<span class="keyword">if</span> n &lt;= <span class="number">2</span>:</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			<span class="keyword">return</span> calc(n<span class="number">-1</span>) + calc(n<span class="number">-2</span>)</span><br><span class="line">	res = calc(n)</span><br><span class="line">	<span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+<p>就上面的代码而言，fibonacci_ord(n) 中的某些数总是会被重复计算。这时候有两个办法，一个是使用额外的列表或者字典存储已经计算后的 f(n)。<br>另外一个是把 fibonacci_ord(n) 的递归计算改成迭代计算，从最小的开始算起，这里还是需要额外的列表。下面使用第二种方式进行改写一下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fibonacci_iter</span><span class="params">(n)</span>:</span></span><br><span class="line">	values = dict()</span><br><span class="line">	values[<span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">	values[<span class="number">1</span>] = <span class="number">1</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(n+<span class="number">1</span>):</span><br><span class="line">		<span class="keyword">if</span> i &lt;= <span class="number">1</span>:</span><br><span class="line">			count = values[i]</span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			values[i] = values[i<span class="number">-1</span>] + values[i<span class="number">-2</span>]</span><br><span class="line">	<span class="keyword">return</span> values[n]</span><br></pre></td></tr></table></figure>
+<p>可以看到，就计算 F(n) 的形式而言，仍旧是使用原来的公式，但是把递归改造成使用 for 循环进行。而这就涉及动态编程了。</p>
+<h2 id="动态编程"><a href="#动态编程" class="headerlink" title="动态编程"></a>动态编程</h2><p>在斐波那契数列这类问题中，问题的解来源于子问题，子问题的解来源于子问题。这类问题的解都可以使用递归，但是里面却有重复计算子问题解的缺陷存在。<br>在这时，在这类可以使用递归的问题中，因为递归重复解决相同的子问题造成效率低下，则可以采用动态编程进行改写。像上面的使用迭代的方式计算斐波那契数列的思路就是动态编程的工作原理，把递归分解成迭代。动态编程能够解决这类的问题，<a href="https://www.ibm.com/developerworks/cn/java/j-seqalign/index.html" target="_blank" rel="noopener">它主要有下面三个特征</a>：</p>
+<blockquote>
+<ol>
+<li>每个问题的解都能用递归关系表示。</li>
+<li>用递归方法对这些递归关系的直接实现会造成解决方案效率低下，因为其中包含了对子问题的多次计算。</li>
+<li>一个问题的最优解能够用原始问题的子问题的最优解构造得到。</li>
+</ol>
+</blockquote>
+<h3 id="最长子序列问题"><a href="#最长子序列问题" class="headerlink" title="最长子序列问题"></a>最长子序列问题</h3><p>下面我们来看常见的一个问题，最长子序列问题（longest common subsequence, LCS）。对于两个序列，记为 C 和 S。我们把这两个序列的左侧各切除 1 个字符，得到 c1 和 s1. 那么现在，LCS 的解依赖于 3 个方面：</p>
+<ul>
+<li>(C-c1) 与 S 的解 LCS1</li>
+<li>(S-s1) 与 C 的解 LCS2</li>
+<li>(C-c1) 和 (S-s1) 的解 LCS3，如果 c1 与 s1 相同，这里的解就是 LCS3 + 1</li>
+</ul>
+<p>LCS 是这三个解之间的最大值。基于这样一个形式，就十分适合于使用动态规划的打分矩阵来进行。当前 cell 的打分依赖于左侧 cell、上侧 cell 和左上 cell 的打分，分别对应那三个方面得到的三个解。对于左上 cell，考虑 +1 的问题。</p>
+<p><img src="https://www.ibm.com/developerworks/cn/java/j-seqalign/LCSTab4.gif" alt="打分"></p>
+<p>在得到打分矩阵之后，从得分最大的点开始回溯。如果当前 cell 的打分比左上 cell 打分大 1，表明在该位置处 c1 和 s1 的值相同，添加到最大子序列里面去。<br>由于这里要回溯到前一个，所以构建打分矩阵的时候要添加连接信息。下面是示例代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">LCS</span><span class="params">(C, S)</span>:</span></span><br><span class="line">	<span class="comment"># 构建打分矩阵, x=C,y=S</span></span><br><span class="line">	score = []</span><br><span class="line">	max_score = <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(len(C) + <span class="number">1</span>): <span class="comment"># 含 0 ，即 C 与 S 都是 “” “”</span></span><br><span class="line">		temp = []</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(len(S) + <span class="number">1</span>):</span><br><span class="line">			<span class="keyword">if</span> j == <span class="number">0</span> <span class="keyword">or</span> i == <span class="number">0</span>:</span><br><span class="line">				temp.append([<span class="number">0</span>, <span class="keyword">None</span>])	<span class="comment"># None is prev</span></span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				max_score = score[i<span class="number">-1</span>][j<span class="number">-1</span>][<span class="number">0</span>] <span class="comment"># 暂定左上</span></span><br><span class="line">				prev = <span class="string">"lefttop"</span></span><br><span class="line">				<span class="keyword">if</span> C[i<span class="number">-1</span>] == S[j<span class="number">-1</span>]:	<span class="comment"># c1 和 s1 相同</span></span><br><span class="line">					max_score = max_score + <span class="number">1</span></span><br><span class="line">				<span class="keyword">if</span> temp[j<span class="number">-1</span>][<span class="number">0</span>] &gt; max_score:	<span class="comment"># 此时的 左边的 cell 值还在 temp 中</span></span><br><span class="line">					max_score = temp[j<span class="number">-1</span>][<span class="number">0</span>]</span><br><span class="line">					prev = <span class="string">"left"</span></span><br><span class="line">				<span class="keyword">if</span> score[i<span class="number">-1</span>][j][<span class="number">0</span>] &gt; max_score:</span><br><span class="line">					max_score = score[i<span class="number">-1</span>][j][<span class="number">0</span>]</span><br><span class="line">					prev = <span class="string">"top"</span></span><br><span class="line">				temp.append([max_score, prev])</span><br><span class="line">		score.append(temp)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 回溯</span></span><br><span class="line">	i = len(C)</span><br><span class="line">	j = len(S)</span><br><span class="line">	shared = []</span><br><span class="line">	<span class="keyword">while</span> i &gt;= <span class="number">1</span> <span class="keyword">and</span> j &gt;= <span class="number">1</span>:</span><br><span class="line">		cell = score[i][j]</span><br><span class="line">		<span class="comment"># 由于前面默认是左上作为初始max分数</span></span><br><span class="line">		<span class="comment"># 所以有可能出现不是左上但分数多了1</span></span><br><span class="line">		<span class="keyword">if</span> cell[<span class="number">0</span>] == score[i<span class="number">-1</span>][j<span class="number">-1</span>][<span class="number">0</span>] + <span class="number">1</span> <span class="keyword">and</span> cell[<span class="number">1</span>] == <span class="string">"lefttop"</span>:</span><br><span class="line">			shared.append(S[j<span class="number">-1</span>])</span><br><span class="line">			i -= <span class="number">1</span></span><br><span class="line">			j -= <span class="number">1</span></span><br><span class="line">		<span class="keyword">elif</span> cell[<span class="number">1</span>] == <span class="string">"left"</span>:</span><br><span class="line">			j -= <span class="number">1</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			i -= <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> <span class="string">""</span>.join(shared)</span><br><span class="line"></span><br><span class="line">print(LCS(<span class="string">"GCCCTAGCG"</span>, <span class="string">"GCGCAATG"</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="最长子串问题"><a href="#最长子串问题" class="headerlink" title="最长子串问题"></a>最长子串问题</h3><p>最长子串和最长子序列问题是不同的，对于子序列来说，只要某个字符在两个序列中出现，那么就视为是共同子序列，最长子序列就是这些共同子序列的并集。而最长子串则是需要连续的共同子序列组成，其重点在于<strong>连续和共同</strong>。我们前面已经实现了寻找最长子序列。在此基础上，我们只要稍作更改即可。</p>
+<p>试想一下，基于前面的代码，如果某个 cell 回溯的前一个 cell 位于其 “lefttop” 则表明，这两个 cell 所对应的两个序列的字符是相同且连续的。那现在要找到连续最长的，我们只需<strong>在打分时，只取两个碱基相等时的打分，其余为 0，这时候得到的分数则是连续共同子串的长度。</strong>这样做以后，我们就可以得到得分最高的那个 cell，由那个 cell 进行回溯就可以得到最长子串。</p>
+<p>在 rosalind 里面的最长子串是 100 个序列的最长子串，采用这里的代码去跑的话，需要 20s 的时间。这说明，对于 n 个序列的最长公共子串这一问题，有更好的算法。事实也在 rosalind 的 solution 里面有展示，不到 30 行代码，跑完是时间不到 0.1s。不得不说，算法的厉害就在于此。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">LCSS</span><span class="params">(C, S)</span>:</span><span class="comment"># longest common substring</span></span><br><span class="line">	<span class="comment"># 构建打分矩阵, x=C,y=S</span></span><br><span class="line">	score = []</span><br><span class="line">	max_score = <span class="number">0</span></span><br><span class="line">	max_score_pos = [<span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(len(C) + <span class="number">1</span>): <span class="comment"># 注意这里的 i 和 j 的取值范围[0, len(C/S)] 是闭区间</span></span><br><span class="line">		temp = []</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(len(S) + <span class="number">1</span>):</span><br><span class="line">			<span class="keyword">if</span> j == <span class="number">0</span> <span class="keyword">or</span> i == <span class="number">0</span>:</span><br><span class="line">				temp.append(<span class="number">0</span>)	<span class="comment"># None is prev</span></span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				<span class="keyword">if</span> C[i<span class="number">-1</span>] == S[j<span class="number">-1</span>]:</span><br><span class="line">					current_score = score[i<span class="number">-1</span>][j<span class="number">-1</span>] + <span class="number">1</span></span><br><span class="line">					<span class="keyword">if</span> current_score &gt; max_score:</span><br><span class="line">						max_score = current_score</span><br><span class="line">						max_score_pos = [i, j]</span><br><span class="line">				<span class="keyword">else</span>:</span><br><span class="line">					current_score = <span class="number">0</span></span><br><span class="line">				temp.append(current_score)</span><br><span class="line">		score.append(temp)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 回溯</span></span><br><span class="line">	i, j = max_score_pos</span><br><span class="line">	shared = []</span><br><span class="line">	<span class="keyword">while</span> max_score &gt; <span class="number">0</span>:</span><br><span class="line">		shared.append(C[i<span class="number">-1</span>])	<span class="comment"># i-1是因为构建打分矩阵多引入了 0 的初始行</span></span><br><span class="line">		max_score = score[i<span class="number">-1</span>][j<span class="number">-1</span>]</span><br><span class="line">		i = i - <span class="number">1</span></span><br><span class="line">		j = j - <span class="number">1</span></span><br><span class="line">	shared.reverse() <span class="comment"># 因为是回溯，要翻转</span></span><br><span class="line">	<span class="keyword">return</span> <span class="string">""</span>.join(shared)</span><br><span class="line"></span><br><span class="line">print(LCSS(<span class="string">"GCCCTAGCG"</span>, <span class="string">"GCGCAATG"</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="序列比对"><a href="#序列比对" class="headerlink" title="序列比对"></a>序列比对</h2><p>有了最长子串和最长子序列的问题，自然而然就联系到序列比对中去了。序列比对不就是在 2 条 DNA 序列中寻找子串或子序列吗。有关序列比对这里展示 2 种类似的算法，NeedlemanWunsch 和 SmithWaterman 算法。</p>
+<h3 id="NeedlemanWunsch-算法"><a href="#NeedlemanWunsch-算法" class="headerlink" title="NeedlemanWunsch 算法"></a>NeedlemanWunsch 算法</h3><p>对于 NeedlemanWunsch 算法，在计算打分矩阵的时候，会根据两个序列字符是否匹配和 gap 添加对应的加分和罚分，以此来寻找最优解。由于这里我们会考虑 gap 和 错配的情况，所以 NeedlemanWunsch 算法也是一种全局比对算法。其基本思路如下：</p>
+<ul>
+<li>比对时加入空格 -2 分，错配 -1 分，比对上加 2 分。这里可以自由指定。</li>
+<li>对于来自上面的单元格，代表将左侧的字符与空格比对。</li>
+<li>对于来自左侧的单元格，代表将上面的字符与空格比对。</li>
+<li>对于来自左上侧的单元格，代表与左侧和上面的字符比对（可能匹配也可能不匹配）</li>
+</ul>
+<p>所以，根据上面这个思路，打分矩阵的第一行和第一列的分数是逐渐递减的。下面是我的实现。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">NeedlemanWunsch</span><span class="params">(C, S, space=<span class="number">-2</span>, match=<span class="number">2</span>, mismatch=<span class="number">-1</span>)</span>:</span></span><br><span class="line">	<span class="comment"># 同样是构建矩阵</span></span><br><span class="line">	score = []</span><br><span class="line">	<span class="comment"># 使用 0,1,-1 分别代表lefttop，left，top</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(len(C) + <span class="number">1</span>):</span><br><span class="line">		temp = []</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(len(S) + <span class="number">1</span>):</span><br><span class="line">			<span class="keyword">if</span> i == <span class="number">0</span> <span class="keyword">and</span> j == <span class="number">0</span>:</span><br><span class="line">				temp.append([<span class="number">0</span>, <span class="keyword">None</span>])			<span class="comment"># 起点得分 0</span></span><br><span class="line">			<span class="keyword">elif</span> i == <span class="number">0</span>:</span><br><span class="line">				temp.append([j*space, <span class="keyword">None</span>])	<span class="comment"># 第一行得分为 space * column_index</span></span><br><span class="line">			<span class="keyword">elif</span> j == <span class="number">0</span>:</span><br><span class="line">				temp.append([i*space, <span class="keyword">None</span>])	<span class="comment"># 第一列得分为 space * row_index</span></span><br><span class="line">			<span class="keyword">else</span>: <span class="comment"># 其余行列</span></span><br><span class="line">				max_score = score[i<span class="number">-1</span>][j<span class="number">-1</span>][<span class="number">0</span>]</span><br><span class="line">				prev = <span class="string">"lefttop"</span></span><br><span class="line">				<span class="keyword">if</span> C[i<span class="number">-1</span>] == S[j<span class="number">-1</span>]:			<span class="comment"># 能比对上</span></span><br><span class="line">					max_score += match</span><br><span class="line">				<span class="keyword">else</span>:</span><br><span class="line">					max_score += mismatch		<span class="comment"># 错配</span></span><br><span class="line">				<span class="keyword">if</span> temp[j<span class="number">-1</span>][<span class="number">0</span>] + space &gt; max_score:</span><br><span class="line">					max_score = temp[j<span class="number">-1</span>][<span class="number">0</span>] + space</span><br><span class="line">					prev = <span class="string">"left"</span></span><br><span class="line">				<span class="keyword">if</span> score[i<span class="number">-1</span>][j][<span class="number">0</span>] + space &gt; max_score:</span><br><span class="line">					max_score = score[i<span class="number">-1</span>][j][<span class="number">0</span>] + space</span><br><span class="line">					prev = <span class="string">"top"</span></span><br><span class="line">				temp.append([max_score, prev])</span><br><span class="line">		score.append(temp)</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 回溯</span></span><br><span class="line">	i = len(C)</span><br><span class="line">	j = len(S)</span><br><span class="line">	C_string = []</span><br><span class="line">	S_string = []</span><br><span class="line">	<span class="keyword">while</span> i &gt;= <span class="number">1</span> <span class="keyword">and</span> j &gt;= <span class="number">1</span>:</span><br><span class="line">		cell = score[i][j]</span><br><span class="line">		prev = cell[<span class="number">1</span>]</span><br><span class="line">		<span class="keyword">if</span> prev == <span class="string">"lefttop"</span>:</span><br><span class="line">			C_string.append(C[i<span class="number">-1</span>])</span><br><span class="line">			S_string.append(S[j<span class="number">-1</span>])</span><br><span class="line">			i -= <span class="number">1</span></span><br><span class="line">			j -= <span class="number">1</span></span><br><span class="line">		<span class="keyword">elif</span> prev == <span class="string">"top"</span>: <span class="comment"># top</span></span><br><span class="line">			S_string.append(<span class="string">"-"</span>)	<span class="comment"># 向下延伸是在 水平 上添加 gap，即 S</span></span><br><span class="line">			C_string.append(C[i<span class="number">-1</span>])</span><br><span class="line">			i -= <span class="number">1</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			C_string.append(<span class="string">"-"</span>)</span><br><span class="line">			C_string.append(S[j<span class="number">-1</span>])</span><br><span class="line">			j -= <span class="number">1</span></span><br><span class="line">	C_string.reverse()</span><br><span class="line">	S_string.reverse()</span><br><span class="line">	<span class="keyword">return</span> [<span class="string">""</span>.join(C_string), <span class="string">""</span>.join(S_string)]</span><br><span class="line"></span><br><span class="line">print(NeedlemanWunsch(<span class="string">"GCCCTAGCG"</span>, <span class="string">"GCGCAATG"</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="Smith-Waterman-算法"><a href="#Smith-Waterman-算法" class="headerlink" title="Smith-Waterman 算法"></a>Smith-Waterman 算法</h3><blockquote>
+<p>在 Smith-Waterman 算法中，不必比对整个序列。两个零长字符串即为得分为 0 的局部比对，这一事实表明在构建局部比对时，不需要使用负分。这样会造成进一步比对所得到的分数低于通过 “重设” 两个零长字符串所能得到的分数。而且，局部比对不需要到达任何一个序列的末端，所以也不需要从右下角开始回溯：可以从得分最高的单元格开始回溯。这一事实表明在构建局部比对时，不需要使用负分。这样会造成进一步比对所得到的分数低于通过 “重设” 两个零长字符串所能得到的分数。而且，局部比对不需要到达任何一个序列的末端，所以也不需要从右下角开始回溯：可以从得分最高的单元格开始回溯。这导致 Smith-Waterman 算法与 Needleman-Wunsch 算法存在着三个区别。</p>
+<ol>
+<li>首先，在初始化阶段，第一行和第一列全填充为 0（而且第一行和第一列的指针均为空）。</li>
+<li>第二，在填充表格时，如果某个得分为负，那么就用 0 代替，只对得分为正的单元格添加返回指针。</li>
+<li>最后，在回溯的时候，从得分最高的单元格开始，回溯到得分为 0 的单元格为止。<br>除此之外，回溯的方式与 Needleman-Wunsch 算法完全相同。</li>
+</ol>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">SmithWaterman</span><span class="params">(C, S, space=<span class="number">-2</span>, match=<span class="number">1</span>, mismatch=<span class="number">-1</span>)</span>:</span></span><br><span class="line">	<span class="comment"># 同样是构建矩阵</span></span><br><span class="line">	score = []</span><br><span class="line">	max_score = <span class="number">0</span></span><br><span class="line">	max_score_pos = [<span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">	<span class="comment"># 使用 0,1,-1 分别代表lefttop，left，top</span></span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(len(C) + <span class="number">1</span>):</span><br><span class="line">		temp = []</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(len(S) + <span class="number">1</span>):</span><br><span class="line">			<span class="keyword">if</span> i == <span class="number">0</span> <span class="keyword">or</span> j == <span class="number">0</span>:</span><br><span class="line">				temp.append([<span class="number">0</span>, <span class="keyword">None</span>])			<span class="comment"># 起点得分 0</span></span><br><span class="line">			<span class="keyword">else</span>: <span class="comment"># 其余行列</span></span><br><span class="line">				current_score = score[i<span class="number">-1</span>][j<span class="number">-1</span>][<span class="number">0</span>]</span><br><span class="line">				prev = <span class="string">"lefttop"</span></span><br><span class="line">				<span class="keyword">if</span> C[i<span class="number">-1</span>] == S[j<span class="number">-1</span>]:			<span class="comment"># 能比对上</span></span><br><span class="line">					current_score += match</span><br><span class="line">				<span class="keyword">else</span>:</span><br><span class="line">					current_score += mismatch		<span class="comment"># 错配</span></span><br><span class="line">				<span class="comment"># 找到最大的分数</span></span><br><span class="line">				<span class="keyword">if</span> temp[j<span class="number">-1</span>][<span class="number">0</span>] + space &gt; current_score:</span><br><span class="line">					current_score = temp[j<span class="number">-1</span>][<span class="number">0</span>] + space</span><br><span class="line">					prev = <span class="string">"left"</span></span><br><span class="line">				<span class="keyword">if</span> score[i<span class="number">-1</span>][j][<span class="number">0</span>] + space &gt; current_score:</span><br><span class="line">					current_score = score[i<span class="number">-1</span>][j][<span class="number">0</span>] + space</span><br><span class="line">					prev = <span class="string">"top"</span></span><br><span class="line">				<span class="comment"># 得分小于 0 就重置为0</span></span><br><span class="line">				<span class="keyword">if</span> current_score &lt; <span class="number">0</span>:</span><br><span class="line">					current_score = <span class="number">0</span></span><br><span class="line">					prev = <span class="keyword">None</span></span><br><span class="line">				<span class="comment"># 不为 0，就看是否是当前最大得分</span></span><br><span class="line">				<span class="keyword">elif</span> current_score &gt; max_score:</span><br><span class="line">					max_score = current_score</span><br><span class="line">					max_score_pos = [i, j]</span><br><span class="line">				temp.append([current_score, prev])</span><br><span class="line">		score.append(temp)</span><br><span class="line">        </span><br><span class="line">	<span class="comment"># 回溯</span></span><br><span class="line">	i, j = max_score_pos</span><br><span class="line">	C_string = []</span><br><span class="line">	S_string = []</span><br><span class="line">	<span class="keyword">while</span> i &gt;= <span class="number">1</span> <span class="keyword">and</span> j &gt;= <span class="number">1</span>:</span><br><span class="line">		cell = score[i][j]</span><br><span class="line">		prev = cell[<span class="number">1</span>]</span><br><span class="line">		<span class="keyword">if</span> prev == <span class="string">"lefttop"</span>:	<span class="comment"># lefttop</span></span><br><span class="line">			C_string.append(C[i<span class="number">-1</span>])</span><br><span class="line">			S_string.append(S[j<span class="number">-1</span>])</span><br><span class="line">			i -= <span class="number">1</span></span><br><span class="line">			j -= <span class="number">1</span></span><br><span class="line">		<span class="keyword">elif</span> prev == <span class="string">"top"</span>: <span class="comment"># top</span></span><br><span class="line">			S_string.append(<span class="string">"-"</span>)	<span class="comment"># 向下延伸是在 水平 上添加 gap，即 S</span></span><br><span class="line">			C_string.append(C[i<span class="number">-1</span>])</span><br><span class="line">			i -= <span class="number">1</span></span><br><span class="line">		<span class="keyword">elif</span>:</span><br><span class="line">			C_string.append(<span class="string">"-"</span>)</span><br><span class="line">			C_string.append(S[j<span class="number">-1</span>])</span><br><span class="line">			j -= <span class="number">1</span></span><br><span class="line">	C_string.reverse()</span><br><span class="line">	S_string.reverse()</span><br><span class="line">	<span class="keyword">return</span> [<span class="string">""</span>.join(C_string), <span class="string">""</span>.join(S_string)]</span><br><span class="line"></span><br><span class="line">print(SmithWaterman(<span class="string">"GCCCTAGCG"</span>, <span class="string">"GCGCAATG"</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.ibm.com/developerworks/cn/java/j-seqalign/index.html" target="_blank" rel="noopener">IBM - developerworks</a></li>
+<li><a href="http://rosalind.info/problems/locations" target="_blank" rel="noopener">rosalind</a></li>
+</ul>
+	  
+	</div>
+
+	<!-- recommended posts -->
+	
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Prev</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/11/27/R-中的函数式/" class="alignright next">Next<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">Comments</h2>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-12-06 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    </li><li><a href="/categories/Python/">Python<span>1</span></a></li>
+  
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/算法/">算法<span>1</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#典型的斐波那契数列"><span class="toc-article-text">典型的斐波那契数列</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#动态编程"><span class="toc-article-text">动态编程</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#最长子序列问题"><span class="toc-article-text">最长子序列问题</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#最长子串问题"><span class="toc-article-text">最长子串问题</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#序列比对"><span class="toc-article-text">序列比对</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#NeedlemanWunsch-算法"><span class="toc-article-text">NeedlemanWunsch 算法</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#Smith-Waterman-算法"><span class="toc-article-text">Smith-Waterman 算法</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#参考"><span class="toc-article-text">参考</span></a></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Xizhihui
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

@@ -140,7 +140,9 @@ var _hmt = _hmt || [];
 <p>问题描述：小弟我用 hexo 建立自己的静态博客，然后部署到 GitHub 之后发现，<code>Tag</code> 文件夹被改成 <code>tag</code> 文件夹，导致博客访问出现 404。</p>
 </blockquote>
 <p>这个开始不好办，因为我不知道出什么地方，然后去改配置啊，改来改去。后来发现啊，是 Git 它默认对大小写不敏感，才会在经过 Git 之后的发布变成小写。这里是杀虫剂，从 <strong><a href="http://www.wujinyu.com/2017/09/01/other/hexo-404/" target="_blank" rel="noopener">卡布奇诺</a></strong> 得到的，感谢他。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> .deploy_git</span><br><span class="line">git config ignorecase <span class="literal">false</span></span><br><span class="line">git rm -rf *</span><br><span class="line">git commit -m <span class="string">'clean all file'</span></span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">hexo clean</span><br><span class="line">hexo deploy -generate</span><br></pre></td></tr></table></figure>	  
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> .deploy_git</span><br><span class="line">git config ignorecase <span class="literal">false</span></span><br><span class="line">git rm -rf *</span><br><span class="line">git commit -m <span class="string">'clean all file'</span></span><br><span class="line">git push</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ..</span><br><span class="line">hexo clean</span><br><span class="line">hexo deploy -generate</span><br></pre></td></tr></table></figure>
+<h3 id="2-Snakemake-里面-JSON-Validation-文件明明设置了某个属性为-string，却总是报错。"><a href="#2-Snakemake-里面-JSON-Validation-文件明明设置了某个属性为-string，却总是报错。" class="headerlink" title="2. Snakemake 里面  JSON Validation 文件明明设置了某个属性为 string，却总是报错。"></a>2. Snakemake 里面  JSON Validation 文件明明设置了某个属性为 string，却总是报错。</h3><p>由于这里我使用的是 yaml 格式，但 yaml 格式是以两个空格的缩进来进行代码块的区分的。那这时候，如果从别处粘贴过来的东西的缩进是 tab 而你的是空格的话，或者反过来，就会导致这样的错误，明明看着没错，然后就是有错。<br>还有很多是少个冒号，逗号，括号的问题，经常会导致看着没错，怎么就报错了的情况。这个情况要避免哦。</p>
+	  
 	</div>
 
 	<!-- recommended posts -->
@@ -243,7 +245,7 @@ var _hmt = _hmt || [];
 	
 	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
 	   <div id="toc" class="toc collapse in">
-			<ol class="toc-article"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-hexo-404"><span class="toc-article-text">1. hexo 404</span></a></li></ol>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-hexo-404"><span class="toc-article-text">1. hexo 404</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2-Snakemake-里面-JSON-Validation-文件明明设置了某个属性为-string，却总是报错。"><span class="toc-article-text">2. Snakemake 里面  JSON Validation 文件明明设置了某个属性为 string，却总是报错。</span></a></li></ol>
 		</div>
 	
 	</div>
