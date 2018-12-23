@@ -124,33 +124,6 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/组装或定量-eXpress/">组装或定量 eXpress</a></div>						
-		</h3>
-	
-
-
-		     <div class="entry">
-  <div class="row">
-	
-	
-		<a id="more"></a>
-<blockquote>
-<p><a href="https://pachterlab.github.io/eXpress/downloads/express-1.5.1/express-1.5.1-linux_x86_64.tgz" target="_blank" rel="noopener">https://pachterlab.github.io/eXpress/downloads/express-1.5.1/express-1.5.1-linux_x86_64.tgz</a></p>
-</blockquote>
-<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">express [options]* &lt;target_seqs.fasta&gt; &lt;aligned_reads.(sam/bam)&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># &lt;target_seqs.fasta&gt;:	参考序列的fasta文件</span></span><br><span class="line"><span class="comment"># &lt;aligned_reads.(sam/bam)&gt;:	比对结果文件</span></span><br><span class="line"><span class="comment"># -o path: 	指定输出路径</span></span><br><span class="line"><span class="comment"># -B n:	指定进行batch EM rounds计算的次数,以时间为代价提高定量准确性</span></span><br><span class="line"><span class="comment"># -O n:	指定进行online EM rounds计算的次数,以时间为代价提高定量准确性</span></span><br><span class="line"><span class="comment"># -m n:	指定fragment的平均长度</span></span><br><span class="line"><span class="comment"># -s n：指定fragment长度的标准差</span></span><br><span class="line"><span class="comment"># -H str:	以逗号分隔的位置坐标,指定haplotypes的位置。利于等位基因的特异表达定量</span></span><br><span class="line"><span class="comment"># --output-align-samp:	</span></span><br><span class="line"><span class="comment"># --output-align-prob:</span></span><br><span class="line"><span class="comment"># --fr-stranded: 指定链特异性比对的方向,read1比对到forward链,read2比对到reverse链</span></span><br><span class="line"><span class="comment"># --rf-stranded：指定链特异性比对的方向,read1比对到reverse链,read2比对到forward链</span></span><br><span class="line"><span class="comment"># --f-stranded:	 single-end, read比对到forward链</span></span><br><span class="line"><span class="comment"># --r-stranded:	 single-end, read比对到reverse链</span></span><br><span class="line"><span class="comment">#</span></span><br></pre></td></tr></table></figure>
-<h2 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h2><p>eXpress需要一个multi-fasta格式的输入文件,计算该文件序列的转录丰度。</p>
-
-	
-	</div>
-  <a type="button" href="/2018/10/12/组装或定量-eXpress/#more" class="btn btn-default more">Read More</a>
-</div>
-
-	       
-		     
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-12 </div>
 			<div class="article-title"><a href="/2018/10/12/生信基础-链特异性/">生信基础 链特异性</a></div>						
 		</h3>
 	
@@ -206,6 +179,76 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/生信基础-质控的那些事/">生信基础 质控的那些事</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="质控的方向"><a href="#质控的方向" class="headerlink" title="质控的方向"></a>质控的方向</h2><p>就平常的生物实验而言，质控是要贯穿到实验的各个阶段的，比如那些阳性阴性对照就可以认为是在进行质控了。而在测序数据的分析过程中，也同样需要将质控贯穿到分析的各个阶段。质控基本上可以分为三个阶段，依据你的分析对象和分析目的不同而有所变化：raw sequence data, alignment, variant calling. 目前比较常见的质控多是局限在raw data的质控这个阶段。虽然如此，另外两个阶段的质控也应该是需要的，因为后续的许多分析也是基于这两个阶段。Raw data 质控的方向通常有以下几类：quality trimming, adapter removal, contaminant filtering. 而在alignment阶段，我们可以通过uniquely mapped reads, signed noise ratio 进行质控。在variant calling阶段，还在调查中……</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/生信基础-质控的那些事/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/组装或定量-eXpress/">组装或定量 eXpress</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<a id="more"></a>
+<blockquote>
+<p><a href="https://pachterlab.github.io/eXpress/downloads/express-1.5.1/express-1.5.1-linux_x86_64.tgz" target="_blank" rel="noopener">https://pachterlab.github.io/eXpress/downloads/express-1.5.1/express-1.5.1-linux_x86_64.tgz</a></p>
+</blockquote>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">express [options]* &lt;target_seqs.fasta&gt; &lt;aligned_reads.(sam/bam)&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># &lt;target_seqs.fasta&gt;:	参考序列的fasta文件</span></span><br><span class="line"><span class="comment"># &lt;aligned_reads.(sam/bam)&gt;:	比对结果文件</span></span><br><span class="line"><span class="comment"># -o path: 	指定输出路径</span></span><br><span class="line"><span class="comment"># -B n:	指定进行batch EM rounds计算的次数,以时间为代价提高定量准确性</span></span><br><span class="line"><span class="comment"># -O n:	指定进行online EM rounds计算的次数,以时间为代价提高定量准确性</span></span><br><span class="line"><span class="comment"># -m n:	指定fragment的平均长度</span></span><br><span class="line"><span class="comment"># -s n：指定fragment长度的标准差</span></span><br><span class="line"><span class="comment"># -H str:	以逗号分隔的位置坐标,指定haplotypes的位置。利于等位基因的特异表达定量</span></span><br><span class="line"><span class="comment"># --output-align-samp:	</span></span><br><span class="line"><span class="comment"># --output-align-prob:</span></span><br><span class="line"><span class="comment"># --fr-stranded: 指定链特异性比对的方向,read1比对到forward链,read2比对到reverse链</span></span><br><span class="line"><span class="comment"># --rf-stranded：指定链特异性比对的方向,read1比对到reverse链,read2比对到forward链</span></span><br><span class="line"><span class="comment"># --f-stranded:	 single-end, read比对到forward链</span></span><br><span class="line"><span class="comment"># --r-stranded:	 single-end, read比对到reverse链</span></span><br><span class="line"><span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h2 id="输入文件"><a href="#输入文件" class="headerlink" title="输入文件"></a>输入文件</h2><p>eXpress需要一个multi-fasta格式的输入文件,计算该文件序列的转录丰度。</p>
+
+	
+	</div>
+  <a type="button" href="/2018/10/12/组装或定量-eXpress/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/组装或定量-kallisto_sleuth/">组装或定量 kallisto_sleuth</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="免比对的定量：kallisto"><a href="#免比对的定量：kallisto" class="headerlink" title="免比对的定量：kallisto"></a>免比对的定量：kallisto</h2><p><a href="https://pachterlab.github.io/kallisto/manual.html" target="_blank" rel="noopener">kallisto</a>是一个align-free的测序结果定量工具。速度快得很.他可以在10min内完成index的构建，然后花3min完成30 million的human reads的定量。它不仅快速而且准确。</p>
+<p>Pseudoalignment保存了用于定量的关键信息。An important feature of kallisto is that it outputs bootstraps along with the estimates of transcript abundances</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/组装或定量-kallisto_sleuth/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
 			<div class="article-title"><a href="/2018/10/12/芯片专题-AffyMetrix/">芯片专题 AffyMetrix</a></div>						
 		</h3>
 	
@@ -248,28 +291,6 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/组装或定量-kallisto_sleuth/">组装或定量 kallisto_sleuth</a></div>						
-		</h3>
-	
-
-
-		     <div class="entry">
-  <div class="row">
-	
-	
-		<h2 id="免比对的定量：kallisto"><a href="#免比对的定量：kallisto" class="headerlink" title="免比对的定量：kallisto"></a>免比对的定量：kallisto</h2><p><a href="https://pachterlab.github.io/kallisto/manual.html" target="_blank" rel="noopener">kallisto</a>是一个align-free的测序结果定量工具。速度快得很.他可以在10min内完成index的构建，然后花3min完成30 million的human reads的定量。它不仅快速而且准确。</p>
-<p>Pseudoalignment保存了用于定量的关键信息。An important feature of kallisto is that it outputs bootstraps along with the estimates of transcript abundances</p>
-	
-	</div>
-  <a type="button" href="/2018/10/12/组装或定量-kallisto_sleuth/#more" class="btn btn-default more">Read More</a>
-</div>
-
-	       
-		     
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-12 </div>
 			<div class="article-title"><a href="/2018/10/12/组装或定量-stringTie/">组装或定量 stringTie</a></div>						
 		</h3>
 	
@@ -304,6 +325,27 @@ var _hmt = _hmt || [];
 	
 	</div>
   <a type="button" href="/2018/10/12/质控软件-raw_data质控/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/生信基础-测序原理/">生信基础 测序原理</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>在生信分析中，我们通常接触的都是下机数据，也就是测序的结果数据，但是这些数据是怎么产生的呢？这就要讲到测序的原理。其实，测序的本质原理就是DNA链的合成咯，通过合成新的 DNA 链我们从而知道 DNA 链的序列组成。一代测序的 sanger 法是通过每步添加一种特定标记的双脱氧核糖核苷酸( ddNTP )来合成 DNA 链，由于 ddNTP 会导致 DNA 链合成的中断，那就可以得到各个长度大小的 DNA 片段，通过跑胶分离则可知道不同DNA长度的链上分别是什么标记，由此知道其标记对应的 ddNTP，从而推出 DNA 的序列组成；这类一代测序法过程比较耗时。而二代测序的改进在于，它是边合成边测序的，无需后续的跑胶等实现；DNA 合成的数量巨大，也就使得测序过程也更为快速。在如今市场上，二代测序虽然说有许多平台，如 Illumina，Roche 454、Ion Torrent，但市场上一直是 Illumina 占据主导地位。所以我们这里将说明一下 Illumina 的测序过程。</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/生信基础-测序原理/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -351,7 +393,7 @@ var _hmt = _hmt || [];
 		<h4>Categories</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+			<li><a href="/categories/Bioinformatics/">Bioinformatics<span>38</span></a></li>
 		
 			<li><a href="/categories/Python/">Python<span>1</span></a></li>
 		
@@ -370,35 +412,39 @@ var _hmt = _hmt || [];
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/R基础/">R基础<span>1</span></a></li>
-		
-			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
-		
-			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
-		
-			<li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
-		
-			<li><a href="/tags/算法/">算法<span>1</span></a></li>
-		
 			<li><a href="/tags/可视化/">可视化<span>1</span></a></li>
-		
-			<li><a href="/tags/流程/">流程<span>1</span></a></li>
-		
-			<li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
 		
 			<li><a href="/tags/随想/">随想<span>1</span></a></li>
 		
-			<li><a href="/tags/组装/">组装<span>1</span></a></li>
-		
-			<li><a href="/tags/富集分析/">富集分析<span>1</span></a></li>
+			<li><a href="/tags/流程/">流程<span>1</span></a></li>
 		
 			<li><a href="/tags/定量/">定量<span>3</span></a></li>
 		
+			<li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
+		
+			<li><a href="/tags/R基础/">R基础<span>1</span></a></li>
+		
+			<li><a href="/tags/算法/">算法<span>1</span></a></li>
+		
+			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
+		
+			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
+		
+			<li><a href="/tags/富集分析/">富集分析<span>1</span></a></li>
+		
+			<li><a href="/tags/组装/">组装<span>1</span></a></li>
+		
 			<li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
+		
+			<li><a href="/tags/稀疏矩阵/">稀疏矩阵<span>1</span></a></li>
+		
+			<li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
 		
 			<li><a href="/tags/bug/">bug<span>1</span></a></li>
 		
-			<li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
+			<li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
+		
+			<li><a href="/tags/软件和包-单细胞/">软件和包 单细胞<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -412,6 +458,14 @@ var _hmt = _hmt || [];
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2018/12/23/稀疏矩阵的表示法/"><i class="fa fa-file-o"></i>稀疏矩阵的表示法</a>
+      </li>
+    
+      <li>
+        <a href="/2018/12/23/Seurat-与-Cellranger-之间互通的二三事/"><i class="fa fa-file-o"></i>Seurat 与 Cellranger 之间互通的二三事</a>
+      </li>
+    
+      <li>
         <a href="/2018/12/06/动态编程/" title="算法的力量真强大。"><i class="fa fa-file-o"></i>动态编程</a>
       </li>
     
@@ -421,14 +475,6 @@ var _hmt = _hmt || [];
     
       <li>
         <a href="/2018/11/27/Bugs/" title="当你打开这里，你要承认，你无时无刻都在产生各种 Bugs，别人写代码，你写 Bug，whatever，这里给你提供杀虫剂。"><i class="fa fa-file-o"></i>杀虫剂</a>
-      </li>
-    
-      <li>
-        <a href="/2018/11/26/第一次写的文/" title="有了第一次写的文，还差第一个爱的人"><i class="fa fa-file-o"></i>第一次写的文</a>
-      </li>
-    
-      <li>
-        <a href="/2018/11/02/可视化-ggplot2入门/" title="听说你要画图？试试 ggplot2 吧，可以搭积木的。"><i class="fa fa-file-o"></i>可视化 ggplot2入门</a>
       </li>
     
   </ul>

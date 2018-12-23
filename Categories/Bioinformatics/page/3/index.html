@@ -124,7 +124,7 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/差异分析-Ballgown/" title="呦呦呦">差异分析 Ballgown</a></div>						
+			<div class="article-title"><a href="/2018/10/12/差异分析-RSEM/" title="呦呦呦">差异分析 RSEM</a></div>						
 		</h3>
 	
 
@@ -133,10 +133,10 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<p>Ballgown是一款灵活的用于RNA-seq数据差异分析的软件，除了差异分析，他还可以进行转录本的组织、可视化和分析表达程度。</p>
+		<p>RSEM利用的是transcripts而非genome。我们有两种方式来构建RSEM转录参考，其一是利用参考基因组来构建；另外一种方式是从许多转录本中构建。</p>
 	
 	</div>
-  <a type="button" href="/2018/10/12/差异分析-Ballgown/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2018/10/12/差异分析-RSEM/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -145,7 +145,7 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/生信基础-各种数据的下载/">生信基础 各种数据的下载</a></div>						
+			<div class="article-title"><a href="/2018/10/12/差异分析-edgeR/">差异分析 edgeR</a></div>						
 		</h3>
 	
 
@@ -154,82 +154,22 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<h2 id="三大数据库版本对应情况"><a href="#三大数据库版本对应情况" class="headerlink" title="三大数据库版本对应情况"></a>三大数据库版本对应情况</h2><table>
-<thead>
-<tr>
-<th>NCBI</th>
-<th>UCSC</th>
-<th>Ensemble</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>GRCh36</td>
-<td>hg18</td>
-<td>ENSEMBL release_52</td>
-</tr>
-<tr>
-<td>GRCh37</td>
-<td>hg19</td>
-<td>ENSEMBL release_59/61/64/68/69/75</td>
-</tr>
-<tr>
-<td>GRCh38</td>
-<td>hg38</td>
-<td>ENSEMBL release_76/77/78/80/81/82</td>
-</tr>
-</tbody>
-</table>
-	
-	</div>
-  <a type="button" href="/2018/10/12/生信基础-各种数据的下载/#more" class="btn btn-default more">Read More</a>
-</div>
-
-	       
-		     
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/比对-subread/">比对 subread</a></div>						
-		</h3>
-	
-
-
-		     <div class="entry">
-  <div class="row">
-	
-	
-		<p>subread是个套件,里面有subread aligner, subjunc aligner, featureCounts, exactSNP.</p>
-<p>subread aligner可以用于DNA-seq和RNA-seq.当用于RNA-seq时,subread只适用于差异分析;对于检测基因组变异如可变剪接之类的,需要reads的完全比对,这时候可以使用subjunc进行比对.在比对RNA-seq数据时,subread不会取检测exon-exon junctions的存在,只会把exon-spanning eads的最大可比对区域作为比对结果.但是,如果只是进行差异分析的话,subread的结果足以进行.subread的比对上reads可能会比subjunc多.</p>
-	
-	</div>
-  <a type="button" href="/2018/10/12/比对-subread/#more" class="btn btn-default more">Read More</a>
-</div>
-
-	       
-		     
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/生信基础-无重复样本的差异分析/">生信基础 无重复样本的差异分析</a></div>						
-		</h3>
-	
-
-
-		     <div class="entry">
-  <div class="row">
-	
-	
-		<ul>
-<li>edgeR</li>
-<li>DESeq2</li>
-<li>GFOLD</li>
+		<p>下方的代码把edgeR的三种差异分析整合成一个函数, 调用时直接指定参数即可.</p>
+<ul>
+<li>classcial</li>
+<li>glm: likelihood ratio test/ quasi-likelihood F-test</li>
+<li><ul>
+<li>quasi-likelihood(qlf): 推荐用于差异分析，因为他对错误率限制较好。</li>
+</ul>
+</li>
+<li><ul>
+<li>likelihood(lrt)：对与单细胞RNA-测序和没有重复的数据较好</li>
+</ul>
+</li>
 </ul>
 	
 	</div>
-  <a type="button" href="/2018/10/12/生信基础-无重复样本的差异分析/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2018/10/12/差异分析-edgeR/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -238,7 +178,7 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/生信基础-reads-重复和比对重复/" title="呦呦呦">生信基础 reads 重复和比对重复</a></div>						
+			<div class="article-title"><a href="/2018/10/12/差异分析-DESeq2/">差异分析 DESeq2</a></div>						
 		</h3>
 	
 
@@ -247,10 +187,13 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<p>在说duplication之前,我们有必要说一下PCR bias和unique reads. PCR bias是指在PCR扩增的过程中,PCR引物会偏好性地同某条DNA链结合,导致的结果就是这条DNA链被扩增的数目要更多;而不是所有的DNA链被平行扩增.那么什么又是unique reads呢?在得到测序结果后,对于任意两条reads,只要其reads的起点,中间序列,终点这三点有一点不同,这两条reads就是互为unique reads. 所以我们来看, 建库后PCR扩增的测序结果里面,肯定有很多条reads不是unique reads,这些reads就是所谓的duplication, 这其中肯定也包含了PCR bias引起的额外重复.</p>
+		<blockquote>
+<p>与DESeq类似的包有：edgeR、limma、DSS、EBSeq、baySeq</p>
+</blockquote>
+<h2 id="一、核心逻辑代码"><a href="#一、核心逻辑代码" class="headerlink" title="一、核心逻辑代码"></a>一、核心逻辑代码</h2><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># countData: 以样品为列名,基因为行名的表达矩阵</span></span><br><span class="line"><span class="comment"># colData的形式: 以样品作为行名,列是样品对应的分组类型</span></span><br><span class="line"><span class="comment"># 生成count matrix</span></span><br><span class="line">dds &lt;- DESeqDataSetFromMatrix(countData = cts,</span><br><span class="line">                              colData = coldata,</span><br><span class="line">                              design = ~ batch + condition)</span><br><span class="line"><span class="comment"># 生成DESeq数据集</span></span><br><span class="line">dds &lt;- DESeq(dds)</span><br><span class="line"><span class="comment"># 进行比较，获得结果</span></span><br><span class="line">res &lt;- results(dds, contrast=c(<span class="string">'condition'</span>, <span class="string">'treat'</span>, <span class="string">'ctrl'</span>))</span><br><span class="line">resultsNames(dds)</span><br><span class="line">res &lt;- lfcShrink(dds, coef=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#  DESeqDataSetFromTximport:   由Salmon, Saifish, kallisto生成</span></span><br><span class="line"><span class="comment">#  DESeqDataSetFromHTSeq:      由htseq-counts生成</span></span><br><span class="line"><span class="comment">#  DESeqDataSet:               由RangedSummarizedExpriment生成</span></span><br></pre></td></tr></table></figure>
 	
 	</div>
-  <a type="button" href="/2018/10/12/生信基础-reads-重复和比对重复/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2018/10/12/差异分析-DESeq2/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -325,7 +268,7 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/生信基础-测序原理/">生信基础 测序原理</a></div>						
+			<div class="article-title"><a href="/2018/10/12/生信基础-reads-重复和比对重复/" title="呦呦呦">生信基础 reads 重复和比对重复</a></div>						
 		</h3>
 	
 
@@ -334,10 +277,10 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<p>在生信分析中，我们通常接触的都是下机数据，也就是测序的结果数据，但是这些数据是怎么产生的呢？这就要讲到测序的原理。其实，测序的本质原理就是DNA链的合成咯，通过合成新的 DNA 链我们从而知道 DNA 链的序列组成。一代测序的 sanger 法是通过每步添加一种特定标记的双脱氧核糖核苷酸( ddNTP )来合成 DNA 链，由于 ddNTP 会导致 DNA 链合成的中断，那就可以得到各个长度大小的 DNA 片段，通过跑胶分离则可知道不同DNA长度的链上分别是什么标记，由此知道其标记对应的 ddNTP，从而推出 DNA 的序列组成；这类一代测序法过程比较耗时。而二代测序的改进在于，它是边合成边测序的，无需后续的跑胶等实现；DNA 合成的数量巨大，也就使得测序过程也更为快速。在如今市场上，二代测序虽然说有许多平台，如 Illumina，Roche 454、Ion Torrent，但市场上一直是 Illumina 占据主导地位。所以我们这里将说明一下 Illumina 的测序过程。</p>
+		<p>在说duplication之前,我们有必要说一下PCR bias和unique reads. PCR bias是指在PCR扩增的过程中,PCR引物会偏好性地同某条DNA链结合,导致的结果就是这条DNA链被扩增的数目要更多;而不是所有的DNA链被平行扩增.那么什么又是unique reads呢?在得到测序结果后,对于任意两条reads,只要其reads的起点,中间序列,终点这三点有一点不同,这两条reads就是互为unique reads. 所以我们来看, 建库后PCR扩增的测序结果里面,肯定有很多条reads不是unique reads,这些reads就是所谓的duplication, 这其中肯定也包含了PCR bias引起的额外重复.</p>
 	
 	</div>
-  <a type="button" href="/2018/10/12/生信基础-测序原理/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2018/10/12/生信基础-reads-重复和比对重复/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -371,7 +314,7 @@ var _hmt = _hmt || [];
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2018-10-12 </div>
-			<div class="article-title"><a href="/2018/10/12/生信基础-质控的那些事/">生信基础 质控的那些事</a></div>						
+			<div class="article-title"><a href="/2018/10/12/生信基础-各种数据的下载/">生信基础 各种数据的下载</a></div>						
 		</h3>
 	
 
@@ -380,10 +323,60 @@ var _hmt = _hmt || [];
   <div class="row">
 	
 	
-		<h2 id="质控的方向"><a href="#质控的方向" class="headerlink" title="质控的方向"></a>质控的方向</h2><p>就平常的生物实验而言，质控是要贯穿到实验的各个阶段的，比如那些阳性阴性对照就可以认为是在进行质控了。而在测序数据的分析过程中，也同样需要将质控贯穿到分析的各个阶段。质控基本上可以分为三个阶段，依据你的分析对象和分析目的不同而有所变化：raw sequence data, alignment, variant calling. 目前比较常见的质控多是局限在raw data的质控这个阶段。虽然如此，另外两个阶段的质控也应该是需要的，因为后续的许多分析也是基于这两个阶段。Raw data 质控的方向通常有以下几类：quality trimming, adapter removal, contaminant filtering. 而在alignment阶段，我们可以通过uniquely mapped reads, signed noise ratio 进行质控。在variant calling阶段，还在调查中……</p>
+		<h2 id="三大数据库版本对应情况"><a href="#三大数据库版本对应情况" class="headerlink" title="三大数据库版本对应情况"></a>三大数据库版本对应情况</h2><table>
+<thead>
+<tr>
+<th>NCBI</th>
+<th>UCSC</th>
+<th>Ensemble</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GRCh36</td>
+<td>hg18</td>
+<td>ENSEMBL release_52</td>
+</tr>
+<tr>
+<td>GRCh37</td>
+<td>hg19</td>
+<td>ENSEMBL release_59/61/64/68/69/75</td>
+</tr>
+<tr>
+<td>GRCh38</td>
+<td>hg38</td>
+<td>ENSEMBL release_76/77/78/80/81/82</td>
+</tr>
+</tbody>
+</table>
 	
 	</div>
-  <a type="button" href="/2018/10/12/生信基础-质控的那些事/#more" class="btn btn-default more">Read More</a>
+  <a type="button" href="/2018/10/12/生信基础-各种数据的下载/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/生信基础-无重复样本的差异分析/">生信基础 无重复样本的差异分析</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<ul>
+<li>edgeR</li>
+<li>DESeq2</li>
+<li>GFOLD</li>
+</ul>
+	
+	</div>
+  <a type="button" href="/2018/10/12/生信基础-无重复样本的差异分析/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -406,6 +399,33 @@ var _hmt = _hmt || [];
 	
 	</div>
   <a type="button" href="/2018/10/12/生信基础-生信数据格式汇总/#more" class="btn btn-default more">Read More</a>
+</div>
+
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-10-12 </div>
+			<div class="article-title"><a href="/2018/10/12/加权共表达基因网络分析-WGCNA/" title="呦呦呦">加权共表达基因网络分析 WGCNA</a></div>						
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<p>在拿到高通量测序数据以后(特别是基因表达数据),通常要分析基因与表型之间的相关性,以探究基因对表型所起关键的调节功能；而加权基因共表达网络分析(Weighted Gene Coexpression Network Analysis)就是其中比较实用的一种分析方法。那么,什么是加权基因共表达网络分析呢？要了解这个,我们需要对以下前提有所了解。</p>
+<ul>
+<li>功能相关的基因,其表达水平/表达模式也基本上是相似的</li>
+<li>表达水平高度相关的基因具有潜在的共有调控机制或参与相似的生物学过程</li>
+<li>如果得到某个表达模式中涉及到许多基因,其中有些基因是已知的,基于上面两点,那么就可以通过该已知基因的功能推测未知基因的功能</li>
+</ul>
+<p>根据上面三点,我们就要得到有许多基因涉及的表达模式,而这个可以通过对基因的表达数据进行聚类得到.讲到这里,WGCNA实质上也是一种聚类方法.而在WGCNA之前,现在也在使用的另一种基因与表型的分析方法,那就是基因共表达网络分析.而WGCNA相较于后者来讲,有何优势?</p>
+	
+	</div>
+  <a type="button" href="/2018/10/12/加权共表达基因网络分析-WGCNA/#more" class="btn btn-default more">Read More</a>
 </div>
 
 	       
@@ -453,7 +473,7 @@ var _hmt = _hmt || [];
 		<h4>Categories</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/categories/Bioinformatics/">Bioinformatics<span>36</span></a></li>
+			<li><a href="/categories/Bioinformatics/">Bioinformatics<span>38</span></a></li>
 		
 			<li><a href="/categories/Python/">Python<span>1</span></a></li>
 		
@@ -474,33 +494,37 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/tags/定量/">定量<span>3</span></a></li>
 		
-			<li><a href="/tags/bug/">bug<span>1</span></a></li>
+			<li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
 		
-			<li><a href="/tags/富集分析/">富集分析<span>1</span></a></li>
+			<li><a href="/tags/软件和包-单细胞/">软件和包 单细胞<span>1</span></a></li>
 		
 			<li><a href="/tags/组装/">组装<span>1</span></a></li>
 		
-			<li><a href="/tags/R基础/">R基础<span>1</span></a></li>
-		
-			<li><a href="/tags/数据处理/">数据处理<span>1</span></a></li>
+			<li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
 		
 			<li><a href="/tags/差异分析/">差异分析<span>4</span></a></li>
 		
-			<li><a href="/tags/软件和包/">软件和包<span>22</span></a></li>
-		
-			<li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
-		
-			<li><a href="/tags/流程/">流程<span>1</span></a></li>
-		
-			<li><a href="/tags/随想/">随想<span>1</span></a></li>
-		
-			<li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
+			<li><a href="/tags/R基础/">R基础<span>1</span></a></li>
 		
 			<li><a href="/tags/可视化/">可视化<span>1</span></a></li>
 		
+			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
+		
+			<li><a href="/tags/富集分析/">富集分析<span>1</span></a></li>
+		
+			<li><a href="/tags/扩增子/">扩增子<span>5</span></a></li>
+		
+			<li><a href="/tags/稀疏矩阵/">稀疏矩阵<span>1</span></a></li>
+		
+			<li><a href="/tags/生信基础/">生信基础<span>13</span></a></li>
+		
 			<li><a href="/tags/算法/">算法<span>1</span></a></li>
 		
-			<li><a href="/tags/变异检测/">变异检测<span>1</span></a></li>
+			<li><a href="/tags/bug/">bug<span>1</span></a></li>
+		
+			<li><a href="/tags/随想/">随想<span>1</span></a></li>
+		
+			<li><a href="/tags/流程/">流程<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -514,6 +538,14 @@ var _hmt = _hmt || [];
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2018/12/23/稀疏矩阵的表示法/"><i class="fa fa-file-o"></i>稀疏矩阵的表示法</a>
+      </li>
+    
+      <li>
+        <a href="/2018/12/23/Seurat-与-Cellranger-之间互通的二三事/"><i class="fa fa-file-o"></i>Seurat 与 Cellranger 之间互通的二三事</a>
+      </li>
+    
+      <li>
         <a href="/2018/12/06/动态编程/" title="算法的力量真强大。"><i class="fa fa-file-o"></i>动态编程</a>
       </li>
     
@@ -523,14 +555,6 @@ var _hmt = _hmt || [];
     
       <li>
         <a href="/2018/11/27/Bugs/" title="当你打开这里，你要承认，你无时无刻都在产生各种 Bugs，别人写代码，你写 Bug，whatever，这里给你提供杀虫剂。"><i class="fa fa-file-o"></i>杀虫剂</a>
-      </li>
-    
-      <li>
-        <a href="/2018/11/26/第一次写的文/" title="有了第一次写的文，还差第一个爱的人"><i class="fa fa-file-o"></i>第一次写的文</a>
-      </li>
-    
-      <li>
-        <a href="/2018/11/02/可视化-ggplot2入门/" title="听说你要画图？试试 ggplot2 吧，可以搭积木的。"><i class="fa fa-file-o"></i>可视化 ggplot2入门</a>
       </li>
     
   </ul>
